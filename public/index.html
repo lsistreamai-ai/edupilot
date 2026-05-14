@@ -40,7 +40,7 @@
     }
 
     .logo-tagline {
-      font-size: 11px;
+      font-size: 12px;
       color: #64748b;
       margin-top: 4px;
     }
@@ -59,7 +59,7 @@
 
     .lang-btn {
       flex: 1;
-      padding: 8px;
+      padding: 6px 12px;
       background: none;
       border: none;
       color: #64748b;
@@ -147,15 +147,6 @@
       color: #94a3b8;
     }
 
-    .form-row {
-      display: flex;
-      gap: 12px;
-    }
-
-    .form-row .form-group {
-      flex: 1;
-    }
-
     .role-select {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -224,64 +215,6 @@
       font-size: 13px;
       font-weight: 600;
       text-decoration: none;
-    }
-
-    /* Divider */
-    .divider {
-      display: flex;
-      align-items: center;
-      margin: 20px 0;
-    }
-
-    .divider-line {
-      flex: 1;
-      height: 1px;
-      background: #e2e8f0;
-    }
-
-    .divider-text {
-      padding: 0 16px;
-      font-size: 11px;
-      color: #94a3b8;
-    }
-
-    /* Social Login */
-    .social-btns {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .social-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      background: white;
-      font-size: 14px;
-      font-weight: 600;
-      color: #1e293b;
-      cursor: pointer;
-    }
-
-    .social-btn:hover {
-      border-color: #3b82f6;
-    }
-
-    .social-icon {
-      font-size: 20px;
-    }
-
-    /* Hide signup fields by default */
-    .signup-fields {
-      display: none;
-    }
-
-    .signup-fields.show {
-      display: block;
     }
   </style>
 </head>
@@ -368,25 +301,6 @@
         <button type="submit" class="submit-btn" data-en="Create Account" data-zh="建立帳戶">Create Account</button>
       </form>
     </div>
-
-    <!-- Divider -->
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-text" data-en="or continue with" data-zh="或使用">or continue with</div>
-      <div class="divider-line"></div>
-    </div>
-
-    <!-- Social Login -->
-    <div class="social-btns">
-      <button class="social-btn" onclick="socialLogin('google')">
-        <span class="social-icon">🔷</span>
-        <span>Google</span>
-      </button>
-      <button class="social-btn" onclick="socialLogin('apple')">
-        <span class="social-icon">🍎</span>
-        <span>Apple</span>
-      </button>
-    </div>
   </main>
 
   <script>
@@ -455,11 +369,6 @@
       // TODO: Connect to Supabase auth
       alert(currentLang === 'zh' ? '註冊成功!' : 'Account created!');
       location.href = role === 'teacher' ? 'teacher' : 'student-dashboard-full.html';
-    }
-
-    function socialLogin(provider) {
-      // TODO: Connect to Supabase OAuth
-      alert(currentLang === 'zh' ? `${provider} 登入中...` : `Signing in with ${provider}...`);
     }
   </script>
 </body>
