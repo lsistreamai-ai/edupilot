@@ -13,12 +13,10 @@
       min-height: 100vh;
     }
 
-    /* Header - FIXED */
+    /* Header */
     .header {
-      position: fixed;
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
       z-index: 100;
@@ -28,7 +26,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
+      padding: 14px 16px;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -42,17 +40,40 @@
     .menu-btn {
       background: rgba(255,255,255,0.2);
       border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       font-size: 22px;
       cursor: pointer;
       color: white;
     }
 
-    .header h1 {
+    .header-title {
       font-size: 18px;
       font-weight: 800;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      padding: 8px 12px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: rgba(255,255,255,0.3);
+      color: white;
     }
 
     /* Side Menu Overlay */
@@ -77,7 +98,7 @@
       left: 0;
       top: 0;
       bottom: 0;
-      width: 280px;
+      width: 260px;
       background: white;
       z-index: 201;
       transform: translateX(-100%);
@@ -92,19 +113,18 @@
     .menu-header {
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
-      padding: 20px 16px;
-      position: relative;
+      padding: 20px;
     }
 
     .menu-avatar {
-      width: 56px;
-      height: 56px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       background: rgba(255,255,255,0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 32px;
       margin-bottom: 12px;
     }
 
@@ -114,7 +134,7 @@
     }
 
     .menu-level {
-      font-size: 13px;
+      font-size: 14px;
       opacity: 0.9;
       margin-top: 4px;
     }
@@ -125,286 +145,275 @@
       right: 12px;
       background: rgba(255,255,255,0.2);
       border: none;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      font-size: 20px;
+      font-size: 22px;
       color: white;
       cursor: pointer;
     }
 
-    /* Sticky Quick Links */
-    .quick-links {
-      position: fixed;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      background: white;
-      border-radius: 0 16px 16px 0;
-      padding: 12px 8px;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-      z-index: 90;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .menu-links {
+      padding: 12px 0;
     }
 
-    .quick-link {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
+    .menu-link {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 20px;
+      gap: 14px;
+      padding: 16px 20px;
       cursor: pointer;
+      transition: background 0.2s;
     }
 
-    .quick-link.active {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      border-color: transparent;
+    .menu-link:hover { background: #f8fafc; }
+    .menu-link.active { background: #eff6ff; }
+
+    .menu-icon {
+      font-size: 24px;
+      width: 28px;
+      text-align: center;
     }
 
-    .quick-link:hover {
-      border-color: #3b82f6;
+    .menu-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #f1f5f9;
+      margin: 8px 20px;
     }
 
     /* Main Content */
     .main {
-      margin-top: 60px;
-      margin-left: 60px;
-      padding: 16px;
-      padding-bottom: 180px;
-      max-width: 540px;
+      padding: 20px 16px;
+      padding-bottom: 100px;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    /* Level Card */
-    .level-card {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      border-radius: 20px;
-      padding: 20px;
-      color: white;
-      margin-bottom: 16px;
+    /* Simple Greeting Card */
+    .greeting-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+      text-align: center;
     }
 
-    .level-header {
+    .greeting-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      justify-content: center;
+      font-size: 40px;
+      margin: 0 auto 16px;
     }
 
-    .level-badge {
-      display: flex;
+    .greeting-name {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .greeting-level {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #92400e;
     }
 
-    .level-icon {
-      font-size: 28px;
-    }
-
-    .level-number {
-      font-size: 28px;
-      font-weight: 900;
-    }
-
-    .points-display {
-      text-align: right;
+    /* Points Display */
+    .points-card {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 24px;
+      padding: 24px;
+      color: white;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     .points-value {
-      font-size: 24px;
-      font-weight: 800;
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 4px;
     }
 
     .points-label {
-      font-size: 11px;
+      font-size: 16px;
       opacity: 0.9;
+    }
+
+    .progress-section {
+      margin-top: 16px;
+    }
+
+    .progress-text {
+      font-size: 14px;
+      margin-bottom: 8px;
     }
 
     .progress-bar {
       background: rgba(255,255,255,0.3);
-      height: 8px;
-      border-radius: 4px;
+      height: 12px;
+      border-radius: 6px;
       overflow: hidden;
     }
 
     .progress-fill {
       background: white;
       height: 100%;
-      width: 82%;
-      border-radius: 4px;
+      width: 65%;
+      border-radius: 6px;
     }
 
-    .progress-text {
-      font-size: 12px;
-      margin-top: 8px;
-      opacity: 0.9;
+    /* Section Title */
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 12px;
     }
 
-    /* Action Grid */
+    /* Big Action Buttons */
     .action-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 14px;
+      margin-bottom: 24px;
     }
 
     .action-card {
       background: white;
-      border-radius: 16px;
-      padding: 16px;
-      border: 2px solid #f1f5f9;
+      border-radius: 20px;
+      padding: 24px 16px;
+      border: 3px solid #f1f5f9;
       text-align: center;
       cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
     }
 
     .action-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .action-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    /* Section */
-    .section {
-      margin-bottom: 16px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      font-size: 48px;
       margin-bottom: 12px;
     }
 
-    .section-title {
-      font-size: 16px;
-      font-weight: 700;
+    .action-name {
+      font-size: 18px;
+      font-weight: 800;
       color: #1e293b;
     }
 
-    .see-all {
-      font-size: 13px;
-      color: #3b82f6;
-      font-weight: 600;
-      text-decoration: none;
+    .action-sub {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 4px;
     }
 
-    /* Subject Cards */
+    /* Simple Subject Cards */
     .subject-card {
       background: white;
-      border-radius: 14px;
-      padding: 12px;
-      border: 2px solid #f1f5f9;
-      margin-bottom: 8px;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 12px;
+      border: 3px solid #f1f5f9;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .subject-card:hover {
+      border-color: #3b82f6;
     }
 
     .subject-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 32px;
     }
 
-    .subject-icon.purple { background: #faf5ff; }
-    .subject-icon.blue { background: #eff6ff; }
-    .subject-icon.green { background: #f0fdf4; }
+    .subject-icon.purple { background: linear-gradient(135deg, #e9d5ff, #d8b4fe); }
+    .subject-icon.blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .subject-icon.green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
 
-    .subject-info {
-      flex: 1;
-    }
+    .subject-info { flex: 1; }
 
     .subject-name {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 800;
       color: #1e293b;
     }
 
     .subject-progress {
-      font-size: 12px;
+      font-size: 14px;
       color: #64748b;
+      margin-top: 4px;
     }
 
     .subject-arrow {
-      font-size: 18px;
+      font-size: 24px;
       color: #94a3b8;
     }
 
-    /* BOTTOM PROFILE - FIXED */
-    .bottom-profile {
+    /* Bottom Navigation */
+    .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       background: white;
       border-top: 2px solid #e2e8f0;
-      z-index: 100;
-      padding: 12px 16px;
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
+      z-index: 50;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
-    .bottom-content {
+    .nav-content {
       display: flex;
-      align-items: center;
-      gap: 12px;
+      justify-content: space-around;
+      padding: 8px 0 12px;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    .profile-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    .nav-item {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
-
-    .profile-info {
-      flex: 1;
-    }
-
-    .profile-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    .profile-level {
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    .logout-btn {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      color: white;
+      gap: 4px;
+      padding: 8px 16px;
+      background: none;
       border: none;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
+      color: #94a3b8;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
+
+    .nav-item.active { color: #3b82f6; }
+    .nav-item .icon { font-size: 28px; }
+    .nav-item .label { font-size: 12px; font-weight: 700; }
   </style>
 </head>
 <body>
@@ -414,45 +423,53 @@
       <div class="menu-header">
         <button class="menu-close" onclick="closeSideMenu()">✕</button>
         <div class="menu-avatar">👦</div>
-        <div class="menu-name">Tommy Tsang</div>
-        <div class="menu-level">⭐ Level 9 • 2,050 points</div>
+        <div class="menu-name" data-en="Tommy Tsang" data-zh="曾志明">Tommy Tsang</div>
+        <div class="menu-level" data-en="⭐ Level 9 • 2,050 points" data-zh="⭐ 等級 9 • 2,050 分">⭐ Level 9 • 2,050 points</div>
       </div>
 
-      <!-- Links -->
-      <div style="padding: 8px 0;">
-        <div class="quick-link-item" onclick="location.href='student-dashboard-full.html'" style="padding: 14px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; background: #eff6ff;">
-          <span style="font-size: 22px;">🏠</span>
-          <span style="font-size: 15px; font-weight: 600; color: #3b82f6;">Dashboard</span>
+      <div class="menu-links">
+        <div class="menu-link active" onclick="location.href='student-dashboard-full.html'">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-text" data-en="Home" data-zh="主頁">Home</span>
         </div>
         
-        <div class="quick-link-item" onclick="location.href='subjects-all.html'" style="padding: 14px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer;">
-          <span style="font-size: 22px;">📚</span>
-          <span style="font-size: 15px; font-weight: 500; color: #475569;">Subjects</span>
+        <div class="menu-link" onclick="location.href='subjects-all.html'">
+          <span class="menu-icon">📚</span>
+          <span class="menu-text" data-en="My Subjects" data-zh="我的科目">My Subjects</span>
         </div>
         
-        <div class="quick-link-item" onclick="location.href='practice-full.html'" style="padding: 14px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer;">
-          <span style="font-size: 22px;">✏️</span>
-          <span style="font-size: 15px; font-weight: 500; color: #475569;">Practice</span>
+        <div class="menu-link" onclick="location.href='practice-full.html'">
+          <span class="menu-icon">✏️</span>
+          <span class="menu-text" data-en="Practice" data-zh="練習">Practice</span>
         </div>
         
-        <div class="quick-link-item" onclick="location.href='leaderboard-full.html'" style="padding: 14px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer;">
-          <span style="font-size: 22px;">🏆</span>
-          <span style="font-size: 15px; font-weight: 500; color: #475569;">Leaderboard</span>
+        <div class="menu-link" onclick="location.href='leaderboard-full.html'">
+          <span class="menu-icon">🏆</span>
+          <span class="menu-text" data-en="Leaderboard" data-zh="排行榜">Leaderboard</span>
         </div>
-        
-        <div class="quick-link-item" onclick="location.href='join-class.html'" style="padding: 14px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer;">
-          <span style="font-size: 22px;">🎒</span>
-          <span style="font-size: 15px; font-weight: 500; color: #475569;">My Classes</span>
+
+        <div class="menu-divider"></div>
+
+        <div class="menu-link" onclick="location.href='join-class.html'">
+          <span class="menu-icon">🎒</span>
+          <span class="menu-text" data-en="My Class" data-zh="我的班級">My Class</span>
         </div>
-        
-        <div class="quick-link-item" onclick="location.href='progress.html'" style="padding: 14px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer;">
-          <span style="font-size: 22px;">📊</span>
-          <span style="font-size: 15px; font-weight: 500; color: #475569;">Progress</span>
+
+        <div class="menu-link" onclick="location.href='progress.html'">
+          <span class="menu-icon">📊</span>
+          <span class="menu-text" data-en="My Progress" data-zh="我的進度">My Progress</span>
         </div>
-        
-        <div class="quick-link-item" onclick="location.href='edit-profile.html'" style="padding: 14px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; border-top: 1px solid #f1f5f9;">
-          <span style="font-size: 22px;">👤</span>
-          <span style="font-size: 15px; font-weight: 500; color: #475569;">Edit Profile</span>
+
+        <div class="menu-divider"></div>
+
+        <div class="menu-link" onclick="location.href='edit-profile.html'">
+          <span class="menu-icon">👤</span>
+          <span class="menu-text" data-en="Edit Profile" data-zh="編輯資料">Edit Profile</span>
+        </div>
+
+        <div class="menu-link" onclick="if(confirm('Logout?')) location.href='index.html'" style="background: #fef2f2;">
+          <span class="menu-icon">🚪</span>
+          <span class="menu-text" data-en="Logout" data-zh="登出" style="color: #ef4444;">Logout</span>
         </div>
       </div>
     </div>
@@ -463,122 +480,148 @@
     <div class="header-content">
       <div class="header-left">
         <button class="menu-btn" onclick="openSideMenu()">☰</button>
-        <h1>🎓 Student Portal</h1>
+        <span class="header-title" data-en="Student Portal" data-zh="學生平台">Student Portal</span>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('zh')">中文</button>
       </div>
     </div>
   </header>
 
-  <!-- Sticky Quick Links (Left Side) -->
-  <div class="quick-links">
-    <div class="quick-link active" onclick="location.href='student-dashboard-full.html'" title="Home">🏠</div>
-    <div class="quick-link" onclick="location.href='subjects-all.html'" title="Subjects">📚</div>
-    <div class="quick-link" onclick="location.href='practice-full.html'" title="Practice">✏️</div>
-    <div class="quick-link" onclick="location.href='leaderboard-full.html'" title="Leaderboard">🏆</div>
-  </div>
-
   <!-- Main Content -->
   <main class="main">
-    <!-- Level Card -->
-    <div class="level-card">
-      <div class="level-header">
-        <div class="level-badge">
-          <span class="level-icon">⭐</span>
-          <div>
-            <div class="level-number">Level 9</div>
-          </div>
-        </div>
-        <div class="points-display">
-          <div class="points-value">2,050</div>
-          <div class="points-label">Total Points</div>
-        </div>
+    <!-- Simple Greeting -->
+    <div class="greeting-card">
+      <div class="greeting-avatar">👦</div>
+      <div class="greeting-name" data-en="Hi, Tommy! 👋" data-zh="你好, 志明! 👋">Hi, Tommy! 👋</div>
+      <div class="greeting-level">
+        <span>⭐</span>
+        <span data-en="Level 9" data-zh="等級 9">Level 9</span>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-      <div class="progress-text">450 points to Level 10 🎯</div>
     </div>
 
-    <!-- Quick Actions -->
+    <!-- Points Display -->
+    <div class="points-card">
+      <div class="points-value">2,050</div>
+      <div class="points-label" data-en="Total Points" data-zh="總分">Total Points</div>
+      <div class="progress-section">
+        <div class="progress-text" data-en="450 points to Level 10" data-zh="距離等級 10 還差 450 分">450 points to Level 10</div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Big Action Buttons -->
+    <h2 class="section-title" data-en="Let's Learn! 🎯" data-zh="開始學習! 🎯">Let's Learn! 🎯</h2>
+    
     <div class="action-grid">
       <div class="action-card" onclick="location.href='subjects-all.html'">
         <div class="action-icon">📚</div>
-        <div class="action-name">Learn</div>
+        <div class="action-name" data-en="Learn" data-zh="學習">Learn</div>
+        <div class="action-sub" data-en="3 subjects" data-zh="3 個科目">3 subjects</div>
       </div>
       <div class="action-card" onclick="location.href='practice-full.html'">
         <div class="action-icon">✏️</div>
-        <div class="action-name">Practice</div>
+        <div class="action-name" data-en="Practice" data-zh="練習">Practice</div>
+        <div class="action-sub" data-en="Do quizzes" data-zh="做測驗">Do quizzes</div>
+      </div>
+      <div class="action-card" onclick="location.href='leaderboard-full.html'">
+        <div class="action-icon">🏆</div>
+        <div class="action-name" data-en="Ranks" data-zh="排名">Ranks</div>
+        <div class="action-sub" data-en="#4 in class" data-zh="班級第 4">)#4 in class</div>
+      </div>
+      <div class="action-card" onclick="location.href='join-class.html'">
+        <div class="action-icon">🎒</div>
+        <div class="action-name" data-en="My Class" data-zh="班級">My Class</div>
+        <div class="action-sub" data-en="P4 - Class A" data-zh="小四甲班">P4 - Class A</div>
       </div>
     </div>
 
-    <!-- Subjects Section -->
-    <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">My Subjects</h2>
-        <a href="subjects-all.html" class="see-all">See all →</a>
-      </div>
-      
-      <div class="subject-card" onclick="location.href='subjects-all.html'">
-        <div class="subject-icon purple">🥽</div>
-        <div class="subject-info">
-          <div class="subject-name">AR/VR Experience</div>
-          <div class="subject-progress">3/6 activities</div>
-        </div>
-        <span class="subject-arrow">→</span>
-      </div>
+    <!-- My Subjects -->
+    <h2 class="section-title" data-en="My Subjects 📖" data-zh="我的科目 📖">My Subjects 📖</h2>
 
-      <div class="subject-card" onclick="location.href='subjects-all.html'">
-        <div class="subject-icon blue">🤖</div>
-        <div class="subject-info">
-          <div class="subject-name">AI & Technology</div>
-          <div class="subject-progress">5/8 activities</div>
-        </div>
-        <span class="subject-arrow">→</span>
+    <div class="subject-card" onclick="location.href='subjects-all.html'">
+      <div class="subject-icon purple">🥽</div>
+      <div class="subject-info">
+        <div class="subject-name" data-en="AR/VR Experience" data-zh="AR/VR 體驗">AR/VR Experience</div>
+        <div class="subject-progress" data-en="3 of 6 done" data-zh="已完成 3/6">3 of 6 done</div>
       </div>
-
-      <div class="subject-card" onclick="location.href='subjects-all.html'">
-        <div class="subject-icon green">🎨</div>
-        <div class="subject-info">
-          <div class="subject-name">Digital Creativity</div>
-          <div class="subject-progress">2/5 activities</div>
-        </div>
-        <span class="subject-arrow">→</span>
-      </div>
+      <span class="subject-arrow">→</span>
     </div>
 
-    <!-- Leaderboard Preview -->
-    <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">Leaderboard</h2>
-        <a href="leaderboard-full.html" class="see-all">See all →</a>
+    <div class="subject-card" onclick="location.href='subjects-all.html'">
+      <div class="subject-icon blue">🤖</div>
+      <div class="subject-info">
+        <div class="subject-name" data-en="AI & Technology" data-zh="人工智能">AI & Technology</div>
+        <div class="subject-progress" data-en="5 of 8 done" data-zh="已完成 5/8">5 of 8 done</div>
       </div>
-      
-      <div class="subject-card" onclick="location.href='leaderboard-full.html'">
-        <div class="subject-icon" style="background: #fef3c7;">🏆</div>
-        <div class="subject-info">
-          <div class="subject-name">Your Rank: #4</div>
-          <div class="subject-progress">Emily is #1 with 3,240 pts</div>
-        </div>
-        <span class="subject-arrow">→</span>
+      <span class="subject-arrow">→</span>
+    </div>
+
+    <div class="subject-card" onclick="location.href='subjects-all.html'">
+      <div class="subject-icon green">🎨</div>
+      <div class="subject-info">
+        <div class="subject-name" data-en="Digital Creativity" data-zh="數碼創意">Digital Creativity</div>
+        <div class="subject-progress" data-en="2 of 5 done" data-zh="已完成 2/5">2 of 5 done</div>
       </div>
+      <span class="subject-arrow">→</span>
     </div>
   </main>
 
-  <!-- Bottom Profile with Logout -->
-  <div class="bottom-profile">
-    <div class="bottom-content">
-      <div class="profile-avatar">👦</div>
-      <div class="profile-info">
-        <div class="profile-name">Tommy Tsang</div>
-        <div class="profile-level">⭐ Level 9 • P4 - Class A</div>
-      </div>
-      <button class="logout-btn" onclick="logout()">
-        <span>🚪</span>
-        <span>Logout</span>
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-content">
+      <button class="nav-item active">
+        <span class="icon">🏠</span>
+        <span class="label" data-en="Home" data-zh="主頁">Home</span>
+      </button>
+      <button class="nav-item" onclick="location.href='subjects-all.html'">
+        <span class="icon">📚</span>
+        <span class="label" data-en="Learn" data-zh="學習">Learn</span>
+      </button>
+      <button class="nav-item" onclick="location.href='leaderboard-full.html'">
+        <span class="icon">🏆</span>
+        <span class="label" data-en="Ranks" data-zh="排名">Ranks</span>
+      </button>
+      <button class="nav-item" onclick="location.href='edit-profile.html'">
+        <span class="icon" style="font-size: 24px;">👦</span>
+        <span class="label" data-en="Me" data-zh="我">Me</span>
       </button>
     </div>
-  </div>
+  </nav>
 
   <script>
+    // Language
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      
+      // Update toggle buttons
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.lang-btn:${lang === 'en' ? 'first-child' : 'last-child'}`).classList.add('active');
+      if (lang === 'en') {
+        document.querySelector('.lang-btn:first-child').classList.add('active');
+      } else {
+        document.querySelector('.lang-btn:last-child').classList.add('active');
+      }
+      
+      // Update text
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+      
+      // Save preference
+      localStorage.setItem('lang', lang);
+    }
+
+    // Load language preference
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) setLang(savedLang);
+
+    // Side Menu
     function openSideMenu() {
       document.getElementById('sideMenuOverlay').classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -587,12 +630,6 @@
     function closeSideMenu() {
       document.getElementById('sideMenuOverlay').classList.remove('active');
       document.body.style.overflow = '';
-    }
-
-    function logout() {
-      if (confirm('Logout?')) {
-        location.href = 'index.html';
-      }
     }
 
     // Swipe to open menu
@@ -605,13 +642,8 @@
       const touchEndX = e.changedTouches[0].clientX;
       const diff = touchEndX - touchStartX;
       
-      if (diff > 100 && touchStartX < 50) {
-        openSideMenu();
-      }
-      
-      if (diff < -100) {
-        closeSideMenu();
-      }
+      if (diff > 100 && touchStartX < 50) openSideMenu();
+      if (diff < -100) closeSideMenu();
     });
   </script>
 </body>
