@@ -535,3 +535,241 @@ INSERT INTO subjects (id, name, category, grade_range, icon) VALUES
 - Materialized view option for leaderboard caching
 - Supabase real-time for live updates
 
+
+---
+
+## Class Code System (May 2026 Update)
+
+### Class Code Generation
+
+Classes now have a unique 6-character code that students use to join:
+
+```sql
+-- Add to classes table
+ALTER TABLE classes ADD COLUMN class_code TEXT UNIQUE NOT NULL;
+ALTER TABLE classes ADD COLUMN max_students INTEGER DEFAULT 30;
+ALTER TABLE classes ADD COLUMN subject_focus TEXT;
+
+-- Generate unique code on insert
+CREATE OR REPLACE FUNCTION generate_class_code()
+RETURNS TEXT AS $$
+DECLARE
+  chars TEXT := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  code TEXT := '';
+  exists BOOLEAN;
+BEGIN
+  LOOP
+    code := '';
+    FOR i IN 1..6 LOOP
+      code := code || substr(chars, floor(random() * length(chars) + 1)::int, 1);
+    END LOOP;
+    
+    SELECT EXISTS(SELECT 1 FROM classes WHERE class_code = code) INTO exists;
+    EXIT WHEN NOT exists;
+  END LOOP;
+  
+  RETURN code;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Auto-generate code on insert
+CREATE TRIGGER generate_class_code_trigger
+  BEFORE INSERT ON classes
+  FOR EACH ROW
+  EXECUTE FUNCTION set_class_code();
+
+CREATE OR REPLACE FUNCTION set_class_code()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.class_code IS NULL OR NEW.class_code = '' THEN
+    NEW.class_code := generate_class_code();
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+### Student-Class Membership
+
+Students can join multiple classes:
+
+```sql
+-- Many-to-many relationship
+CREATE TABLE student_classes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  student_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  class_id UUID REFERENCES classes(id) ON DELETE CASCADE,
+  joined_at TIMESTAMPTZ DEFAULT now(),
+  status TEXT DEFAULT 'active' CHECK (status IN ('active', 'inactive')),
+  UNIQUE(student_id, class_id)
+);
+
+CREATE INDEX idx_student_classes_student ON student_classes(student_id);
+CREATE INDEX idx_student_classes_class ON student_classes(class_id);
+```
+
+### Join Class API
+
+```typescript
+// Student joins class by code
+async function joinClass(studentId: string, classCode: string) {
+  const { data: classData, error } = await supabase
+    .from('classes')
+    .select('id, name, teacher_id, max_students')
+    .eq('class_code', classCode.toUpperCase())
+    .single();
+  
+  if (error || !classData) {
+    return { error: 'Class not found' };
+  }
+  
+  // Check if already joined
+  const { data: existing } = await supabase
+    .from('student_classes')
+    .select('id')
+    .eq('student_id', studentId)
+    .eq('class_id', classData.id)
+    .single();
+  
+  if (existing) {
+    return { error: 'Already joined this class' };
+  }
+  
+  // Check capacity
+  const { count } = await supabase
+    .from('student_classes')
+    .select('id', { count: 'exact' })
+    .eq('class_id', classData.id);
+  
+  if (count >= classData.max_students) {
+    return { error: 'Class is full' };
+  }
+  
+  // Join class
+  const { error: joinError } = await supabase
+    .from('student_classes')
+    .insert({
+      student_id: studentId,
+      class_id: classData.id
+    });
+  
+  if (joinError) {
+    return { error: 'Failed to join class' };
+  }
+  
+  return { 
+    success: true, 
+    class: classData 
+  };
+}
+```
+
+### Teacher Class Management
+
+```typescript
+// Teacher creates class
+async function createClass(teacherId: string, classData: {
+  name: string;
+  grade_level: number;
+  academic_year: string;
+  term: string;
+  max_students?: number;
+  subject_focus?: string;
+}) {
+  const { data, error } = await supabase
+    .from('classes')
+    .insert({
+      ...classData,
+      teacher_id: teacherId,
+      max_students: classData.max_students || 30
+    })
+    .select()
+    .single();
+  
+  return { data, error };
+}
+
+// Teacher copies class code
+function copyClassCode(classCode: string) {
+  navigator.clipboard.writeText(classCode);
+}
+
+// Teacher regenerates class code
+async function regenerateClassCode(classId: string) {
+  const newCode = generateClassCode(); // Same logic as SQL function
+  
+  const { data, error } = await supabase
+    .from('classes')
+    .update({ class_code: newCode })
+    .eq('id', classId)
+    .select('class_code')
+    .single();
+  
+  return { data, error };
+}
+```
+
+### UI Flow
+
+**Teacher Flow:**
+1. Click "Create Class" → `/create-class`
+2. Enter class details (name, grade, term, etc.)
+3. System generates 6-character code (e.g., `P4CLS21`)
+4. Teacher shares code with students
+5. Teacher can regenerate code anytime
+
+**Student Flow:**
+1. Click "Join Class" → `/join-class`
+2. Enter 6-character class code
+3. System validates code
+4. Student joins class → Success modal
+5. Class appears in "My Classes" list
+
+### Sample Data
+
+```sql
+-- Teacher creates class
+INSERT INTO classes (id, school_id, name, grade_level, teacher_id, class_code, academic_year, term, max_students)
+VALUES 
+  ('class-1', 'school-1', 'Primary 4 - Class A', 4, 'teacher-1', 'P4CLS21', '2025-26', '2', 30),
+  ('class-2', 'school-1', 'Primary 4 - Class B', 4, 'teacher-1', 'P4CLS22', '2025-26', '2', 30);
+
+-- Student joins class
+INSERT INTO student_classes (student_id, class_id)
+VALUES 
+  ('student-1', 'class-1'),
+  ('student-2', 'class-1'),
+  ('student-3', 'class-1');
+```
+
+### Security Rules
+
+```sql
+-- Students can only join active classes
+CREATE POLICY "Students join active classes" ON student_classes
+  FOR INSERT
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM classes 
+      WHERE id = class_id 
+      AND is_active = true
+    )
+  );
+
+-- Students can see their own memberships
+CREATE POLICY "Students see own classes" ON student_classes
+  FOR SELECT
+  USING (student_id = current_user_id());
+
+-- Teachers can see all students in their classes
+CREATE POLICY "Teachers see class students" ON student_classes
+  FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM classes
+      WHERE id = class_id
+      AND teacher_id = current_user_id()
+    )
+  );
+```
+

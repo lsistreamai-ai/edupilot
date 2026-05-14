@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
       { source: '/class-detail', destination: '/class-detail.html' },
       { source: '/assign-activity', destination: '/assign-activity.html' },
       { source: '/admin', destination: '/admin-mobile.html' },
+      { source: '/create-class', destination: '/create-class.html' },
+      { source: '/join-class', destination: '/join-class.html' },
     ];
   },
 };
