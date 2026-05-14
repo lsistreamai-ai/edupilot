@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
       { source: '/subjects-all', destination: '/subjects-all.html' },
       { source: '/practice', destination: '/practice.html' },
       { source: '/practice-full', destination: '/practice-full.html' },
-      { source: '/leaderboard', destination: '/leaderboard.html' },
+      { source: '/leaderboard', destination: '/leaderboard-full.html' },
       { source: '/progress', destination: '/progress.html' },
       { source: '/class-detail', destination: '/class-detail.html' },
       { source: '/assign-activity', destination: '/assign-activity.html' },

@@ -1254,3 +1254,310 @@
   </script>
 </body>
 </html>
+
+<!-- Point Rules Configuration Modal -->
+<div class="modal-overlay" id="pointRulesModal" onclick="closePointRules(event)">
+  <div class="config-panel" onclick="event.stopPropagation()">
+    <div class="config-header">
+      <h2>⚙️ Point Rules Setup</h2>
+      <button class="close-btn" onclick="closePointRules()">✕</button>
+    </div>
+    <div class="config-body">
+      <p style="color: #64748b; margin-bottom: 20px; font-size: 14px;">
+        Configure how many points students earn for each activity. Changes apply to your class only.
+      </p>
+      
+      <div class="rule-item">
+        <div class="rule-info">
+          <span class="rule-icon">📖</span>
+          <div>
+            <div class="rule-name">Lesson Completion</div>
+            <div class="rule-desc">Points when student finishes a lesson</div>
+          </div>
+        </div>
+        <div class="rule-input">
+          <input type="number" value="20" min="0" max="100" id="rule-lesson">
+          <span class="points-label">pts</span>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-info">
+          <span class="rule-icon">✏️</span>
+          <div>
+            <div class="rule-name">Practice Completion</div>
+            <div class="rule-desc">Points for finishing practice activities</div>
+          </div>
+        </div>
+        <div class="rule-input">
+          <input type="number" value="15" min="0" max="100" id="rule-practice">
+          <span class="points-label">pts</span>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-info">
+          <span class="rule-icon">🎯</span>
+          <div>
+            <div class="rule-name">Project Submission</div>
+            <div class="rule-desc">Points for submitting projects</div>
+          </div>
+        </div>
+        <div class="rule-input">
+          <input type="number" value="30" min="0" max="100" id="rule-project">
+          <span class="points-label">pts</span>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-info">
+          <span class="rule-icon">🤝</span>
+          <div>
+            <div class="rule-name">Helping Peers</div>
+            <div class="rule-desc">Bonus for helping classmates</div>
+          </div>
+        </div>
+        <div class="rule-input">
+          <input type="number" value="10" min="0" max="100" id="rule-help">
+          <span class="points-label">pts</span>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-info">
+          <span class="rule-icon">⏰</span>
+          <div>
+            <div class="rule-name">On-Time Bonus</div>
+            <div class="rule-desc">Extra points for submitting before deadline</div>
+          </div>
+        </div>
+        <div class="rule-input">
+          <input type="number" value="10" min="0" max="100" id="rule-ontime">
+          <span class="points-label">pts</span>
+        </div>
+      </div>
+
+      <div class="rule-item">
+        <div class="rule-info">
+          <span class="rule-icon">⭐</span>
+          <div>
+            <div class="rule-name">Perfect Score Bonus</div>
+            <div class="rule-desc">Extra points for 100% correct</div>
+          </div>
+        </div>
+        <div class="rule-input">
+          <input type="number" value="20" min="0" max="100" id="rule-perfect">
+          <span class="points-label">pts</span>
+        </div>
+      </div>
+
+      <div class="level-calc">
+        <div class="calc-header">📊 Level Calculation</div>
+        <div class="calc-formula">
+          Level = floor(Points ÷ <input type="number" value="500" style="width: 80px; padding: 8px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px;">) + 1
+        </div>
+        <p style="font-size: 12px; color: #94a3b8; margin-top: 8px;">
+          Example: 2,050 points ÷ 500 = Level 5
+        </p>
+      </div>
+    </div>
+    <div class="config-footer">
+      <button class="cancel-btn" onclick="closePointRules()">Cancel</button>
+      <button class="save-btn" onclick="savePointRules()">💾 Save Rules</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.config-panel {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease-out;
+}
+
+.config-header {
+  padding: 20px;
+  border-bottom: 2px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.config-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.close-btn {
+  background: #f8fafc;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.config-body {
+  padding: 20px;
+}
+
+.rule-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+.rule-info {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.rule-icon {
+  font-size: 28px;
+}
+
+.rule-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.rule-desc {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.rule-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rule-input input {
+  width: 70px;
+  padding: 10px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.rule-input input:focus {
+  border-color: #8b5cf6;
+  outline: none;
+}
+
+.points-label {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.level-calc {
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.calc-header {
+  font-size: 14px;
+  font-weight: 700;
+  color: #6b21a8;
+  margin-bottom: 12px;
+}
+
+.calc-formula {
+  font-size: 14px;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.config-footer {
+  padding: 16px 20px;
+  border-top: 2px solid #f1f5f9;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.cancel-btn {
+  padding: 12px 20px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Add to sidebar menu */
+#sidebar-menu::after {
+  content: '';
+}
+</style>
+
+<script>
+function openPointRules() {
+  document.getElementById('pointRulesModal').classList.add('active');
+}
+
+function closePointRules(e) {
+  if (!e || e.target === e.currentTarget) {
+    document.getElementById('pointRulesModal').classList.remove('active');
+  }
+}
+
+function savePointRules() {
+  const rules = {
+    lesson: document.getElementById('rule-lesson').value,
+    practice: document.getElementById('rule-practice').value,
+    project: document.getElementById('rule-project').value,
+    help: document.getElementById('rule-help').value,
+    ontime: document.getElementById('rule-ontime').value,
+    perfect: document.getElementById('rule-perfect').value
+  };
+  
+  localStorage.setItem('pointRules', JSON.stringify(rules));
+  alert('✅ Point rules saved!');
+  closePointRules();
+}
+
+// Load saved rules
+const saved = localStorage.getItem('pointRules');
+if (saved) {
+  const rules = JSON.parse(saved);
+  document.getElementById('rule-lesson').value = rules.lesson || 20;
+  document.getElementById('rule-practice').value = rules.practice || 15;
+  document.getElementById('rule-project').value = rules.project || 30;
+  document.getElementById('rule-help').value = rules.help || 10;
+  document.getElementById('rule-ontime').value = rules.ontime || 10;
+  document.getElementById('rule-perfect').value = rules.perfect || 20;
+}
+</script>
