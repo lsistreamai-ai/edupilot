@@ -11,7 +11,6 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
       background: #f0f9ff;
       min-height: 100vh;
-      padding-bottom: 70px;
     }
 
     /* Header */
@@ -20,116 +19,227 @@
       top: 0;
       background: white;
       border-bottom: 2px solid #e2e8f0;
-      z-index: 50;
+      z-index: 100;
     }
 
     .header-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
+      padding: 12px 16px;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    .user-greeting {
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-btn {
+      background: none;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .user-info {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
     .avatar {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 18px;
+      font-size: 16px;
     }
 
-    .greeting-text h2 {
-      font-size: 16px;
+    .user-text h2 {
+      font-size: 14px;
       font-weight: 800;
       color: #1e293b;
     }
 
-    .greeting-text p {
+    .user-text p {
       font-size: 11px;
       color: #64748b;
     }
 
-    .header-actions {
-      display: flex;
-      gap: 8px;
-      position: relative;
-    }
-
     .header-btn {
       background: #f8fafc;
-      border: 2px solid #e2e8f0;
-      width: 40px;
-      height: 40px;
+      border: 1px solid #e2e8f0;
+      width: 36px;
+      height: 36px;
       border-radius: 10px;
-      font-size: 18px;
+      font-size: 16px;
       cursor: pointer;
+    }
+
+    /* Side Menu Overlay */
+    .side-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .side-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Side Menu */
+    .side-menu {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 280px;
+      background: white;
+      z-index: 201;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-out;
+      overflow-y: auto;
+    }
+
+    .side-menu-overlay.active .side-menu {
+      transform: translateX(0);
+    }
+
+    .menu-header {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      padding: 20px 16px;
+    }
+
+    .menu-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .menu-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 24px;
     }
 
-    .settings-dropdown {
+    .menu-user-name {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .menu-user-level {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .menu-close {
       position: absolute;
-      right: 0;
-      top: 48px;
-      background: white;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      width: 160px;
-      display: none;
-      z-index: 100;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .settings-dropdown.show {
-      display: block;
-    }
-
-    .dropdown-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 16px;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 20px;
+      color: white;
       cursor: pointer;
+    }
+
+    /* Menu Sections */
+    .menu-section {
+      padding: 8px 0;
       border-bottom: 1px solid #f1f5f9;
     }
 
-    .dropdown-item:last-child {
+    .menu-section:last-child {
       border-bottom: none;
     }
 
-    .dropdown-item:hover {
+    .menu-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #94a3b8;
+      padding: 8px 20px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      cursor: pointer;
+      color: #475569;
+      transition: background 0.2s;
+    }
+
+    .menu-item:hover {
       background: #f8fafc;
     }
 
-    .dropdown-item.logout {
-      color: #ef4444;
+    .menu-item.active {
+      background: #eff6ff;
+      color: #3b82f6;
+      border-right: 3px solid #3b82f6;
+    }
+
+    .menu-icon {
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+
+    .menu-text {
+      font-size: 15px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .menu-badge {
+      background: #ef4444;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .menu-badge.green {
+      background: #22c55e;
+    }
+
+    .menu-divider {
+      height: 8px;
+      background: #f8fafc;
     }
 
     /* Main Content */
     .main {
       padding: 16px;
+      padding-bottom: 80px;
       max-width: 600px;
       margin: 0 auto;
-    }
-
-    .page-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 16px;
     }
 
     /* Level Card */
@@ -159,13 +269,8 @@
     }
 
     .level-number {
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .level-label {
-      font-size: 12px;
-      opacity: 0.9;
+      font-size: 28px;
+      font-weight: 900;
     }
 
     .points-display {
@@ -203,7 +308,7 @@
     }
 
     /* Quick Actions */
-    .quick-actions {
+    .action-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
@@ -259,22 +364,23 @@
     .subject-card {
       background: white;
       border-radius: 14px;
-      padding: 14px;
+      padding: 12px;
       border: 2px solid #f1f5f9;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 12px;
+      cursor: pointer;
     }
 
     .subject-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .subject-icon.purple { background: #faf5ff; }
@@ -287,7 +393,7 @@
 
     .subject-name {
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 600;
       color: #1e293b;
     }
 
@@ -301,7 +407,7 @@
       color: #94a3b8;
     }
 
-    /* Bottom Nav - Fixed 4 items */
+    /* Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -326,12 +432,12 @@
       flex-direction: column;
       align-items: center;
       gap: 2px;
-      padding: 4px 8px;
+      padding: 4px 10px;
       background: none;
       border: none;
       color: #94a3b8;
       cursor: pointer;
-      min-width: 60px;
+      min-width: 70px;
     }
 
     .nav-item.active { color: #3b82f6; }
@@ -340,37 +446,115 @@
   </style>
 </head>
 <body>
+  <!-- Side Menu Overlay -->
+  <div class="side-menu-overlay" id="sideMenuOverlay" onclick="closeSideMenu()">
+    <div class="side-menu" onclick="event.stopPropagation()">
+      <div class="menu-header">
+        <div class="menu-user">
+          <div class="menu-avatar">👦</div>
+          <div>
+            <div class="menu-user-name">Tommy Tsang</div>
+            <div class="menu-user-level">⭐ Level 9 • 2,050 pts</div>
+          </div>
+        </div>
+        <button class="menu-close" onclick="closeSideMenu()">✕</button>
+      </div>
+
+      <!-- Main Navigation -->
+      <div class="menu-section">
+        <div class="menu-label">Main</div>
+        <div class="menu-item active" onclick="location.href='student-dashboard-full.html'">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-text">Dashboard</span>
+        </div>
+        <div class="menu-item" onclick="location.href='subjects-all.html'">
+          <span class="menu-icon">📚</span>
+          <span class="menu-text">My Subjects</span>
+        </div>
+        <div class="menu-item" onclick="location.href='practice-full.html'">
+          <span class="menu-icon">✏️</span>
+          <span class="menu-text">Practice</span>
+        </div>
+        <div class="menu-item" onclick="location.href='leaderboard-full.html'">
+          <span class="menu-icon">🏆</span>
+          <span class="menu-text">Leaderboard</span>
+        </div>
+      </div>
+
+      <!-- Learning -->
+      <div class="menu-section">
+        <div class="menu-label">Learning</div>
+        <div class="menu-item" onclick="location.href='join-class.html'">
+          <span class="menu-icon">🎒</span>
+          <span class="menu-text">My Classes</span>
+          <span class="menu-badge green">2</span>
+        </div>
+        <div class="menu-item" onclick="location.href='progress.html'">
+          <span class="menu-icon">📊</span>
+          <span class="menu-text">My Progress</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">🏅</span>
+          <span class="menu-text">Badges</span>
+          <span class="menu-badge">3</span>
+        </div>
+      </div>
+
+      <!-- Resources -->
+      <div class="menu-section">
+        <div class="menu-label">Resources</div>
+        <div class="menu-item">
+          <span class="menu-icon">📁</span>
+          <span class="menu-text">My Files</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">🎬</span>
+          <span class="menu-text">Video Tutorials</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">❓</span>
+          <span class="menu-text">Help Center</span>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div class="menu-section">
+        <div class="menu-label">Account</div>
+        <div class="menu-item">
+          <span class="menu-icon">👤</span>
+          <span class="menu-text">Edit Profile</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">⚙️</span>
+          <span class="menu-text">Settings</span>
+        </div>
+        <div class="menu-item" onclick="if(confirm('Logout?')) location.href='index.html'">
+          <span class="menu-icon">🚪</span>
+          <span class="menu-text" style="color: #ef4444;">Logout</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <div class="user-greeting">
-        <div class="avatar">👦</div>
-        <div class="greeting-text">
-          <h2>Hi, Tommy! 👋</h2>
-          <p>Primary 4 • Class A</p>
-        </div>
-      </div>
-      <div class="header-actions">
-        <button class="header-btn" onclick="location.href='join-class.html'">🎒</button>
-        <button class="header-btn" onclick="toggleSettings()">⚙️</button>
-        <div class="settings-dropdown" id="settingsDropdown">
-          <div class="dropdown-item" onclick="editProfile()">
-            <span>👤</span>
-            <span>Edit Profile</span>
-          </div>
-          <div class="dropdown-item logout" onclick="logout()">
-            <span>🚪</span>
-            <span>Logout</span>
+      <div class="header-left">
+        <button class="menu-btn" onclick="openSideMenu()">☰</button>
+        <div class="user-info">
+          <div class="avatar">👦</div>
+          <div class="user-text">
+            <h2>Hi, Tommy! 👋</h2>
+            <p>P4 - Class A</p>
           </div>
         </div>
       </div>
+      <button class="header-btn" onclick="location.href='join-class.html'">🎒</button>
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="main">
-    <h1 class="page-title">Welcome back! 🎉</h1>
-
     <!-- Level Card -->
     <div class="level-card">
       <div class="level-header">
@@ -378,7 +562,6 @@
           <span class="level-icon">⭐</span>
           <div>
             <div class="level-number">Level 9</div>
-            <div class="level-label">Keep learning!</div>
           </div>
         </div>
         <div class="points-display">
@@ -393,7 +576,7 @@
     </div>
 
     <!-- Quick Actions -->
-    <div class="quick-actions">
+    <div class="action-grid">
       <div class="action-card" onclick="location.href='subjects-all.html'">
         <div class="action-icon">📚</div>
         <div class="action-name">Learn</div>
@@ -415,7 +598,7 @@
         <div class="subject-icon purple">🥽</div>
         <div class="subject-info">
           <div class="subject-name">AR/VR Experience</div>
-          <div class="subject-progress">3/6 activities completed</div>
+          <div class="subject-progress">3/6 activities</div>
         </div>
         <span class="subject-arrow">→</span>
       </div>
@@ -424,7 +607,7 @@
         <div class="subject-icon blue">🤖</div>
         <div class="subject-info">
           <div class="subject-name">AI & Technology</div>
-          <div class="subject-progress">5/8 activities completed</div>
+          <div class="subject-progress">5/8 activities</div>
         </div>
         <span class="subject-arrow">→</span>
       </div>
@@ -433,7 +616,7 @@
         <div class="subject-icon green">🎨</div>
         <div class="subject-info">
           <div class="subject-name">Digital Creativity</div>
-          <div class="subject-progress">2/5 activities completed</div>
+          <div class="subject-progress">2/5 activities</div>
         </div>
         <span class="subject-arrow">→</span>
       </div>
@@ -457,7 +640,7 @@
     </div>
   </main>
 
-  <!-- Bottom Nav - Only 4 items -->
+  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-content">
       <button class="nav-item active">
@@ -472,37 +655,44 @@
         <span class="icon">🏆</span>
         <span class="label">Ranks</span>
       </button>
-      <button class="nav-item" onclick="location.href='progress.html'">
-        <span class="icon">📊</span>
-        <span class="label">Me</span>
+      <button class="nav-item" onclick="openSideMenu()">
+        <span class="icon">☰</span>
+        <span class="label">Menu</span>
       </button>
     </div>
   </nav>
 
   <script>
-    function toggleSettings() {
-      const dropdown = document.getElementById('settingsDropdown');
-      dropdown.classList.toggle('show');
+    function openSideMenu() {
+      document.getElementById('sideMenuOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      const dropdown = document.getElementById('settingsDropdown');
-      if (!e.target.closest('.header-actions')) {
-        dropdown.classList.remove('show');
-      }
+    function closeSideMenu() {
+      document.getElementById('sideMenuOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Swipe to open menu
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
     });
 
-    function editProfile() {
-      alert('Edit Profile coming soon!');
-      toggleSettings();
-    }
-
-    function logout() {
-      if (confirm('Are you sure you want to logout?')) {
-        location.href = 'index.html';
+    document.addEventListener('touchend', e => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diff = touchEndX - touchStartX;
+      
+      // Swipe right to open
+      if (diff > 100 && touchStartX < 50) {
+        openSideMenu();
       }
-    }
+      
+      // Swipe left to close
+      if (diff < -100) {
+        closeSideMenu();
+      }
+    });
   </script>
 </body>
 </html>
