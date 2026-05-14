@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Student Dashboard - LSI Learning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
+      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 50%, #faf5ff 100%);
+      min-height: 100vh;
+      padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      z-index: 50;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon { font-size: 28px; }
+
+    .logo-text {
+      font-weight: 800;
+      font-size: 18px;
+      color: #1e293b;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .points-badge {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      padding: 8px 14px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
+    }
+
+    .points-badge span:first-child { font-size: 18px; }
+    .points-badge span:last-child {
+      font-weight: 800;
+      color: #b45309;
+      font-size: 15px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      position: relative;
+      padding: 4px;
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 10px;
+      height: 10px;
+      background: #ef4444;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Welcome Banner */
+    .welcome-banner {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 24px;
+      padding: 28px;
+      color: white;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+
+    .welcome-banner h1 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .welcome-banner p {
+      font-size: 14px;
+      opacity: 0.95;
+      margin-bottom: 18px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat-box {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat-box .value {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .stat-box .label {
+      font-size: 11px;
+      opacity: 0.95;
+      margin-top: 4px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .section-link {
+      font-size: 14px;
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Task Cards */
+    .task-card {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid #f1f5f9;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .task-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+    }
+
+    .task-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    .task-icon.blue { background: linear-gradient(135deg, #93c5fd, #60a5fa); }
+    .task-icon.purple { background: linear-gradient(135deg, #c4b5fd, #a78bfa); }
+    .task-icon.green { background: linear-gradient(135deg, #86efac, #4ade80); }
+    .task-icon.orange { background: linear-gradient(135deg, #fdba74, #fb923c); }
+
+    .task-info { flex: 1; min-width: 0; }
+
+    .task-subject {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .task-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 4px 0;
+    }
+
+    .task-time {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .task-progress {
+      width: 54px;
+      height: 54px;
+      background: #f1f5f9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .task-progress .percent {
+      font-size: 14px;
+      font-weight: 800;
+      color: #3b82f6;
+    }
+
+    .task-progress .label {
+      font-size: 8px;
+      color: #94a3b8;
+    }
+
+    .task-badge {
+      background: #fef3c7;
+      color: #b45309;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    /* Subjects Grid */
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .subject-item {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .subject-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 8px;
+      transition: transform 0.2s;
+    }
+
+    .subject-item:hover .subject-icon {
+      transform: scale(1.1);
+    }
+
+    .subject-icon.blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .subject-icon.purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
+    .subject-icon.green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+    .subject-icon.orange { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+
+    .subject-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    /* Leaderboard */
+    .leaderboard {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid #f1f5f9;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-bottom: 1px solid #f8fafc;
+    }
+
+    .leaderboard-item:last-child { border-bottom: none; }
+
+    .leaderboard-item.gold { background: linear-gradient(135deg, #fffbeb, #fef3c7); }
+    .leaderboard-item.silver { background: linear-gradient(135deg, #f8fafc, #f1f5f9); }
+    .leaderboard-item.bronze { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+    .leaderboard-item.you { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #3b82f6; }
+
+    .rank {
+      width: 32px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 16px;
+      color: #94a3b8;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #c4b5fd, #f0abfc);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .player-info { flex: 1; }
+
+    .player-name {
+      font-weight: 700;
+      color: #1e293b;
+      font-size: 14px;
+    }
+
+    .player-level {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .player-points {
+      font-weight: 800;
+      color: #3b82f6;
+      font-size: 15px;
+    }
+
+    .you-badge {
+      background: #3b82f6;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 8px;
+      margin-left: 8px;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid #f1f5f9;
+      z-index: 50;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    }
+
+    .bottom-nav-content {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: all 0.2s;
+    }
+
+    .nav-item.active { color: #3b82f6; }
+
+    .nav-item .icon { font-size: 22px; }
+    .nav-item .label { font-size: 11px; font-weight: 600; }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <span class="logo-icon">🎓</span>
+        <span class="logo-text">LSI Learning</span>
+      </div>
+      <div class="header-right">
+        <div class="points-badge">
+          <span>⭐</span>
+          <span>2,050</span>
+        </div>
+        <button class="icon-btn" onclick="location.href='index.html'">
+          🔔
+          <span class="notification-dot"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <h1>Good morning, Tommy! 👋</h1>
+      <p>Primary 4 • Ready to learn something amazing?</p>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="value">📚 3</div>
+          <div class="label">Tasks Today</div>
+        </div>
+        <div class="stat-box">
+          <div class="value">🔥 5</div>
+          <div class="label">Day Streak</div>
+        </div>
+        <div class="stat-box">
+          <div class="value">70%</div>
+          <div class="label">Weekly Goal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's Tasks -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">📝 Today's Tasks</h2>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon blue">📐</div>
+        <div class="task-info">
+          <div class="task-subject">Math</div>
+          <div class="task-title">Fractions Quiz</div>
+          <div class="task-time">10 questions • 15 mins</div>
+        </div>
+        <div class="task-progress">
+          <div class="percent">60%</div>
+          <div class="label">done</div>
+        </div>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon purple">📖</div>
+        <div class="task-info">
+          <div class="task-subject">English</div>
+          <div class="task-title">Past Tense Practice</div>
+          <div class="task-time">⏱️ 15 mins • +50 ⭐</div>
+        </div>
+        <span class="task-badge">NEW</span>
+      </div>
+
+      <div class="task-card">
+        <div class="task-icon green">🎨</div>
+        <div class="task-info">
+          <div class="task-subject">Digital Creativity</div>
+          <div class="task-title">Design Your Avatar</div>
+          <div class="task-time">🎨 Creative Activity • +80 ⭐</div>
+        </div>
+        <span class="task-badge">NEW</span>
+      </div>
+    </div>
+
+    <!-- My Subjects -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">📚 My Subjects</h2>
+        <span class="section-link">View All →</span>
+      </div>
+      <div class="subjects-grid">
+        <div class="subject-item">
+          <div class="subject-icon blue">📐</div>
+          <div class="subject-name">Math</div>
+        </div>
+        <div class="subject-item">
+          <div class="subject-icon purple">📖</div>
+          <div class="subject-name">English</div>
+        </div>
+        <div class="subject-item">
+          <div class="subject-icon orange">📝</div>
+          <div class="subject-name">Chinese</div>
+        </div>
+        <div class="subject-item">
+          <div class="subject-icon green">🎨</div>
+          <div class="subject-name">Art</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">🏆 Leaderboard</h2>
+        <span class="section-link">View All →</span>
+      </div>
+      <div class="leaderboard">
+        <div class="leaderboard-item gold">
+          <div class="rank">🥇</div>
+          <div class="avatar">👧</div>
+          <div class="player-info">
+            <div class="player-name">Emily Wong</div>
+            <div class="player-level">Level 12</div>
+          </div>
+          <div class="player-points">⭐ 2,450</div>
+        </div>
+        <div class="leaderboard-item silver">
+          <div class="rank">🥈</div>
+          <div class="avatar">👦</div>
+          <div class="player-info">
+            <div class="player-name">Jason Lee</div>
+            <div class="player-level">Level 11</div>
+          </div>
+          <div class="player-points">⭐ 2,320</div>
+        </div>
+        <div class="leaderboard-item bronze">
+          <div class="rank">🥉</div>
+          <div class="avatar">👧</div>
+          <div class="player-info">
+            <div class="player-name">Sophie Chan</div>
+            <div class="player-level">Level 10</div>
+          </div>
+          <div class="player-points">⭐ 2,180</div>
+        </div>
+        <div class="leaderboard-item you">
+          <div class="rank">4</div>
+          <div class="avatar">👦</div>
+          <div class="player-info">
+            <div class="player-name">Tommy Tsang <span class="you-badge">YOU</span></div>
+            <div class="player-level">Level 9</div>
+          </div>
+          <div class="player-points">⭐ 2,050</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-content">
+      <button class="nav-item active">
+        <span class="icon">🏠</span>
+        <span class="label">Home</span>
+      </button>
+      <button class="nav-item">
+        <span class="icon">📚</span>
+        <span class="label">Subjects</span>
+      </button>
+      <button class="nav-item">
+        <span class="icon">✏️</span>
+        <span class="label">Practice</span>
+      </button>
+      <button class="nav-item">
+        <span class="icon">🏆</span>
+        <span class="label">Leaderboard</span>
+      </button>
+      <button class="nav-item">
+        <span class="icon">👤</span>
+        <span class="label">Profile</span>
+      </button>
+    </div>
+  </nav>
+</body>
+</html>
