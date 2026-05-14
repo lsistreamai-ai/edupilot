@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>My Subjects - LSI Learning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif; background: #f8fafc; min-height: 100vh; padding-bottom: 80px; }
+
+    .header { position: sticky; top: 0; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 50; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; max-width: 600px; margin: 0 auto; }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .back-btn { background: none; border: none; cursor: pointer; font-size: 24px; }
+    .header h1 { font-size: 20px; font-weight: 800; color: #1e293b; }
+
+    .main { padding: 20px; max-width: 600px; margin: 0 auto; }
+
+    .subject-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid #f1f5f9;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .subject-card:hover { border-color: #3b82f6; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1); }
+
+    .subject-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .subject-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+    .subject-icon.blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .subject-icon.purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
+    .subject-icon.green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+    .subject-icon.orange { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+    .subject-icon.pink { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .subject-icon.cyan { background: linear-gradient(135deg, #cffafe, #a5f3fc); }
+
+    .subject-info h3 { font-size: 18px; font-weight: 700; color: #1e293b; }
+    .subject-info p { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+    .progress-bar { height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
+    .progress-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+    .progress-fill.blue { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .progress-fill.purple { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+    .progress-fill.green { background: linear-gradient(90deg, #22c55e, #4ade80); }
+    .progress-fill.orange { background: linear-gradient(90deg, #f97316, #fb923c); }
+
+    .subject-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .stat { text-align: center; }
+    .stat-value { font-size: 18px; font-weight: 800; color: #1e293b; }
+    .stat-label { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+    .topic-list { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f9; }
+    .topic-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
+    .topic-icon { font-size: 18px; }
+    .topic-name { flex: 1; font-size: 14px; color: #475569; }
+    .topic-status { font-size: 20px; }
+
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #f1f5f9; z-index: 50; }
+    .bottom-nav-content { display: flex; justify-content: space-around; padding: 10px 0 max(10px, env(safe-area-inset-bottom)); max-width: 600px; margin: 0 auto; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 20px; background: none; border: none; cursor: pointer; color: #94a3b8; }
+    .nav-item.active { color: #3b82f6; }
+    .nav-item .icon { font-size: 22px; }
+    .nav-item .label { font-size: 11px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <button class="back-btn" onclick="history.back()">←</button>
+        <h1>📚 My Subjects</h1>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="subject-card" onclick="location.href='subject-detail.html'">
+      <div class="subject-header">
+        <div class="subject-icon blue">📐</div>
+        <div class="subject-info">
+          <h3>Math 數學</h3>
+          <p>Primary 4 • TSA</p>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill blue" style="width: 80%"></div>
+      </div>
+      <div class="subject-stats">
+        <div class="stat">
+          <div class="stat-value">80%</div>
+          <div class="stat-label">Complete</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">12</div>
+          <div class="stat-label">Topics</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">450⭐</div>
+          <div class="stat-label">Earned</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon purple">📖</div>
+        <div class="subject-info">
+          <h3>English 英文</h3>
+          <p>Primary 4 • TSA</p>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill purple" style="width: 60%"></div>
+      </div>
+      <div class="subject-stats">
+        <div class="stat">
+          <div class="stat-value">60%</div>
+          <div class="stat-label">Complete</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">10</div>
+          <div class="stat-label">Topics</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">380⭐</div>
+          <div class="stat-label">Earned</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon orange">📝</div>
+        <div class="subject-info">
+          <h3>Chinese 中文</h3>
+          <p>Primary 4 • TSA</p>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill orange" style="width: 50%"></div>
+      </div>
+      <div class="subject-stats">
+        <div class="stat">
+          <div class="stat-value">50%</div>
+          <div class="stat-label">Complete</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">8</div>
+          <div class="stat-label">Topics</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">320⭐</div>
+          <div class="stat-label">Earned</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon green">🔬</div>
+        <div class="subject-info">
+          <h3>Science 科學</h3>
+          <p>Primary 4 • TSA</p>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill green" style="width: 70%"></div>
+      </div>
+      <div class="subject-stats">
+        <div class="stat">
+          <div class="stat-value">70%</div>
+          <div class="stat-label">Complete</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">6</div>
+          <div class="stat-label">Topics</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">280⭐</div>
+          <div class="stat-label">Earned</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon pink">🎨</div>
+        <div class="subject-info">
+          <h3>Digital Creativity</h3>
+          <p>Enrichment • Level 2</p>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: 35%; background: linear-gradient(90deg, #ec4899, #f472b6);"></div>
+      </div>
+      <div class="subject-stats">
+        <div class="stat">
+          <div class="stat-value">35%</div>
+          <div class="stat-label">Complete</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">4</div>
+          <div class="stat-label">Projects</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">150⭐</div>
+          <div class="stat-label">Earned</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon cyan">🤖</div>
+        <div class="subject-info">
+          <h3>AI & Technology</h3>
+          <p>Enrichment • Level 1</p>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: 25%; background: linear-gradient(90deg, #06b6d4, #22d3ee);"></div>
+      </div>
+      <div class="subject-stats">
+        <div class="stat">
+          <div class="stat-value">25%</div>
+          <div class="stat-label">Complete</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Modules</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">120⭐</div>
+          <div class="stat-label">Earned</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-content">
+      <button class="nav-item" onclick="location.href='student-dashboard.html'">
+        <span class="icon">🏠</span>
+        <span class="label">Home</span>
+      </button>
+      <button class="nav-item active">
+        <span class="icon">📚</span>
+        <span class="label">Subjects</span>
+      </button>
+      <button class="nav-item" onclick="location.href='practice.html'">
+        <span class="icon">✏️</span>
+        <span class="label">Practice</span>
+      </button>
+      <button class="nav-item" onclick="location.href='leaderboard.html'">
+        <span class="icon">🏆</span>
+        <span class="label">Leaderboard</span>
+      </button>
+      <button class="nav-item" onclick="location.href='progress.html'">
+        <span class="icon">👤</span>
+        <span class="label">Profile</span>
+      </button>
+    </div>
+  </nav>
+</body>
+</html>

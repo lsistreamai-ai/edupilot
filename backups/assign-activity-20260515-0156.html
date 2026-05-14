@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Assign Activity - LSI Learning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif; background: #f8fafc; min-height: 100vh; }
+
+    .header { position: sticky; top: 0; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 50; }
+    .header-content { display: flex; align-items: center; gap: 12px; padding: 14px 20px; max-width: 600px; margin: 0 auto; }
+    .back-btn { background: none; border: none; font-size: 24px; cursor: pointer; }
+    .header h1 { font-size: 18px; font-weight: 800; color: #1e293b; }
+
+    .main { padding: 20px; max-width: 600px; margin: 0 auto; }
+
+    .form-section { margin-bottom: 24px; }
+    .section-label { font-size: 13px; font-weight: 700; color: #64748b; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .class-select { display: grid; gap: 10px; }
+    .class-option { background: white; border: 2px solid #e2e8f0; border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .class-option.selected { border-color: #7c3aed; background: #faf5ff; }
+    .checkbox { width: 22px; height: 22px; border: 2px solid #cbd5e1; border-radius: 6px; }
+    .checkbox.checked { background: #7c3aed; border-color: #7c3aed; color: white; display: flex; align-items: center; justify-content: center; }
+    .class-name { flex: 1; font-size: 14px; font-weight: 600; color: #1e293b; }
+    .class-count { font-size: 12px; color: #64748b; }
+
+    .activity-types { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .activity-type { background: white; border: 2px solid #f1f5f9; border-radius: 16px; padding: 16px; text-align: center; cursor: pointer; }
+    .activity-type.selected { border-color: #7c3aed; background: #faf5ff; }
+    .activity-icon { font-size: 32px; margin-bottom: 8px; }
+    .activity-name { font-size: 14px; font-weight: 600; color: #1e293b; }
+
+    .form-field { margin-bottom: 18px; }
+    .form-field label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 8px; }
+    .form-field input, .form-field textarea, .form-field select { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; outline: none; }
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: #7c3aed; }
+    .form-field textarea { min-height: 100px; resize: vertical; }
+
+    .points-slider { display: flex; align-items: center; gap: 16px; }
+    .slider { flex: 1; -webkit-appearance: none; height: 8px; background: #e2e8f0; border-radius: 4px; }
+    .slider::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; background: #7c3aed; border-radius: 50%; cursor: pointer; }
+    .points-value { font-size: 20px; font-weight: 800; color: #7c3aed; min-width: 80px; text-align: right; }
+
+    .actions { display: flex; gap: 12px; margin-top: 28px; padding-bottom: 40px; }
+    .cancel-btn { flex: 1; padding: 16px; background: white; border: 2px solid #e2e8f0; border-radius: 14px; font-size: 16px; font-weight: 600; color: #64748b; cursor: pointer; }
+    .submit-btn { flex: 2; padding: 16px; background: linear-gradient(135deg, #7c3aed, #8b5cf6); border: none; border-radius: 14px; color: white; font-size: 16px; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <button class="back-btn" onclick="history.back()">←</button>
+      <h1>🎯 Assign Activity</h1>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="form-section">
+      <div class="section-label">Select Classes</div>
+      <div class="class-select">
+        <div class="class-option selected" onclick="this.classList.toggle('selected')">
+          <div class="checkbox checked">✓</div>
+          <div class="class-name">P4A - Chinese 中文</div>
+          <div class="class-count">18 students</div>
+        </div>
+        <div class="class-option" onclick="this.classList.toggle('selected')">
+          <div class="checkbox"></div>
+          <div class="class-name">P4B - Math 數學</div>
+          <div class="class-count">15 students</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-label">Activity Type</div>
+      <div class="activity-types">
+        <div class="activity-type selected">
+          <div class="activity-icon">🥽</div>
+          <div class="activity-name">AR/VR Experience</div>
+        </div>
+        <div class="activity-type">
+          <div class="activity-icon">🤖</div>
+          <div class="activity-name">AI & Technology</div>
+        </div>
+        <div class="activity-type">
+          <div class="activity-icon">🎨</div>
+          <div class="activity-name">Digital Creativity</div>
+        </div>
+        <div class="activity-type">
+          <div class="activity-icon">🎲</div>
+          <div class="activity-name">3D Design</div>
+        </div>
+        <div class="activity-type">
+          <div class="activity-icon">🌐</div>
+          <div class="activity-name">VR/Metaverse</div>
+        </div>
+        <div class="activity-type">
+          <div class="activity-icon">📝</div>
+          <div class="activity-name">DSE Prep</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-field">
+        <label>Activity Title</label>
+        <input type="text" placeholder="e.g. Solar System Explorer">
+      </div>
+
+      <div class="form-field">
+        <label>Description</label>
+        <textarea placeholder="Describe what students will learn or do..."></textarea>
+      </div>
+
+      <div class="form-field">
+        <label>Subject</label>
+        <select>
+          <option>Select subject...</option>
+          <option>Chinese 中文</option>
+          <option>English 英文</option>
+          <option>Math 數學</option>
+          <option>General Studies 常識</option>
+          <option>Science 科學</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label>Due Date</label>
+        <input type="date">
+      </div>
+
+      <div class="form-field">
+        <label>Points Reward</label>
+        <div class="points-slider">
+          <input type="range" class="slider" min="10" max="200" value="50" oninput="document.getElementById('points').textContent = this.value + ' ⭐'">
+          <div class="points-value" id="points">50 ⭐</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="cancel-btn" onclick="history.back()">Cancel</button>
+      <button class="submit-btn">🎯 Assign Activity</button>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.class-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const checkbox = this.querySelector('.checkbox');
+        checkbox.classList.toggle('checked');
+        if (checkbox.classList.contains('checked')) {
+          checkbox.textContent = '✓';
+        } else {
+          checkbox.textContent = '';
+        }
+      });
+    });
+
+    document.querySelectorAll('.activity-type').forEach(type => {
+      type.addEventListener('click', function() {
+        document.querySelectorAll('.activity-type').forEach(t => t.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>

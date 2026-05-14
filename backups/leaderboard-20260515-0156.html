@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Leaderboard - LSI Learning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif; background: #f8fafc; min-height: 100vh; padding-bottom: 80px; }
+
+    .header { position: sticky; top: 0; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 50; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; max-width: 600px; margin: 0 auto; }
+    .header h1 { font-size: 20px; font-weight: 800; color: #1e293b; }
+
+    .main { padding: 20px; max-width: 600px; margin: 0 auto; }
+
+    .time-filter { display: flex; gap: 8px; margin-bottom: 24px; }
+    .time-btn { flex: 1; padding: 12px; border: 2px solid #e2e8f0; background: white; border-radius: 12px; font-size: 14px; font-weight: 600; color: #64748b; cursor: pointer; transition: all 0.2s; }
+    .time-btn.active { border-color: #3b82f6; background: #eff6ff; color: #3b82f6; }
+
+    .top-three { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+    .top-card { background: white; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 16px; position: relative; overflow: hidden; }
+    .top-card.gold { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 2px solid #fcd34d; }
+    .top-card.silver { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 2px solid #cbd5e1; }
+    .top-card.bronze { background: linear-gradient(135deg, #fff7ed, #ffedd5); border: 2px solid #fdba74; }
+
+    .rank-medal { font-size: 36px; flex-shrink: 0; width: 50px; text-align: center; }
+    .top-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #c4b5fd, #a78bfa); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+    .top-info { flex: 1; }
+    .top-name { font-size: 18px; font-weight: 800; color: #1e293b; }
+    .top-level { font-size: 13px; color: #64748b; margin-top: 2px; }
+    .top-points { font-size: 20px; font-weight: 800; color: #f59e0b; }
+
+    .leaderboard-list { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #f1f5f9; }
+    .leaderboard-item { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid #f8fafc; }
+    .leaderboard-item:last-child { border-bottom: none; }
+    .leaderboard-item.you { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-left: 4px solid #3b82f6; }
+
+    .rank { width: 28px; text-align: center; font-weight: 800; font-size: 16px; color: #94a3b8; }
+    .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #c4b5fd, #f0abfc); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .player-info { flex: 1; }
+    .player-name { font-weight: 700; color: #1e293b; font-size: 14px; }
+    .player-level { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .player-points { font-weight: 800; color: #3b82f6; font-size: 15px; }
+    .you-badge { background: #3b82f6; color: white; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; margin-left: 8px; }
+
+    .badges-section { margin-top: 28px; }
+    .section-title { font-size: 17px; font-weight: 800; color: #1e293b; margin-bottom: 14px; }
+    .badges-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .badge-item { text-align: center; }
+    .badge-icon { width: 56px; height: 56px; background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 6px; }
+    .badge-name { font-size: 10px; color: #64748b; font-weight: 600; }
+
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #f1f5f9; z-index: 50; }
+    .bottom-nav-content { display: flex; justify-content: space-around; padding: 10px 0 max(10px, env(safe-area-inset-bottom)); max-width: 600px; margin: 0 auto; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 20px; background: none; border: none; cursor: pointer; color: #94a3b8; }
+    .nav-item.active { color: #3b82f6; }
+    .nav-item .icon { font-size: 22px; }
+    .nav-item .label { font-size: 11px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1>🏆 Leaderboard</h1>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="time-filter">
+      <button class="time-btn active">This Week</button>
+      <button class="time-btn">This Month</button>
+      <button class="time-btn">All Time</button>
+    </div>
+
+    <div class="top-three">
+      <div class="top-card gold">
+        <div class="rank-medal">🥇</div>
+        <div class="top-avatar">👧</div>
+        <div class="top-info">
+          <div class="top-name">Emily Wong</div>
+          <div class="top-level">Level 12 • Learning Champion</div>
+        </div>
+        <div class="top-points">⭐ 2,450</div>
+      </div>
+
+      <div class="top-card silver">
+        <div class="rank-medal">🥈</div>
+        <div class="top-avatar">👦</div>
+        <div class="top-info">
+          <div class="top-name">Jason Lee</div>
+          <div class="top-level">Level 11 • Quiz Master</div>
+        </div>
+        <div class="top-points">⭐ 2,320</div>
+      </div>
+
+      <div class="top-card bronze">
+        <div class="rank-medal">🥉</div>
+        <div class="top-avatar">👧</div>
+        <div class="top-info">
+          <div class="top-name">Sophie Chan</div>
+          <div class="top-level">Level 10 • Quick Learner</div>
+        </div>
+        <div class="top-points">⭐ 2,180</div>
+      </div>
+    </div>
+
+    <div class="leaderboard-list">
+      <div class="leaderboard-item you">
+        <div class="rank">4</div>
+        <div class="avatar">👦</div>
+        <div class="player-info">
+          <div class="player-name">Tommy Tsang <span class="you-badge">YOU</span></div>
+          <div class="player-level">Level 9 • Rising Star</div>
+        </div>
+        <div class="player-points">⭐ 2,050</div>
+      </div>
+
+      <div class="leaderboard-item">
+        <div class="rank">5</div>
+        <div class="avatar">👧</div>
+        <div class="player-info">
+          <div class="player-name">Chloe Lam</div>
+          <div class="player-level">Level 8 • Practice Pro</div>
+        </div>
+        <div class="player-points">⭐ 1,890</div>
+      </div>
+
+      <div class="leaderboard-item">
+        <div class="rank">6</div>
+        <div class="avatar">👦</div>
+        <div class="player-info">
+          <div class="player-name">Ryan Cheung</div>
+          <div class="player-level">Level 8</div>
+        </div>
+        <div class="player-points">⭐ 1,750</div>
+      </div>
+
+      <div class="leaderboard-item">
+        <div class="rank">7</div>
+        <div class="avatar">👧</div>
+        <div class="player-info">
+          <div class="player-name">Amy Liu</div>
+          <div class="player-level">Level 7</div>
+        </div>
+        <div class="player-points">⭐ 1,620</div>
+      </div>
+
+      <div class="leaderboard-item">
+        <div class="rank">8</div>
+        <div class="avatar">👦</div>
+        <div class="player-info">
+          <div class="player-name">David Wong</div>
+          <div class="player-level">Level 7</div>
+        </div>
+        <div class="player-points">⭐ 1,580</div>
+      </div>
+    </div>
+
+    <div class="badges-section">
+      <h2 class="section-title">🎖️ Badges Earned This Week</h2>
+      <div class="badges-grid">
+        <div class="badge-item">
+          <div class="badge-icon">🏅</div>
+          <div class="badge-name">Quiz Master</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">🔥</div>
+          <div class="badge-name">7-Day Streak</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">🎯</div>
+          <div class="badge-name">Perfect Score</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">📚</div>
+          <div class="badge-name">Bookworm</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-content">
+      <button class="nav-item" onclick="location.href='student-dashboard.html'">
+        <span class="icon">🏠</span>
+        <span class="label">Home</span>
+      </button>
+      <button class="nav-item" onclick="location.href='subjects.html'">
+        <span class="icon">📚</span>
+        <span class="label">Subjects</span>
+      </button>
+      <button class="nav-item" onclick="location.href='practice.html'">
+        <span class="icon">✏️</span>
+        <span class="label">Practice</span>
+      </button>
+      <button class="nav-item active">
+        <span class="icon">🏆</span>
+        <span class="label">Leaderboard</span>
+      </button>
+      <button class="nav-item" onclick="location.href='progress.html'">
+        <span class="icon">👤</span>
+        <span class="label">Profile</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    document.querySelectorAll('.time-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
