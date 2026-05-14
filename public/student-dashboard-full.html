@@ -13,10 +13,12 @@
       min-height: 100vh;
     }
 
-    /* Header */
+    /* Header - FIXED AT TOP */
     .header {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       background: white;
       border-bottom: 2px solid #e2e8f0;
       z-index: 100;
@@ -229,17 +231,58 @@
       background: #22c55e;
     }
 
-    .menu-divider {
-      height: 8px;
-      background: #f8fafc;
+    /* TOP FIXED SECTION - Student & Portal */
+    .top-section {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      z-index: 90;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    /* Main Content */
+    /* Quick Portal Buttons */
+    .portal-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 16px;
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    }
+
+    .portal-btn {
+      background: white;
+      border: 2px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .portal-btn:hover {
+      border-color: #3b82f6;
+    }
+
+    .portal-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .portal-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    /* Main Content - SCROLLS BELOW */
     .main {
+      margin-top: 180px;
       padding: 16px;
       padding-bottom: 80px;
       max-width: 600px;
-      margin: 0 auto;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* Level Card */
@@ -493,7 +536,7 @@
           <span class="menu-icon">📊</span>
           <span class="menu-text">My Progress</span>
         </div>
-        <div class="menu-item" onclick="location.href='edit-profile.html'">
+        <div class="menu-item">
           <span class="menu-icon">🏅</span>
           <span class="menu-text">Badges</span>
           <span class="menu-badge">3</span>
@@ -503,15 +546,15 @@
       <!-- Resources -->
       <div class="menu-section">
         <div class="menu-label">Resources</div>
-        <div class="menu-item" onclick="location.href='edit-profile.html'">
+        <div class="menu-item">
           <span class="menu-icon">📁</span>
           <span class="menu-text">My Files</span>
         </div>
-        <div class="menu-item" onclick="location.href='edit-profile.html'">
+        <div class="menu-item">
           <span class="menu-icon">🎬</span>
           <span class="menu-text">Video Tutorials</span>
         </div>
-        <div class="menu-item" onclick="location.href='edit-profile.html'">
+        <div class="menu-item">
           <span class="menu-icon">❓</span>
           <span class="menu-text">Help Center</span>
         </div>
@@ -524,7 +567,7 @@
           <span class="menu-icon">👤</span>
           <span class="menu-text">Edit Profile</span>
         </div>
-        <div class="menu-item" onclick="location.href='edit-profile.html'">
+        <div class="menu-item">
           <span class="menu-icon">⚙️</span>
           <span class="menu-text">Settings</span>
         </div>
@@ -536,7 +579,7 @@
     </div>
   </div>
 
-  <!-- Header -->
+  <!-- Header - FIXED -->
   <header class="header">
     <div class="header-content">
       <div class="header-left">
@@ -553,7 +596,21 @@
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- TOP FIXED - Student & Portal -->
+  <div class="top-section">
+    <div class="portal-row">
+      <div class="portal-btn" onclick="location.href='subjects-all.html'">
+        <div class="portal-icon">📚</div>
+        <div class="portal-name">Student Portal</div>
+      </div>
+      <div class="portal-btn" onclick="location.href='leaderboard-full.html'">
+        <div class="portal-icon">🏆</div>
+        <div class="portal-name">Leaderboard</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content - SCROLLS -->
   <main class="main">
     <!-- Level Card -->
     <div class="level-card">
