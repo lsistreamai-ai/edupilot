@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Practice Area - LSI Learning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif; background: #f8fafc; min-height: 100vh; padding-bottom: 80px; }
+
+    .header { position: sticky; top: 0; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 50; }
+    .header-content { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; max-width: 600px; margin: 0 auto; }
+    .header h1 { font-size: 20px; font-weight: 800; color: #1e293b; }
+
+    .main { padding: 20px; max-width: 600px; margin: 0 auto; }
+
+    .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px; }
+    .filter-tab { padding: 10px 18px; border-radius: 20px; background: white; border: 1px solid #e2e8f0; font-size: 13px; font-weight: 600; color: #64748b; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+    .filter-tab.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+
+    .section-title { font-size: 17px; font-weight: 800; color: #1e293b; margin-bottom: 14px; }
+
+    .practice-card {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid #f1f5f9;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .practice-card:hover { border-color: #3b82f6; transform: translateY(-2px); box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1); }
+
+    .practice-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+    .practice-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .practice-icon.blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .practice-icon.purple { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
+    .practice-icon.green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+    .practice-icon.orange { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+    .practice-icon.pink { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+
+    .practice-info { flex: 1; }
+    .practice-subject { font-size: 11px; color: #94a3b8; font-weight: 600; text-transform: uppercase; }
+    .practice-title { font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 2px; }
+
+    .practice-meta { display: flex; gap: 16px; margin-bottom: 12px; }
+    .meta-item { font-size: 12px; color: #64748b; display: flex; align-items: center; gap: 4px; }
+
+    .practice-footer { display: flex; justify-content: space-between; align-items: center; }
+    .practice-points { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; color: #f59e0b; }
+    .start-btn { padding: 10px 20px; background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+    .completed-section { margin-top: 28px; }
+    .completed-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+    .completed-icon { font-size: 24px; }
+    .completed-info { flex: 1; }
+    .completed-title { font-size: 14px; font-weight: 600; color: #1e293b; }
+    .completed-score { font-size: 12px; color: #22c55e; font-weight: 600; }
+
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #f1f5f9; z-index: 50; }
+    .bottom-nav-content { display: flex; justify-content: space-around; padding: 10px 0 max(10px, env(safe-area-inset-bottom)); max-width: 600px; margin: 0 auto; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 20px; background: none; border: none; cursor: pointer; color: #94a3b8; }
+    .nav-item.active { color: #3b82f6; }
+    .nav-item .icon { font-size: 22px; }
+    .nav-item .label { font-size: 11px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1>✏️ Practice Area</h1>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="filter-tabs">
+      <div class="filter-tab active">All</div>
+      <div class="filter-tab">📐 Math</div>
+      <div class="filter-tab">📖 English</div>
+      <div class="filter-tab">📝 Chinese</div>
+      <div class="filter-tab">🤖 AI & Tech</div>
+      <div class="filter-tab">🎨 Creative</div>
+    </div>
+
+    <h2 class="section-title">🎯 Available Practice</h2>
+
+    <div class="practice-card">
+      <div class="practice-header">
+        <div class="practice-icon blue">📐</div>
+        <div class="practice-info">
+          <div class="practice-subject">Math</div>
+          <div class="practice-title">Fractions Quiz</div>
+        </div>
+      </div>
+      <div class="practice-meta">
+        <span class="meta-item">📝 10 questions</span>
+        <span class="meta-item">⏱️ 15 mins</span>
+      </div>
+      <div class="practice-footer">
+        <div class="practice-points">⭐ +50 points</div>
+        <button class="start-btn">Start →</button>
+      </div>
+    </div>
+
+    <div class="practice-card">
+      <div class="practice-header">
+        <div class="practice-icon orange">📝</div>
+        <div class="practice-info">
+          <div class="practice-subject">Chinese</div>
+          <div class="practice-title">閱讀理解練習</div>
+        </div>
+      </div>
+      <div class="practice-meta">
+        <span class="meta-item">📄 5 passages</span>
+        <span class="meta-item">⏱️ 20 mins</span>
+      </div>
+      <div class="practice-footer">
+        <div class="practice-points">⭐ +80 points</div>
+        <button class="start-btn">Start →</button>
+      </div>
+    </div>
+
+    <div class="practice-card">
+      <div class="practice-header">
+        <div class="practice-icon purple">📖</div>
+        <div class="practice-info">
+          <div class="practice-subject">English</div>
+          <div class="practice-title">Past Tense Practice</div>
+        </div>
+      </div>
+      <div class="practice-meta">
+        <span class="meta-item">📝 15 questions</span>
+        <span class="meta-item">⏱️ 10 mins</span>
+      </div>
+      <div class="practice-footer">
+        <div class="practice-points">⭐ +40 points</div>
+        <button class="start-btn">Start →</button>
+      </div>
+    </div>
+
+    <div class="practice-card">
+      <div class="practice-header">
+        <div class="practice-icon pink">🎨</div>
+        <div class="practice-info">
+          <div class="practice-subject">Digital Creativity</div>
+          <div class="practice-title">Design Your Avatar</div>
+        </div>
+      </div>
+      <div class="practice-meta">
+        <span class="meta-item">🎨 Creative project</span>
+        <span class="meta-item">⏱️ 30 mins</span>
+      </div>
+      <div class="practice-footer">
+        <div class="practice-points">⭐ +100 points</div>
+        <button class="start-btn">Start →</button>
+      </div>
+    </div>
+
+    <div class="practice-card">
+      <div class="practice-header">
+        <div class="practice-icon green">🥽</div>
+        <div class="practice-info">
+          <div class="practice-subject">AR/VR Experience</div>
+          <div class="practice-title">Solar System Explorer</div>
+        </div>
+      </div>
+      <div class="practice-meta">
+        <span class="meta-item">🥽 AR activity</span>
+        <span class="meta-item">⏱️ 15 mins</span>
+      </div>
+      <div class="practice-footer">
+        <div class="practice-points">⭐ +120 points</div>
+        <button class="start-btn">Start →</button>
+      </div>
+    </div>
+
+    <div class="completed-section">
+      <h2 class="section-title">✅ Completed Today</h2>
+
+      <div class="completed-card">
+        <div class="completed-icon">✅</div>
+        <div class="completed-info">
+          <div class="completed-title">Multiplication Tables Quiz</div>
+          <div class="completed-score">Score: 100% • +50 ⭐</div>
+        </div>
+      </div>
+
+      <div class="completed-card">
+        <div class="completed-icon">✅</div>
+        <div class="completed-info">
+          <div class="completed-title">Vocabulary Flash Cards</div>
+          <div class="completed-score">Score: 95% • +35 ⭐</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <div class="bottom-nav-content">
+      <button class="nav-item" onclick="location.href='student-dashboard.html'">
+        <span class="icon">🏠</span>
+        <span class="label">Home</span>
+      </button>
+      <button class="nav-item" onclick="location.href='subjects.html'">
+        <span class="icon">📚</span>
+        <span class="label">Subjects</span>
+      </button>
+      <button class="nav-item active">
+        <span class="icon">✏️</span>
+        <span class="label">Practice</span>
+      </button>
+      <button class="nav-item" onclick="location.href='leaderboard.html'">
+        <span class="icon">🏆</span>
+        <span class="label">Leaderboard</span>
+      </button>
+      <button class="nav-item" onclick="location.href='progress.html'">
+        <span class="icon">👤</span>
+        <span class="label">Profile</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
