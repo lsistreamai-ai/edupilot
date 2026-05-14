@@ -11,7 +11,6 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
       background: #faf5ff;
       min-height: 100vh;
-      padding-bottom: 70px;
     }
 
     /* Header */
@@ -20,7 +19,7 @@
       top: 0;
       background: linear-gradient(135deg, #8b5cf6, #7c3aed);
       color: white;
-      z-index: 50;
+      z-index: 100;
     }
 
     .header-content {
@@ -38,31 +37,17 @@
       gap: 12px;
     }
 
-    .logo {
-      width: 36px;
-      height: 36px;
-      background: white;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
+    .menu-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 26px;
+      cursor: pointer;
     }
 
-    .header-title h1 {
-      font-size: 18px;
+    .header h1 {
+      font-size: 20px;
       font-weight: 800;
-    }
-
-    .header-title p {
-      font-size: 11px;
-      opacity: 0.9;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 8px;
-      position: relative;
     }
 
     .header-btn {
@@ -76,44 +61,15 @@
       color: white;
     }
 
-    .settings-dropdown {
-      position: absolute;
-      right: 0;
-      top: 46px;
-      background: white;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      width: 160px;
-      display: none;
-      z-index: 100;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
-
-    .settings-dropdown.show { display: block; }
-
-    .dropdown-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      cursor: pointer;
-      border-bottom: 1px solid #f1f5f9;
-      color: #1e293b;
-      font-size: 14px;
-    }
-
-    .dropdown-item:last-child { border-bottom: none; }
-    .dropdown-item:hover { background: #f8fafc; }
-    .dropdown-item.logout { color: #ef4444; }
-
     /* Main Content */
     .main {
       padding: 16px;
+      padding-bottom: 80px;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    /* Greeting */
+    /* Greeting Card */
     .greeting-card {
       background: white;
       border-radius: 20px;
@@ -134,12 +90,13 @@
       color: #64748b;
     }
 
-    /* Quick Stats */
+    /* Quick Stats Row */
     .stats-row {
       display: flex;
       gap: 10px;
       margin-bottom: 16px;
       overflow-x: auto;
+      padding-bottom: 4px;
     }
 
     .stat-card {
@@ -149,7 +106,7 @@
       padding: 14px;
       border: 2px solid #f1f5f9;
       text-align: center;
-      min-width: 90px;
+      min-width: 85px;
     }
 
     .stat-value {
@@ -189,51 +146,39 @@
       text-decoration: none;
     }
 
-    /* Action Cards */
+    /* Action Grid */
     .action-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
       margin-bottom: 16px;
     }
 
     .action-card {
       background: white;
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: 14px;
+      padding: 14px 10px;
       border: 2px solid #f1f5f9;
+      text-align: center;
       cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .action-card:hover {
-      border-color: #8b5cf6;
-      transform: translateY(-1px);
     }
 
     .action-icon {
-      font-size: 28px;
-      margin-bottom: 8px;
+      font-size: 26px;
+      margin-bottom: 6px;
     }
 
     .action-name {
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 600;
       color: #1e293b;
     }
 
-    .action-count {
-      font-size: 11px;
-      color: #64748b;
-      margin-top: 2px;
-    }
-
-    /* Sub Links (Right Side Sections) */
+    /* Sub Section */
     .sub-section {
       background: white;
       border-radius: 16px;
       border: 2px solid #f1f5f9;
-      margin-bottom: 12px;
       overflow: hidden;
     }
 
@@ -269,6 +214,8 @@
     .sub-icon.green { background: #f0fdf4; }
     .sub-icon.orange { background: #fff7ed; }
     .sub-icon.pink { background: #fce7f3; }
+    .sub-icon.red { background: #fef2f2; }
+    .sub-icon.teal { background: #f0fdfa; }
 
     .sub-content {
       flex: 1;
@@ -304,8 +251,8 @@
       background: #22c55e;
     }
 
-    /* Teaching Resources Section */
-    .resources-grid {
+    /* Resource Grid */
+    .resource-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
@@ -376,35 +323,6 @@
     .nav-item.active { color: #8b5cf6; }
     .nav-item .icon { font-size: 22px; }
     .nav-item .label { font-size: 10px; font-weight: 600; }
-
-    /* Quick Actions Row */
-    .quick-actions {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .quick-btn {
-      flex: 1;
-      padding: 12px;
-      background: white;
-      border: 2px solid #f1f5f9;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      color: #1e293b;
-    }
-
-    .quick-btn.primary {
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-      color: white;
-      border: none;
-    }
   </style>
 </head>
 <body>
@@ -412,30 +330,10 @@
   <header class="header">
     <div class="header-content">
       <div class="header-left">
-        <div class="logo">🎓</div>
-        <div class="header-title">
-          <h1>Dashboard</h1>
-          <p>LSI Learning Academy</p>
-        </div>
+        <button class="menu-btn" onclick="history.back()">←</button>
+        <h1>📊 Teacher Dashboard</h1>
       </div>
-      <div class="header-actions">
-        <button class="header-btn" onclick="location.href='create-class.html'">➕</button>
-        <button class="header-btn" onclick="toggleSettings()">⚙️</button>
-        <div class="settings-dropdown" id="settingsDropdown">
-          <div class="dropdown-item" onclick="alert('Profile editor coming soon!')">
-            <span>👤</span>
-            <span>Edit Profile</span>
-          </div>
-          <div class="dropdown-item" onclick="location.href='admin.html'">
-            <span>🔧</span>
-            <span>Admin Panel</span>
-          </div>
-          <div class="dropdown-item logout" onclick="if(confirm('Logout?')) location.href='index.html'">
-            <span>🚪</span>
-            <span>Logout</span>
-          </div>
-        </div>
-      </div>
+      <button class="header-btn" onclick="location.href='create-class.html'">➕</button>
     </div>
   </header>
 
@@ -467,19 +365,27 @@
       </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-      <button class="quick-btn primary" onclick="location.href='create-class.html'">
-        <span>🏫</span>
-        <span>Create Class</span>
-      </button>
-      <button class="quick-btn" onclick="location.href='assign-activity.html'">
-        <span>📝</span>
-        <span>Assign</span>
-      </button>
+    <!-- Quick Actions Grid -->
+    <div class="action-grid">
+      <div class="action-card" onclick="location.href='create-class.html'">
+        <div class="action-icon">🏫</div>
+        <div class="action-name">Create Class</div>
+      </div>
+      <div class="action-card" onclick="location.href='assign-activity.html'">
+        <div class="action-icon">📝</div>
+        <div class="action-name">Assign</div>
+      </div>
+      <div class="action-card" onclick="location.href='subjects-all.html'">
+        <div class="action-icon">📚</div>
+        <div class="action-name">Content</div>
+      </div>
+      <div class="action-card" onclick="location.href='admin.html'">
+        <div class="action-icon">⚙️</div>
+        <div class="action-name">Admin</div>
+      </div>
     </div>
 
-    <!-- My Classes Section -->
+    <!-- SECTION 1: My Classes -->
     <div class="section">
       <div class="section-header">
         <h2 class="section-title">📚 My Classes</h2>
@@ -491,7 +397,7 @@
           <div class="sub-icon purple">📖</div>
           <div class="sub-content">
             <div class="sub-name">Primary 4 - Class A</div>
-            <div class="sub-meta">24 students • P4CLS21</div>
+            <div class="sub-meta">24 students • P4CS21</div>
           </div>
           <span class="sub-badge green">Active</span>
         </div>
@@ -500,47 +406,14 @@
           <div class="sub-icon blue">📖</div>
           <div class="sub-content">
             <div class="sub-name">Primary 4 - Class B</div>
-            <div class="sub-meta">18 students • P4CLS22</div>
+            <div class="sub-meta">18 students • P4CS22</div>
           </div>
           <span class="sub-badge green">Active</span>
         </div>
       </div>
     </div>
 
-    <!-- Teaching Resources Section -->
-    <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">🎯 Teaching Resources</h2>
-      </div>
-      
-      <div class="resources-grid">
-        <div class="resource-card" onclick="location.href='subjects-all.html'">
-          <div class="resource-icon">📚</div>
-          <div class="resource-name">Lesson Plans</div>
-          <div class="resource-count">12 available</div>
-        </div>
-        
-        <div class="resource-card" onclick="location.href='practice-full.html'">
-          <div class="resource-icon">✏️</div>
-          <div class="resource-name">Practice Sets</div>
-          <div class="resource-count">24 ready</div>
-        </div>
-        
-        <div class="resource-card">
-          <div class="resource-icon">📝</div>
-          <div class="resource-name">Templates</div>
-          <div class="resource-count">8 templates</div>
-        </div>
-        
-        <div class="resource-card">
-          <div class="resource-icon">🎬</div>
-          <div class="resource-name">Video Guides</div>
-          <div class="resource-count">6 videos</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Student Work Section -->
+    <!-- SECTION 2: Student Work -->
     <div class="section">
       <div class="section-header">
         <h2 class="section-title">📝 Student Work</h2>
@@ -576,7 +449,40 @@
       </div>
     </div>
 
-    <!-- Attendance Section -->
+    <!-- SECTION 3: Teaching Resources -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">🎯 Teaching Resources</h2>
+      </div>
+      
+      <div class="resource-grid">
+        <div class="resource-card" onclick="location.href='subjects-all.html'">
+          <div class="resource-icon">📚</div>
+          <div class="resource-name">Lesson Plans</div>
+          <div class="resource-count">12 available</div>
+        </div>
+        
+        <div class="resource-card" onclick="location.href='practice-full.html'">
+          <div class="resource-icon">✏️</div>
+          <div class="resource-name">Practice Sets</div>
+          <div class="resource-count">24 ready</div>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">📝</div>
+          <div class="resource-name">Templates</div>
+          <div class="resource-count">8 templates</div>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">🎬</div>
+          <div class="resource-name">Video Guides</div>
+          <div class="resource-count">6 videos</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: Today's Schedule -->
     <div class="section">
       <div class="section-header">
         <h2 class="section-title">📅 Today's Schedule</h2>
@@ -596,6 +502,80 @@
           <div class="sub-content">
             <div class="sub-name">P4-B: AI Practice</div>
             <div class="sub-meta">11:00 AM - 12:00 PM</div>
+          </div>
+        </div>
+        
+        <div class="sub-item">
+          <div class="sub-icon teal">🕒</div>
+          <div class="sub-content">
+            <div class="sub-name">Staff Meeting</div>
+            <div class="sub-meta">3:00 PM - 4:00 PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Quick Links -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">🔗 Quick Links</h2>
+      </div>
+      
+      <div class="sub-section">
+        <div class="sub-item">
+          <div class="sub-icon blue">📊</div>
+          <div class="sub-content">
+            <div class="sub-name">Analytics Dashboard</div>
+            <div class="sub-meta">View student progress reports</div>
+          </div>
+        </div>
+        
+        <div class="sub-item">
+          <div class="sub-icon green">📈</div>
+          <div class="sub-content">
+            <div class="sub-name">Performance Reports</div>
+            <div class="sub-meta">Class performance insights</div>
+          </div>
+        </div>
+        
+        <div class="sub-item">
+          <div class="sub-icon orange">🏆</div>
+          <div class="sub-content">
+            <div class="sub-name">Class Leaderboards</div>
+            <div class="sub-meta">Student rankings</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: Settings -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">⚙️ Settings</h2>
+      </div>
+      
+      <div class="sub-section">
+        <div class="sub-item" onclick="location.href='edit-profile.html'">
+          <div class="sub-icon purple">👤</div>
+          <div class="sub-content">
+            <div class="sub-name">Edit Profile</div>
+            <div class="sub-meta">Update your information</div>
+          </div>
+        </div>
+        
+        <div class="sub-item">
+          <div class="sub-icon blue">🔔</div>
+          <div class="sub-content">
+            <div class="sub-name">Notifications</div>
+            <div class="sub-meta">Manage alerts</div>
+          </div>
+        </div>
+        
+        <div class="sub-item">
+          <div class="sub-icon red">🚪</div>
+          <div class="sub-content">
+            <div class="sub-name" style="color: #ef4444;">Logout</div>
+            <div class="sub-meta">Sign out of your account</div>
           </div>
         </div>
       </div>
@@ -619,24 +599,9 @@
       </button>
       <button class="nav-item" onclick="location.href='admin.html'">
         <span class="icon">⚙️</span>
-        <span class="label">Settings</span>
+        <span class="label">Admin</span>
       </button>
     </div>
   </nav>
-
-  <script>
-    function toggleSettings() {
-      const dropdown = document.getElementById('settingsDropdown');
-      dropdown.classList.toggle('show');
-    }
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      const dropdown = document.getElementById('settingsDropdown');
-      if (!e.target.closest('.header-actions')) {
-        dropdown.classList.remove('show');
-      }
-    });
-  </script>
 </body>
 </html>
