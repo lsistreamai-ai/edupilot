@@ -225,28 +225,28 @@
       <div class="welcome-sub" data-en="Let's get you started" data-zh="讓我們開始吧">Let's get you started</div>
     </div>
 
-    <!-- Step 1: Join Class -->
-    <div class="setup-card">
-      <div class="setup-header">
-        <div class="setup-icon">🎒</div>
-        <div>
-          <div class="setup-title" data-en="Step 1: Join a Class" data-zh="步驟 1: 加入班級">Step 1: Join a Class</div>
-        </div>
-      </div>
-      <div class="setup-desc" data-en="Enter your class code from your teacher to join your class and see your subjects." data-zh="輸入老師提供的班級代碼，加入班級並查看你的科目。">Enter your class code from your teacher to join your class and see your subjects.</div>
-      <button class="setup-btn" data-en="Join Class" data-zh="加入班級" onclick="location.href='join-class.html'">Join Class</button>
-    </div>
-
-    <!-- Step 2: Set Profile -->
+    <!-- Step 1: Edit Profile -->
     <div class="setup-card">
       <div class="setup-header">
         <div class="setup-icon">👤</div>
         <div>
-          <div class="setup-title" data-en="Step 2: Your Profile" data-zh="步驟 2: 你的資料">Step 2: Your Profile</div>
+          <div class="setup-title" data-en="Step 1: Your Profile" data-zh="步驟 1: 你的資料">Step 1: Your Profile</div>
         </div>
       </div>
       <div class="setup-desc" data-en="Set your name and choose your avatar. Your teacher and classmates will see this." data-zh="設定你的名稱並選擇頭像。老師和同學會看到這個。">Set your name and choose your avatar. Your teacher and classmates will see this.</div>
-      <button class="setup-btn" data-en="Edit Profile" data-zh="編輯資料" onclick="location.href='settings.html'">Edit Profile</button>
+      <button class="setup-btn" data-en="Edit Profile" data-zh="編輯資料" onclick="location.href='edit-profile.html'">Edit Profile</button>
+    </div>
+
+    <!-- Step 2: Join Class -->
+    <div class="setup-card">
+      <div class="setup-header">
+        <div class="setup-icon">🎒</div>
+        <div>
+          <div class="setup-title" data-en="Step 2: Join a Class" data-zh="步驟 2: 加入班級">Step 2: Join a Class</div>
+        </div>
+      </div>
+      <div class="setup-desc" data-en="Enter your class code from your teacher to join your class and see your subjects." data-zh="輸入老師提供的班級代碼，加入班級並查看你的科目。">Enter your class code from your teacher to join your class and see your subjects.</div>
+      <button class="setup-btn" data-en="Join Class" data-zh="加入班級" onclick="location.href='join-class.html'">Join Class</button>
     </div>
 
     <!-- Empty States -->
@@ -292,9 +292,7 @@
     function setLang(lang) {
       currentLang = lang;
       
-      document.querySelectorAll('.lang-btn').forEach(b => {
-        b.classList.remove('active');
-      });
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
       if (lang === 'en') {
         document.querySelector('.lang-btn:first-child').classList.add('active');
       } else {
