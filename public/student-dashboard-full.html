@@ -27,25 +27,6 @@
       align-items: center;
       justify-content: space-between;
       padding: 14px 16px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .menu-btn {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      font-size: 22px;
-      cursor: pointer;
-      color: white;
     }
 
     .header-title {
@@ -76,307 +57,117 @@
       color: white;
     }
 
-    /* Side Menu Overlay */
-    .side-menu-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 200;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-    }
-
-    .side-menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* Side Menu */
-    .side-menu {
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 260px;
-      background: white;
-      z-index: 201;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease-out;
-      overflow-y: auto;
-    }
-
-    .side-menu-overlay.active .side-menu {
-      transform: translateX(0);
-    }
-
-    .menu-header {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
-      padding: 20px;
-    }
-
-    .menu-avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-
-    .menu-name {
-      font-size: 20px;
-      font-weight: 800;
-    }
-
-    .menu-level {
-      font-size: 14px;
-      opacity: 0.9;
-      margin-top: 4px;
-    }
-
-    .menu-close {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-size: 22px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .menu-links {
-      padding: 12px 0;
-    }
-
-    .menu-link {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 20px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .menu-link:hover { background: #f8fafc; }
-    .menu-link.active { background: #eff6ff; }
-
-    .menu-icon {
-      font-size: 24px;
-      width: 28px;
-      text-align: center;
-    }
-
-    .menu-text {
-      font-size: 16px;
-      font-weight: 600;
-      color: #1e293b;
-    }
-
-    .menu-divider {
-      height: 1px;
-      background: #f1f5f9;
-      margin: 8px 20px;
-    }
-
     /* Main Content */
     .main {
       padding: 20px 16px;
       padding-bottom: 100px;
-      max-width: 600px;
-      margin: 0 auto;
     }
 
-    /* Simple Greeting Card */
-    .greeting-card {
+    /* Welcome Card */
+    .welcome-card {
       background: white;
       border-radius: 24px;
-      padding: 24px;
+      padding: 32px 24px;
       margin-bottom: 20px;
       box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
       text-align: center;
     }
 
-    .greeting-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
+    .welcome-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .welcome-sub {
+      font-size: 16px;
+      color: #64748b;
+    }
+
+    /* Setup Card */
+    .setup-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 16px;
+      border: 3px solid #f1f5f9;
+    }
+
+    .setup-card:hover {
+      border-color: #3b82f6;
+    }
+
+    .setup-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .setup-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
       background: linear-gradient(135deg, #dbeafe, #bfdbfe);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
-      margin: 0 auto 16px;
+      font-size: 28px;
     }
 
-    .greeting-name {
-      font-size: 24px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 8px;
-    }
-
-    .greeting-level {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #92400e;
-    }
-
-    /* Points Display */
-    .points-card {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      border-radius: 24px;
-      padding: 24px;
-      color: white;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .points-value {
-      font-size: 48px;
-      font-weight: 900;
-      margin-bottom: 4px;
-    }
-
-    .points-label {
-      font-size: 16px;
-      opacity: 0.9;
-    }
-
-    .progress-section {
-      margin-top: 16px;
-    }
-
-    .progress-text {
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    .progress-bar {
-      background: rgba(255,255,255,0.3);
-      height: 12px;
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      background: white;
-      height: 100%;
-      width: 65%;
-      border-radius: 6px;
-    }
-
-    /* Section Title */
-    .section-title {
+    .setup-title {
       font-size: 20px;
       font-weight: 800;
       color: #1e293b;
-      margin-bottom: 12px;
     }
 
-    /* Big Action Buttons */
-    .action-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-bottom: 24px;
+    .setup-desc {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.5;
     }
 
-    .action-card {
+    .setup-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      margin-top: 16px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    /* Empty State */
+    .empty-state {
       background: white;
       border-radius: 20px;
-      padding: 24px 16px;
-      border: 3px solid #f1f5f9;
+      padding: 32px 24px;
+      margin-bottom: 16px;
+      border: 3px dashed #e2e8f0;
       text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
     }
 
-    .action-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-2px);
-    }
-
-    .action-icon {
+    .empty-icon {
       font-size: 48px;
       margin-bottom: 12px;
     }
 
-    .action-name {
+    .empty-title {
       font-size: 18px;
-      font-weight: 800;
+      font-weight: 700;
       color: #1e293b;
+      margin-bottom: 6px;
     }
 
-    .action-sub {
+    .empty-desc {
       font-size: 14px;
       color: #64748b;
-      margin-top: 4px;
-    }
-
-    /* Simple Subject Cards */
-    .subject-card {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 12px;
-      border: 3px solid #f1f5f9;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .subject-card:hover {
-      border-color: #3b82f6;
-    }
-
-    .subject-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-    }
-
-    .subject-icon.purple { background: linear-gradient(135deg, #e9d5ff, #d8b4fe); }
-    .subject-icon.blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-    .subject-icon.green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
-
-    .subject-info { flex: 1; }
-
-    .subject-name {
-      font-size: 18px;
-      font-weight: 800;
-      color: #1e293b;
-    }
-
-    .subject-progress {
-      font-size: 14px;
-      color: #64748b;
-      margin-top: 4px;
-    }
-
-    .subject-arrow {
-      font-size: 24px;
-      color: #94a3b8;
     }
 
     /* Bottom Navigation */
@@ -395,8 +186,6 @@
       display: flex;
       justify-content: space-around;
       padding: 8px 0 12px;
-      max-width: 600px;
-      margin: 0 auto;
     }
 
     .nav-item {
@@ -417,71 +206,10 @@
   </style>
 </head>
 <body>
-  <!-- Side Menu Overlay -->
-  <div class="side-menu-overlay" id="sideMenuOverlay" onclick="closeSideMenu()">
-    <div class="side-menu" onclick="event.stopPropagation()">
-      <div class="menu-header">
-        <button class="menu-close" onclick="closeSideMenu()">✕</button>
-        <div class="menu-avatar">👦</div>
-        <div class="menu-name" data-en="Tommy Tsang" data-zh="曾志明">Tommy Tsang</div>
-        <div class="menu-level" data-en="⭐ Level 9 • 2,050 points" data-zh="⭐ 等級 9 • 2,050 分">⭐ Level 9 • 2,050 points</div>
-      </div>
-
-      <div class="menu-links">
-        <div class="menu-link active" onclick="location.href='student-dashboard-full.html'">
-          <span class="menu-icon">🏠</span>
-          <span class="menu-text" data-en="Home" data-zh="主頁">Home</span>
-        </div>
-        
-        <div class="menu-link" onclick="location.href='subjects-all.html'">
-          <span class="menu-icon">📚</span>
-          <span class="menu-text" data-en="My Subjects" data-zh="我的科目">My Subjects</span>
-        </div>
-        
-        <div class="menu-link" onclick="location.href='practice-full.html'">
-          <span class="menu-icon">✏️</span>
-          <span class="menu-text" data-en="Practice" data-zh="練習">Practice</span>
-        </div>
-        
-        <div class="menu-link" onclick="location.href='leaderboard-full.html'">
-          <span class="menu-icon">🏆</span>
-          <span class="menu-text" data-en="Leaderboard" data-zh="排行榜">Leaderboard</span>
-        </div>
-
-        <div class="menu-divider"></div>
-
-        <div class="menu-link" onclick="location.href='join-class.html'">
-          <span class="menu-icon">🎒</span>
-          <span class="menu-text" data-en="My Class" data-zh="我的班級">My Class</span>
-        </div>
-
-        <div class="menu-link" onclick="location.href='progress.html'">
-          <span class="menu-icon">📊</span>
-          <span class="menu-text" data-en="My Progress" data-zh="我的進度">My Progress</span>
-        </div>
-
-        <div class="menu-divider"></div>
-
-        <div class="menu-link" onclick="location.href='edit-profile.html'">
-          <span class="menu-icon">👤</span>
-          <span class="menu-text" data-en="Edit Profile" data-zh="編輯資料">Edit Profile</span>
-        </div>
-
-        <div class="menu-link" onclick="if(confirm('Logout?')) location.href='index.html'" style="background: #fef2f2;">
-          <span class="menu-icon">🚪</span>
-          <span class="menu-text" data-en="Logout" data-zh="登出" style="color: #ef4444;">Logout</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <div class="header-left">
-        <button class="menu-btn" onclick="openSideMenu()">☰</button>
-        <span class="header-title" data-en="Student Portal" data-zh="學生平台">Student Portal</span>
-      </div>
+      <span class="header-title" data-en="EduPilot" data-zh="EduPilot">EduPilot</span>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en')">EN</button>
         <button class="lang-btn" onclick="setLang('zh')">中文</button>
@@ -491,82 +219,47 @@
 
   <!-- Main Content -->
   <main class="main">
-    <!-- Simple Greeting -->
-    <div class="greeting-card">
-      <div class="greeting-avatar">👦</div>
-      <div class="greeting-name" data-en="Hi, Tommy! 👋" data-zh="你好, 志明! 👋">Hi, Tommy! 👋</div>
-      <div class="greeting-level">
-        <span>⭐</span>
-        <span data-en="Level 9" data-zh="等級 9">Level 9</span>
-      </div>
+    <!-- Welcome -->
+    <div class="welcome-card">
+      <div class="welcome-title" data-en="Welcome! 👋" data-zh="歡迎! 👋">Welcome! 👋</div>
+      <div class="welcome-sub" data-en="Let's get you started" data-zh="讓我們開始吧">Let's get you started</div>
     </div>
 
-    <!-- Points Display -->
-    <div class="points-card">
-      <div class="points-value">2,050</div>
-      <div class="points-label" data-en="Total Points" data-zh="總分">Total Points</div>
-      <div class="progress-section">
-        <div class="progress-text" data-en="450 points to Level 10" data-zh="距離等級 10 還差 450 分">450 points to Level 10</div>
-        <div class="progress-bar">
-          <div class="progress-fill"></div>
+    <!-- Step 1: Join Class -->
+    <div class="setup-card">
+      <div class="setup-header">
+        <div class="setup-icon">🎒</div>
+        <div>
+          <div class="setup-title" data-en="Step 1: Join a Class" data-zh="步驟 1: 加入班級">Step 1: Join a Class</div>
         </div>
       </div>
+      <div class="setup-desc" data-en="Enter your class code from your teacher to join your class and see your subjects." data-zh="輸入老師提供的班級代碼，加入班級並查看你的科目。">Enter your class code from your teacher to join your class and see your subjects.</div>
+      <button class="setup-btn" data-en="Join Class" data-zh="加入班級" onclick="location.href='join-class.html'">Join Class</button>
     </div>
 
-    <!-- Big Action Buttons -->
-    <h2 class="section-title" data-en="Let's Learn! 🎯" data-zh="開始學習! 🎯">Let's Learn! 🎯</h2>
-    
-    <div class="action-grid">
-      <div class="action-card" onclick="location.href='subjects-all.html'">
-        <div class="action-icon">📚</div>
-        <div class="action-name" data-en="Learn" data-zh="學習">Learn</div>
-        <div class="action-sub" data-en="3 subjects" data-zh="3 個科目">3 subjects</div>
+    <!-- Step 2: Set Profile -->
+    <div class="setup-card">
+      <div class="setup-header">
+        <div class="setup-icon">👤</div>
+        <div>
+          <div class="setup-title" data-en="Step 2: Your Profile" data-zh="步驟 2: 你的資料">Step 2: Your Profile</div>
+        </div>
       </div>
-      <div class="action-card" onclick="location.href='practice-full.html'">
-        <div class="action-icon">✏️</div>
-        <div class="action-name" data-en="Practice" data-zh="練習">Practice</div>
-        <div class="action-sub" data-en="Do quizzes" data-zh="做測驗">Do quizzes</div>
-      </div>
-      <div class="action-card" onclick="location.href='leaderboard-full.html'">
-        <div class="action-icon">🏆</div>
-        <div class="action-name" data-en="Ranks" data-zh="排名">Ranks</div>
-        <div class="action-sub" data-en="#4 in class" data-zh="班級第 4">)#4 in class</div>
-      </div>
-      <div class="action-card" onclick="location.href='join-class.html'">
-        <div class="action-icon">🎒</div>
-        <div class="action-name" data-en="My Class" data-zh="班級">My Class</div>
-        <div class="action-sub" data-en="P4 - Class A" data-zh="小四甲班">P4 - Class A</div>
-      </div>
+      <div class="setup-desc" data-en="Set your name and choose your avatar. Your teacher and classmates will see this." data-zh="設定你的名稱並選擇頭像。老師和同學會看到這個。">Set your name and choose your avatar. Your teacher and classmates will see this.</div>
+      <button class="setup-btn" data-en="Edit Profile" data-zh="編輯資料" onclick="location.href='edit-profile.html'">Edit Profile</button>
     </div>
 
-    <!-- My Subjects -->
-    <h2 class="section-title" data-en="My Subjects 📖" data-zh="我的科目 📖">My Subjects 📖</h2>
-
-    <div class="subject-card" onclick="location.href='subjects-all.html'">
-      <div class="subject-icon purple">🥽</div>
-      <div class="subject-info">
-        <div class="subject-name" data-en="AR/VR Experience" data-zh="AR/VR 體驗">AR/VR Experience</div>
-        <div class="subject-progress" data-en="3 of 6 done" data-zh="已完成 3/6">3 of 6 done</div>
-      </div>
-      <span class="subject-arrow">→</span>
+    <!-- Empty States -->
+    <div class="empty-state">
+      <div class="empty-icon">📚</div>
+      <div class="empty-title" data-en="No Subjects Yet" data-zh="還沒有科目">No Subjects Yet</div>
+      <div class="empty-desc" data-en="Join a class to see your subjects" data-zh="加入班級後可查看科目">Join a class to see your subjects</div>
     </div>
 
-    <div class="subject-card" onclick="location.href='subjects-all.html'">
-      <div class="subject-icon blue">🤖</div>
-      <div class="subject-info">
-        <div class="subject-name" data-en="AI & Technology" data-zh="人工智能">AI & Technology</div>
-        <div class="subject-progress" data-en="5 of 8 done" data-zh="已完成 5/8">5 of 8 done</div>
-      </div>
-      <span class="subject-arrow">→</span>
-    </div>
-
-    <div class="subject-card" onclick="location.href='subjects-all.html'">
-      <div class="subject-icon green">🎨</div>
-      <div class="subject-info">
-        <div class="subject-name" data-en="Digital Creativity" data-zh="數碼創意">Digital Creativity</div>
-        <div class="subject-progress" data-en="2 of 5 done" data-zh="已完成 2/5">2 of 5 done</div>
-      </div>
-      <span class="subject-arrow">→</span>
+    <div class="empty-state">
+      <div class="empty-icon">🏆</div>
+      <div class="empty-title" data-en="No Points Yet" data-zh="還沒有積分">No Points Yet</div>
+      <div class="empty-desc" data-en="Complete activities to earn points" data-zh="完成活動可賺取積分">Complete activities to earn points</div>
     </div>
   </main>
 
@@ -577,11 +270,11 @@
         <span class="icon">🏠</span>
         <span class="label" data-en="Home" data-zh="主頁">Home</span>
       </button>
-      <button class="nav-item" onclick="location.href='subjects-all.html'">
+      <button class="nav-item">
         <span class="icon">📚</span>
         <span class="label" data-en="Learn" data-zh="學習">Learn</span>
       </button>
-      <button class="nav-item" onclick="location.href='leaderboard-full.html'">
+      <button class="nav-item">
         <span class="icon">🏆</span>
         <span class="label" data-en="Ranks" data-zh="排名">Ranks</span>
       </button>
@@ -599,52 +292,24 @@
     function setLang(lang) {
       currentLang = lang;
       
-      // Update toggle buttons
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector(`.lang-btn:${lang === 'en' ? 'first-child' : 'last-child'}`).classList.add('active');
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.remove('active');
+      });
       if (lang === 'en') {
         document.querySelector('.lang-btn:first-child').classList.add('active');
       } else {
         document.querySelector('.lang-btn:last-child').classList.add('active');
       }
       
-      // Update text
       document.querySelectorAll('[data-en]').forEach(el => {
         el.textContent = el.getAttribute(`data-${lang}`);
       });
       
-      // Save preference
       localStorage.setItem('lang', lang);
     }
 
-    // Load language preference
     const savedLang = localStorage.getItem('lang');
     if (savedLang) setLang(savedLang);
-
-    // Side Menu
-    function openSideMenu() {
-      document.getElementById('sideMenuOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeSideMenu() {
-      document.getElementById('sideMenuOverlay').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // Swipe to open menu
-    let touchStartX = 0;
-    document.addEventListener('touchstart', e => {
-      touchStartX = e.touches[0].clientX;
-    });
-
-    document.addEventListener('touchend', e => {
-      const touchEndX = e.changedTouches[0].clientX;
-      const diff = touchEndX - touchStartX;
-      
-      if (diff > 100 && touchStartX < 50) openSideMenu();
-      if (diff < -100) closeSideMenu();
-    });
   </script>
 </body>
 </html>
