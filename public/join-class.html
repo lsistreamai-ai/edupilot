@@ -9,66 +9,97 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
-      background: linear-gradient(135deg, #dbeafe 0%, #f0f9ff 100%);
+      background: #f0f9ff;
       min-height: 100vh;
       padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* Header */
     .header {
       position: sticky;
       top: 0;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
-      z-index: 50;
+      z-index: 100;
     }
 
     .header-content {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 18px 20px;
-      max-width: 600px;
-      margin: 0 auto;
+      justify-content: space-between;
+      padding: 14px 16px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .back-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 22px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      padding: 8px 12px;
       background: none;
       border: none;
-      color: white;
-      font-size: 28px;
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 700;
       cursor: pointer;
     }
 
-    .header h1 {
-      font-size: 20px;
-      font-weight: 800;
+    .lang-btn.active {
+      background: rgba(255,255,255,0.3);
+      color: white;
     }
 
     /* Main Content */
     .main {
-      padding: 20px;
+      padding: 20px 16px;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
       text-align: center;
-      padding: 30px 20px;
+      padding: 24px 16px;
       margin-bottom: 20px;
     }
 
     .hero-icon {
-      font-size: 64px;
-      margin-bottom: 16px;
+      font-size: 56px;
+      margin-bottom: 12px;
     }
 
     .hero-title {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       color: #1e293b;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .hero-subtitle {
@@ -86,23 +117,18 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
 
-    .code-input-group {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
     .code-input {
-      flex: 1;
-      padding: 16px;
-      border: 2px solid #e2e8f0;
-      border-radius: 14px;
-      font-size: 24px;
+      width: 100%;
+      padding: 18px;
+      border: 3px solid #e2e8f0;
+      border-radius: 16px;
+      font-size: 28px;
       font-weight: 800;
       text-align: center;
       text-transform: uppercase;
-      letter-spacing: 4px;
+      letter-spacing: 8px;
       color: #1e293b;
+      margin-bottom: 16px;
     }
 
     .code-input:focus {
@@ -114,13 +140,13 @@
       font-size: 16px;
       font-weight: 600;
       color: #94a3b8;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
     }
 
     .join-btn {
       width: 100%;
       padding: 16px;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
       border: none;
       border-radius: 14px;
@@ -145,93 +171,41 @@
       margin-top: 12px;
     }
 
-    /* My Classes */
+    /* Section */
     .section-title {
       font-size: 18px;
       font-weight: 800;
       color: #1e293b;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    .class-card {
+    /* Empty State */
+    .empty-state {
       background: white;
       border-radius: 16px;
-      padding: 16px;
-      border: 2px solid #f1f5f9;
-      margin-bottom: 12px;
-    }
-
-    .class-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-
-    .class-info {
-      flex: 1;
-    }
-
-    .class-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    .class-meta {
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 4px;
-    }
-
-    .teacher-badge {
-      background: #dbeafe;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #2563eb;
-    }
-
-    .class-stats {
-      display: flex;
-      gap: 20px;
-      padding-top: 12px;
-      border-top: 1px solid #f1f5f9;
-      margin-bottom: 12px;
-    }
-
-    .stat-item {
+      padding: 32px 20px;
+      border: 2px dashed #e2e8f0;
       text-align: center;
     }
 
-    .stat-value {
-      font-size: 18px;
-      font-weight: 800;
-      color: #1e293b;
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
     }
 
-    .stat-label {
-      font-size: 11px;
+    .empty-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .empty-text {
+      font-size: 13px;
       color: #64748b;
     }
 
-    .enter-btn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    /* Success Modal */
+    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -251,38 +225,38 @@
       background: white;
       border-radius: 24px;
       width: 100%;
-      max-width: 400px;
-      padding: 30px;
+      max-width: 360px;
+      padding: 28px;
       text-align: center;
     }
 
     .modal-icon {
-      font-size: 64px;
-      margin-bottom: 16px;
+      font-size: 56px;
+      margin-bottom: 12px;
     }
 
     .modal-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       color: #1e293b;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .modal-text {
       font-size: 14px;
       color: #64748b;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .modal-class-info {
       background: #f8fafc;
       border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 20px;
+      padding: 14px;
+      margin-bottom: 16px;
     }
 
     .modal-class-name {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       color: #1e293b;
     }
@@ -296,7 +270,7 @@
     .modal-btn {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
       border: none;
       border-radius: 12px;
@@ -314,15 +288,13 @@
       background: white;
       border-top: 2px solid #e2e8f0;
       z-index: 50;
-      padding-bottom: max(10px, env(safe-area-inset-bottom));
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .nav-content {
       display: flex;
       justify-content: space-around;
-      padding: 8px 0;
-      max-width: 600px;
-      margin: 0 auto;
+      padding: 8px 0 12px;
     }
 
     .nav-item {
@@ -330,7 +302,7 @@
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      padding: 6px 12px;
+      padding: 8px 16px;
       background: none;
       border: none;
       color: #94a3b8;
@@ -338,95 +310,58 @@
     }
 
     .nav-item.active { color: #3b82f6; }
-    .nav-item .icon { font-size: 22px; }
-    .nav-item .label { font-size: 10px; font-weight: 600; }
-
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: #94a3b8;
-    }
-
-    .empty-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-    }
-
-    .empty-text {
-      font-size: 14px;
-    }
+    .nav-item .icon { font-size: 28px; }
+    .nav-item .label { font-size: 12px; font-weight: 700; }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
-      <h1>🎒 Join Class</h1>
+      <div class="header-left">
+        <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
+        <span class="header-title" data-en="Join Class" data-zh="加入班級">Join Class</span>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      </div>
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="main">
-    <!-- Hero Section -->
+    <!-- Hero -->
     <div class="hero">
-      <div class="hero-icon">🎓</div>
-      <h2 class="hero-title">Join a Class</h2>
-      <p class="hero-subtitle">Enter your class code to join your teacher's class</p>
+      <div class="hero-icon">🎒</div>
+      <h2 class="hero-title" data-en="Join Your Class" data-zh="加入你的班級">Join Your Class</h2>
+      <p class="hero-subtitle" data-en="Enter the class code from your teacher" data-zh="輸入老師提供的班級代碼">Enter the class code from your teacher</p>
     </div>
 
-    <!-- Code Input Card -->
+    <!-- Code Input -->
     <div class="code-card">
-      <div class="code-input-group">
-        <input type="text" 
-               class="code-input" 
-               id="classCode" 
-               placeholder="ABC123" 
-               maxlength="6"
-               oninput="validateCode()">
-      </div>
+      <input type="text" 
+             class="code-input" 
+             id="classCode" 
+             placeholder="ABC123" 
+             maxlength="6"
+             oninput="validateCode()">
+      
       <button class="join-btn" id="joinBtn" disabled onclick="joinClass()">
         <span>✨</span>
-        <span>Join Class</span>
+        <span data-en="Join Class" data-zh="加入班級">Join Class</span>
       </button>
-      <p class="hint-text">Ask your teacher for the 6-character class code</p>
+      
+      <p class="hint-text" data-en="Ask your teacher for the 6-character code" data-zh="向老師索取 6 位班級代碼">Ask your teacher for the 6-character code</p>
     </div>
 
     <!-- My Classes -->
-    <h3 class="section-title">
-      <span>📚</span>
-      <span>My Classes</span>
-    </h3>
+    <h3 class="section-title" data-en="My Classes" data-zh="我的班級">My Classes</h3>
 
-    <div id="myClasses">
-      <!-- Class Card 1 -->
-      <div class="class-card">
-        <div class="class-header">
-          <div class="class-info">
-            <div class="class-name">Primary 4 - Class A</div>
-            <div class="class-meta">P4 • 2025-26 Term 2 • 24 students</div>
-          </div>
-          <div class="teacher-badge">👨‍🏫 Mr. Patrick</div>
-        </div>
-        <div class="class-stats">
-          <div class="stat-item">
-            <div class="stat-value">12</div>
-            <div class="stat-label">Activities</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">2,050</div>
-            <div class="stat-label">Points</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">#4</div>
-            <div class="stat-label">Rank</div>
-          </div>
-        </div>
-        <button class="enter-btn" onclick="location.href='student-dashboard-full.html'">
-          🚀 Enter Class
-        </button>
-      </div>
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">📭</div>
+      <div class="empty-title" data-en="No Classes Yet" data-zh="還沒有班級">No Classes Yet</div>
+      <div class="empty-text" data-en="Join a class above to get started" data-zh="在上面加入班級以開始">Join a class above to get started</div>
     </div>
   </main>
 
@@ -434,15 +369,13 @@
   <div class="modal-overlay" id="successModal">
     <div class="modal-content">
       <div class="modal-icon">🎉</div>
-      <h3 class="modal-title">Welcome to Class!</h3>
-      <p class="modal-text">You've successfully joined</p>
+      <h3 class="modal-title" data-en="Welcome!" data-zh="歡迎!">Welcome!</h3>
+      <p class="modal-text" data-en="You've joined the class" data-zh="你已成功加入班級">You've joined the class</p>
       <div class="modal-class-info">
-        <div class="modal-class-name" id="joinedClassName">Primary 4 - Class A</div>
+        <div class="modal-class-name" id="joinedClassName">Primary 4A</div>
         <div class="modal-class-teacher">👨‍🏫 Mr. Patrick</div>
       </div>
-      <button class="modal-btn" onclick="closeModal()">
-        🚀 Start Learning!
-      </button>
+      <button class="modal-btn" data-en="Start Learning!" data-zh="開始學習!" onclick="closeModal()">Start Learning!</button>
     </div>
   </div>
 
@@ -451,87 +384,84 @@
     <div class="nav-content">
       <button class="nav-item" onclick="location.href='student-dashboard-full.html'">
         <span class="icon">🏠</span>
-        <span class="label">Home</span>
+        <span class="label" data-en="Home" data-zh="主頁">Home</span>
       </button>
       <button class="nav-item" onclick="location.href='subjects-all.html'">
         <span class="icon">📚</span>
-        <span class="label">Learn</span>
+        <span class="label" data-en="Learn" data-zh="學習">Learn</span>
       </button>
       <button class="nav-item active">
         <span class="icon">🎒</span>
-        <span class="label">Classes</span>
+        <span class="label" data-en="Class" data-zh="班級">Class</span>
       </button>
-      <button class="nav-item" onclick="location.href='leaderboard-full.html'">
-        <span class="icon">🏆</span>
-        <span class="label">Leaders</span>
-      </button>
-      <button class="nav-item" onclick="location.href='progress.html'">
-        <span class="icon">📊</span>
-        <span class="label">Progress</span>
+      <button class="nav-item" onclick="location.href='settings.html'">
+        <span class="icon" style="font-size: 24px;">👦</span>
+        <span class="label" data-en="Me" data-zh="我">Me</span>
       </button>
     </div>
   </nav>
 
   <script>
+    // Language
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      if (lang === 'en') {
+        document.querySelector('.lang-btn:first-child').classList.add('active');
+      } else {
+        document.querySelector('.lang-btn:last-child').classList.add('active');
+      }
+      
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+      
+      localStorage.setItem('lang', lang);
+    }
+
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) setLang(savedLang);
+
+    // Code Validation
     function validateCode() {
       const code = document.getElementById('classCode').value.toUpperCase();
       const btn = document.getElementById('joinBtn');
-      
       btn.disabled = code.length !== 6;
     }
 
+    // Auto-uppercase
+    document.getElementById('classCode').addEventListener('input', function(e) {
+      this.value = this.value.toUpperCase();
+    });
+
+    // Join Class
     function joinClass() {
       const code = document.getElementById('classCode').value.toUpperCase();
       
-      // Simulate joining (would check against Supabase in production)
       if (code.length === 6) {
-        document.getElementById('joinedClassName').textContent = 'Primary 4 - Class A';
+        // TODO: Check against Supabase
         document.getElementById('successModal').classList.add('active');
       }
     }
 
+    // Close Modal
     function closeModal() {
       document.getElementById('successModal').classList.remove('active');
       document.getElementById('classCode').value = '';
       document.getElementById('joinBtn').disabled = true;
       
-      // Add new class to list
-      const classList = document.getElementById('myClasses');
-      const newClass = document.createElement('div');
-      newClass.className = 'class-card';
-      newClass.innerHTML = `
-        <div class="class-header">
-          <div class="class-info">
-            <div class="class-name">Primary 5 - Class B</div>
-            <div class="class-meta">P5 • 2025-26 Term 2 • Just joined</div>
-          </div>
-          <div class="teacher-badge">👨‍🏫 Ms. Wong</div>
+      // Hide empty state, show class info
+      document.getElementById('emptyState').innerHTML = `
+        <div style="background: white; border-radius: 16px; padding: 16px; border: 2px solid #f1f5f9;">
+          <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">Primary 4A</div>
+          <div style="font-size: 12px; color: #64748b;">👨‍🏫 Mr. Patrick • Just joined</div>
+          <button onclick="location.href='student-dashboard-full.html'" style="width: 100%; margin-top: 12px; padding: 12px; background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">🚀 ${currentLang === 'zh' ? '進入班級' : 'Enter Class'}</button>
         </div>
-        <div class="class-stats">
-          <div class="stat-item">
-            <div class="stat-value">0</div>
-            <div class="stat-label">Activities</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">0</div>
-            <div class="stat-label">Points</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value">-</div>
-            <div class="stat-label">Rank</div>
-          </div>
-        </div>
-        <button class="enter-btn">
-          🚀 Enter Class
-        </button>
       `;
-      classList.insertBefore(newClass, classList.firstChild);
     }
-
-    // Auto-uppercase input
-    document.getElementById('classCode').addEventListener('input', function(e) {
-      this.value = this.value.toUpperCase();
-    });
   </script>
 </body>
 </html>
