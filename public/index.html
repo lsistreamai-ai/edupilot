@@ -3,67 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EduPilot - Login</title>
+  <title>LSI Learning Dashboard</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 16px;
-      background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 50%, #fce7f3 100%);
+      background: linear-gradient(135deg, #eff6ff 0%, #faf5ff 50%, #f0fdf4 100%);
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Floating blobs */
-    .blob {
+    /* Animated Background */
+    .bg-shapes {
       position: fixed;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.6;
-      animation: blob 7s infinite;
+      inset: 0;
       pointer-events: none;
-    }
-    .blob-1 { top: -100px; right: -100px; width: 300px; height: 300px; background: #93c5fd; }
-    .blob-2 { bottom: -100px; left: -100px; width: 300px; height: 300px; background: #c4b5fd; animation-delay: 2s; }
-    .blob-3 { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: #fbcfe8; animation-delay: 4s; }
-
-    @keyframes blob {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(30px, -50px) scale(1.1); }
-      66% { transform: translate(-20px, 20px) scale(0.9); }
+      overflow: hidden;
     }
 
-    /* Main container */
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .shape-1 { width: 400px; height: 400px; background: linear-gradient(135deg, #93c5fd, #c4b5fd); top: -100px; right: -100px; animation-delay: 0s; }
+    .shape-2 { width: 300px; height: 300px; background: linear-gradient(135deg, #86efac, #67e8f9); bottom: -50px; left: -50px; animation-delay: 5s; }
+    .shape-3 { width: 200px; height: 200px; background: linear-gradient(135deg, #fcd34d, #fb923c); top: 50%; left: 50%; animation-delay: 10s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate(30px, -30px) rotate(90deg) scale(1.1); }
+      50% { transform: translate(-20px, 20px) rotate(180deg) scale(0.9); }
+      75% { transform: translate(20px, 30px) rotate(270deg) scale(1.05); }
+    }
+
     .container {
       position: relative;
       width: 100%;
-      max-width: 420px;
+      max-width: 440px;
+      z-index: 10;
     }
 
     /* Logo */
     .logo {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .logo-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      width: 88px;
+      height: 88px;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
       border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
-      margin-bottom: 16px;
+      box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.4);
+      margin-bottom: 18px;
     }
 
     .logo-icon span {
@@ -72,112 +75,117 @@
 
     .logo h1 {
       font-size: 32px;
-      font-weight: 700;
-      color: #1f2937;
+      font-weight: 800;
+      color: #1e293b;
+      letter-spacing: -0.5px;
     }
 
     .logo p {
-      color: #6b7280;
-      margin-top: 4px;
+      color: #64748b;
+      margin-top: 6px;
+      font-size: 15px;
     }
 
     /* Card */
     .card {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
-      border-radius: 24px;
-      box-shadow: 0 25px 50px rgba(59, 130, 246, 0.15);
+      border-radius: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
       overflow: hidden;
     }
 
-    /* Role toggle */
+    /* Role Toggle */
     .role-toggle {
       display: flex;
-      border-bottom: 1px solid #f3f4f6;
+      background: #f1f5f9;
+      padding: 6px;
+      margin: 6px;
+      border-radius: 18px;
     }
 
     .role-btn {
       flex: 1;
-      padding: 16px;
-      font-size: 14px;
-      font-weight: 500;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 600;
       background: none;
       border: none;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      border-radius: 14px;
+      color: #64748b;
     }
 
-    .role-btn.student {
-      color: #6b7280;
+    .role-btn.active.student {
+      background: white;
+      color: #3b82f6;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
     }
 
-    .role-btn.teacher {
-      color: #6b7280;
-    }
-
-    .role-btn.student.active {
-      color: #2563eb;
-      background: rgba(239, 246, 255, 0.5);
-      border-bottom: 2px solid #2563eb;
-    }
-
-    .role-btn.teacher.active {
+    .role-btn.active.teacher {
+      background: white;
       color: #7c3aed;
-      background: rgba(245, 243, 255, 0.5);
-      border-bottom: 2px solid #7c3aed;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+    }
+
+    .role-btn .icon {
+      font-size: 20px;
     }
 
     /* Form */
     .form {
-      padding: 24px;
+      padding: 28px;
     }
 
     .toggle-text {
       text-align: center;
       font-size: 14px;
-      color: #6b7280;
-      margin-bottom: 20px;
+      color: #64748b;
+      margin-bottom: 24px;
     }
 
     .toggle-text a {
-      font-weight: 600;
+      font-weight: 700;
       text-decoration: none;
+      cursor: pointer;
     }
 
-    .toggle-text a.student { color: #2563eb; }
+    .toggle-text a.student { color: #3b82f6; }
     .toggle-text a.teacher { color: #7c3aed; }
 
     .field {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .field label {
       display: block;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       color: #374151;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .field input,
     .field select {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 18px;
       font-size: 16px;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
       outline: none;
       transition: all 0.2s;
-      background: white;
+      background: #f8fafc;
     }
 
     .field input:focus,
     .field select:focus {
       border-color: #3b82f6;
+      background: white;
       box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
     }
 
@@ -189,48 +197,36 @@
 
     .field select {
       cursor: pointer;
-    }
-
-    .message {
-      padding: 12px;
-      border-radius: 12px;
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
-
-    .message.success {
-      background: #ecfdf5;
-      color: #059669;
-      border: 1px solid #86efac;
-    }
-
-    .message.error {
-      background: #fef2f2;
-      color: #dc2626;
-      border: 1px solid #fca5a5;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 20px;
+      padding-right: 44px;
     }
 
     .submit-btn {
       width: 100%;
-      padding: 14px;
-      font-size: 16px;
+      padding: 16px;
+      font-size: 17px;
       font-weight: 700;
       color: white;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s;
       transform: translateY(0);
+      margin-top: 8px;
     }
 
     .submit-btn.student {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5);
     }
 
     .submit-btn.teacher {
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-      box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.5);
     }
 
     .submit-btn:hover {
@@ -244,49 +240,70 @@
     .footer-text {
       text-align: center;
       font-size: 12px;
-      color: #9ca3af;
-      margin-top: 16px;
+      color: #94a3b8;
+      margin-top: 20px;
+    }
+
+    .footer-text span {
+      color: #64748b;
+      font-weight: 500;
     }
 
     .hidden { display: none; }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .logo h1 { font-size: 26px; }
+      .logo-icon { width: 72px; height: 72px; }
+      .logo-icon span { font-size: 40px; }
+    }
   </style>
 </head>
 <body>
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
+  <!-- Animated Background -->
+  <div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
 
   <div class="container">
+    <!-- Logo -->
     <div class="logo">
-      <div class="logo-icon"><span>✈️</span></div>
-      <h1>EduPilot</h1>
-      <p>Pilot your education journey</p>
+      <div class="logo-icon"><span>🎓</span></div>
+      <h1>LSI Learning Dashboard</h1>
+      <p>Learn • Practice • Excel</p>
     </div>
 
+    <!-- Card -->
     <div class="card">
+      <!-- Role Toggle -->
       <div class="role-toggle">
-        <button class="role-btn student active" onclick="setRole('student')">
-          <span>👨‍🎓</span> Student
+        <button class="role-btn active student" onclick="setRole('student')">
+          <span class="icon">👨‍🎓</span>
+          <span>Student</span>
         </button>
         <button class="role-btn teacher" onclick="setRole('teacher')">
-          <span>👨‍🏫</span> Teacher
+          <span class="icon">👨‍🏫</span>
+          <span>Teacher</span>
         </button>
       </div>
 
+      <!-- Form -->
       <form class="form" onsubmit="handleSubmit(event)">
         <p class="toggle-text">
           <span id="toggle-label">Don't have an account?</span>
-          <a href="#" id="toggle-link" class="student" onclick="toggleLogin(event)">Sign up</a>
+          <a id="toggle-link" class="student" onclick="toggleLogin(event)">Sign up</a>
         </p>
 
         <div class="field hidden" id="name-field">
-          <label>Name</label>
-          <input type="text" id="name" placeholder="Your name">
+          <label>Full Name</label>
+          <input type="text" id="name" placeholder="Enter your name">
         </div>
 
         <div class="field">
-          <label>Email</label>
-          <input type="email" id="email" required placeholder="you@example.com">
+          <label>Email Address</label>
+          <input type="email" id="email" required placeholder="you@school.edu.hk">
         </div>
 
         <div class="field">
@@ -295,24 +312,24 @@
         </div>
 
         <div class="field hidden" id="grade-field">
-          <label>Grade</label>
+          <label>Grade Level</label>
           <select id="grade">
             <option value="">Select your grade</option>
-            <optgroup label="Primary (TSA)">
-              <option value="Primary 1">Primary 1</option>
-              <option value="Primary 2">Primary 2</option>
-              <option value="Primary 3">Primary 3</option>
-              <option value="Primary 4">Primary 4</option>
-              <option value="Primary 5">Primary 5</option>
-              <option value="Primary 6">Primary 6</option>
+            <optgroup label="_primary School (TSA)_">
+              <option value="P1">Primary 1 (小一)</option>
+              <option value="P2">Primary 2 (小二)</option>
+              <option value="P3">Primary 3 (小三)</option>
+              <option value="P4">Primary 4 (小四)</option>
+              <option value="P5">Primary 5 (小五)</option>
+              <option value="P6">Primary 6 (小六)</option>
             </optgroup>
-            <optgroup label="Secondary (DSE)">
-              <option value="Secondary 1">Secondary 1</option>
-              <option value="Secondary 2">Secondary 2</option>
-              <option value="Secondary 3">Secondary 3</option>
-              <option value="Secondary 4">Secondary 4</option>
-              <option value="Secondary 5">Secondary 5</option>
-              <option value="Secondary 6">Secondary 6</option>
+            <optgroup label="Secondary School (DSE)_">
+              <option value="S1">Secondary 1 (中一)</option>
+              <option value="S2">Secondary 2 (中二)</option>
+              <option value="S3">Secondary 3 (中三)</option>
+              <option value="S4">Secondary 4 (中四)</option>
+              <option value="S5">Secondary 5 (中五)</option>
+              <option value="S6">Secondary 6 (中六)</option>
             </optgroup>
           </select>
         </div>
@@ -321,22 +338,12 @@
           <label>Main Subject</label>
           <select id="subject">
             <option value="">Select your subject</option>
-            <optgroup label="Primary (TSA)">
-              <option value="CHIN-P">Chinese 中文</option>
-              <option value="ENG-P">English 英文</option>
-              <option value="MATH-P">Math 數學</option>
-              <option value="GS-P">General Studies 常識</option>
-            </optgroup>
-            <optgroup label="Secondary (DSE)">
-              <option value="CHIN-S">Chinese 中國語文</option>
-              <option value="ENG-S">English 英國語文</option>
-              <option value="MATH-S">Math 數學</option>
-              <option value="PHY-S">Physics 物理</option>
-              <option value="CHEM-S">Chemistry 化學</option>
-              <option value="BIO-S">Biology 生物</option>
-              <option value="ECON-S">Economics 經濟</option>
-              <option value="ICT-S">ICT 資訊科技</option>
-            </optgroup>
+            <option value="CHIN">Chinese 中國語文</option>
+            <option value="ENG">English Language</option>
+            <option value="MATH">Mathematics 數學</option>
+            <option value="GS">General Studies 常識</option>
+            <option value="SCI">Science 科學</option>
+            <option value="ICT">ICT 資訊科技</option>
           </select>
         </div>
 
@@ -344,7 +351,9 @@
       </form>
     </div>
 
-    <p class="footer-text">TSA (Primary) & DSE (Secondary) • Hong Kong</p>
+    <p class="footer-text">
+      <span>TSA (Primary)</span> & <span>DSE (Secondary)</span> • Hong Kong Schools
+    </p>
   </div>
 
   <script>
@@ -353,22 +362,31 @@
 
     function setRole(r) {
       role = r;
-      const studentBtn = document.querySelector('.role-btn.student');
-      const teacherBtn = document.querySelector('.role-btn.teacher');
+      
+      document.querySelectorAll('.role-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`.role-btn.${r}`).classList.add('active');
+      
       const submitBtn = document.getElementById('submit-btn');
       const toggleLink = document.getElementById('toggle-link');
-      const gradeField = document.getElementById('grade-field');
       const subjectField = document.getElementById('subject-field');
-
-      studentBtn.classList.toggle('active', r === 'student');
-      teacherBtn.classList.toggle('active', r === 'teacher');
-
+      const gradeField = document.getElementById('grade-field');
+      
       submitBtn.className = 'submit-btn ' + r;
       toggleLink.className = r;
-
+      
       if (!isLogin) {
         gradeField.classList.toggle('hidden', r !== 'student');
         subjectField.classList.toggle('hidden', r !== 'teacher');
+        
+        document.querySelectorAll('.field').forEach(field => {
+          if (r === 'teacher') {
+            field.classList.add('teacher');
+          } else {
+            field.classList.remove('teacher');
+          }
+        });
       }
     }
 
@@ -400,8 +418,11 @@
 
     function handleSubmit(e) {
       e.preventDefault();
-      // For demo, just redirect to dashboard
-      window.location.href = role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
+      if (role === 'teacher') {
+        window.location.href = '/teacher';
+      } else {
+        window.location.href = '/student';
+      }
     }
   </script>
 </body>
