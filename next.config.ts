@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       { source: '/', destination: '/index.html' },
       { source: '/student', destination: '/student-dashboard.html' },
       { source: '/teacher', destination: '/teacher-dashboard.html' },
+      { source: '/teacher-full', destination: '/teacher-dashboard-full.html' },
       { source: '/subjects', destination: '/subjects.html' },
       { source: '/practice', destination: '/practice.html' },
       { source: '/leaderboard', destination: '/leaderboard.html' },
