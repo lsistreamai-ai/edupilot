@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>All Subjects - LSI Learning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
+      background: #f0f9ff;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: white;
+      border-bottom: 2px solid #e2e8f0;
+      z-index: 50;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 12px 20px;
+      overflow-x: auto;
+      background: white;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .filter-tab {
+      padding: 10px 18px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .filter-tab.active {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border-color: transparent;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Subject Card */
+    .subject-card {
+      background: white;
+      border-radius: 24px;
+      margin-bottom: 20px;
+      border: 2px solid #f1f5f9;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .subject-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 2px solid #f8fafc;
+    }
+
+    .subject-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
+
+    .subject-icon.ar-vr { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .subject-icon.ai-tech { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+    .subject-icon.creativity { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .subject-icon.design { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+    .subject-icon.metaverse { background: linear-gradient(135deg, #fae8ff, #e9d5ff); }
+    .subject-icon.dse { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+
+    .subject-info {
+      flex: 1;
+    }
+
+    .subject-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .subject-meta {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .level-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .level-badge.primary { background: #dbeafe; color: #1d4ed8; }
+    .level-badge.secondary { background: #fce7f3; color: #be185d; }
+    .level-badge.all { background: #f8fafc; color: #64748b; }
+
+    .course-type {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    /* Activity Cards */
+    .activities-section {
+      padding: 16px 20px;
+    }
+
+    .activity-card {
+      background: #f8fafc;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      border: 2px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+
+    .activity-card:hover {
+      border-color: #3b82f6;
+    }
+
+    .activity-header {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .activity-type-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .activity-type-icon.learn { background: linear-gradient(135deg, #dbeafe, #93c5fd); }
+    .activity-type-icon.build { background: linear-gradient(135deg, #d1fae5, #6ee7b7); }
+    .activity-type-icon.present { background: linear-gradient(135deg, #fef3c7, #fcd34d); }
+
+    .activity-title {
+      flex: 1;
+    }
+
+    .activity-title h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .activity-title p {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .time-badge {
+      padding: 6px 12px;
+      background: white;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .activity-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 0 16px 16px;
+    }
+
+    .activity-btn {
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .activity-btn.start-lesson {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+    }
+
+    .activity-btn.start-practice {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+    }
+
+    .activity-btn.view-examples {
+      background: white;
+      color: #475569;
+      border: 2px solid #e2e8f0;
+    }
+
+    /* Guided Screen Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .guided-screen {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .guided-header {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      padding: 24px 20px;
+    }
+
+    .guided-subject {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .guided-title {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .guided-body {
+      padding: 24px 20px;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+
+    .goals-section {
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .goal-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      background: #f0f9ff;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+
+    .goal-icon {
+      font-size: 20px;
+    }
+
+    .goal-text {
+      font-size: 14px;
+      color: #1e293b;
+      font-weight: 500;
+    }
+
+    .steps-section {
+      margin-bottom: 24px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .step-content p {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .guided-footer {
+      padding: 20px;
+      border-top: 2px solid #f1f5f9;
+    }
+
+    .try-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 2px solid #e2e8f0;
+      z-index: 50;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+      min-width: 60px;
+    }
+
+    .nav-item.active { color: #3b82f6; }
+
+    .nav-item .icon { font-size: 24px; }
+    .nav-item .label { font-size: 11px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
+      <h1>📚 All Subjects</h1>
+    </div>
+  </header>
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <div class="filter-tab active">All</div>
+    <div class="filter-tab">🥽 AR/VR</div>
+    <div class="filter-tab">🤖 AI & Tech</div>
+    <div class="filter-tab">🎨 Creativity</div>
+    <div class="filter-tab">🎲 3D Design</div>
+    <div class="filter-tab">🌐 Metaverse</div>
+    <div class="filter-tab">📝 DSE Prep</div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- AR/VR Experience -->
+    <div class="subject-card" data-type="ar-vr">
+      <div class="subject-header">
+        <div class="subject-icon ar-vr">🥽</div>
+        <div class="subject-info">
+          <div class="subject-name">AR/VR Experience</div>
+          <div class="subject-meta">
+            <span class="level-badge all">P1-S6</span>
+            <span class="course-type">LSI Course Type</span>
+          </div>
+        </div>
+      </div>
+      <div class="activities-section">
+        <!-- Learn Activity -->
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon learn">📖</div>
+            <div class="activity-title">
+              <h3>Learn: Solar System Explorer</h3>
+              <p>Explore planets in VR</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>45-60 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('ar-vr', 'learn')">▶️ Lesson</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+
+        <!-- Build Activity -->
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon build">🔨</div>
+            <div class="activity-title">
+              <h3>Build: AR Science Model</h3>
+              <p>Create your own AR model</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>20-30 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('ar-vr', 'build')">▶️ Build</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+
+        <!-- Present Activity -->
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon present">🎤</div>
+            <div class="activity-title">
+              <h3>Present: Show Your Creation</h3>
+              <p>Share your AR experience</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>10-15 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('ar-vr', 'present')">▶️ Present</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI & Technology -->
+    <div class="subject-card" data-type="ai-tech">
+      <div class="subject-header">
+        <div class="subject-icon ai-tech">🤖</div>
+        <div class="subject-info">
+          <div class="subject-name">AI & Technology</div>
+          <div class="subject-meta">
+            <span class="level-badge all">P4-S6</span>
+            <span class="course-type">LSI Course Type</span>
+          </div>
+        </div>
+      </div>
+      <div class="activities-section">
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon learn">📖</div>
+            <div class="activity-title">
+              <h3>Learn: AI Basics</h3>
+              <p>How AI thinks and learns</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>45-60 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('ai-tech', 'learn')">▶️ Lesson</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon build">🔨</div>
+            <div class="activity-title">
+              <h3>Build: Train a Chatbot</h3>
+              <p>Create your own AI assistant</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>15-25 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('ai-tech', 'build')">▶️ Build</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Digital Creativity -->
+    <div class="subject-card" data-type="creativity">
+      <div class="subject-header">
+        <div class="subject-icon creativity">🎨</div>
+        <div class="subject-info">
+          <div class="subject-name">Digital Creativity</div>
+          <div class="subject-meta">
+            <span class="level-badge all">P1-S6</span>
+            <span class="course-type">LSI Course Type</span>
+          </div>
+        </div>
+      </div>
+      <div class="activities-section">
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon learn">📖</div>
+            <div class="activity-title">
+              <h3>Learn: Digital Art Basics</h3>
+              <p>Colors, shapes, and design</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>30-45 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('creativity', 'learn')">▶️ Lesson</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon build">🔨</div>
+            <div class="activity-title">
+              <h3>Build: Design an Avatar</h3>
+              <p>Create your character</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>10-20 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('creativity', 'build')">▶️ Build</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3D Design -->
+    <div class="subject-card" data-type="design">
+      <div class="subject-header">
+        <div class="subject-icon design">🎲</div>
+        <div class="subject-info">
+          <div class="subject-name">3D Design</div>
+          <div class="subject-meta">
+            <span class="level-badge secondary">S1-S6</span>
+            <span class="course-type">LSI Course Type</span>
+          </div>
+        </div>
+      </div>
+      <div class="activities-section">
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon learn">📖</div>
+            <div class="activity-title">
+              <h3>Learn: 3D Modeling Basics</h3>
+              <p>Introduction to 3D shapes</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>45-60 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('design', 'learn')">▶️ Lesson</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VR/Metaverse -->
+    <div class="subject-card" data-type="metaverse">
+      <div class="subject-header">
+        <div class="subject-icon metaverse">🌐</div>
+        <div class="subject-info">
+          <div class="subject-name">VR/Metaverse</div>
+          <div class="subject-meta">
+            <span class="level-badge secondary">S3-S6</span>
+            <span class="course-type">LSI Course Type</span>
+          </div>
+        </div>
+      </div>
+      <div class="activities-section">
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon learn">📖</div>
+            <div class="activity-title">
+              <h3>Learn: Virtual Worlds</h3>
+              <p>Exploring digital spaces</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>30-45 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('metaverse', 'learn')">▶️ Lesson</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DSE Prep -->
+    <div class="subject-card" data-type="dse">
+      <div class="subject-header">
+        <div class="subject-icon dse">📝</div>
+        <div class="subject-info">
+          <div class="subject-name">DSE Prep</div>
+          <div class="subject-meta">
+            <span class="level-badge secondary">S4-S6</span>
+            <span class="course-type">LSI Course Type</span>
+          </div>
+        </div>
+      </div>
+      <div class="activities-section">
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon learn">📖</div>
+            <div class="activity-title">
+              <h3>Learn: Past Paper Analysis</h3>
+              <p>DSE exam strategies</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>60-90 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('dse', 'learn')">▶️ Lesson</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-header">
+            <div class="activity-type-icon build">🔨</div>
+            <div class="activity-title">
+              <h3>Build: Mock Exam Practice</h3>
+              <p>Timed practice tests</p>
+            </div>
+            <div class="time-badge">
+              <span>⏱️</span>
+              <span>15-30 min</span>
+            </div>
+          </div>
+          <div class="activity-buttons">
+            <button class="activity-btn start-lesson" onclick="openGuided('dse', 'build')">▶️ Build</button>
+            <button class="activity-btn start-practice">✏️ Practice</button>
+            <button class="activity-btn view-examples">👁️ Examples</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Guided Screen Modal -->
+  <div class="modal-overlay" id="guidedModal" onclick="closeGuided(event)">
+    <div class="guided-screen" onclick="event.stopPropagation()">
+      <div class="guided-header" style="position: relative;">
+        <button class="close-btn" onclick="closeGuided()">✕</button>
+        <div class="guided-subject">🥽 AR/VR Experience</div>
+        <div class="guided-title" id="guidedTitle">Learn: Solar System Explorer</div>
+      </div>
+      <div class="guided-body">
+        <div class="goals-section">
+          <div class="section-label">🎯 Learning Goals</div>
+          <div class="goal-item">
+            <span class="goal-icon">✅</span>
+            <span class="goal-text">Understand the order of planets in our solar system</span>
+          </div>
+          <div class="goal-item">
+            <span class="goal-icon">✅</span>
+            <span class="goal-text">Explore each planet in 3D VR environment</span>
+          </div>
+          <div class="goal-item">
+            <span class="goal-icon">✅</span>
+            <span class="goal-text">Complete the interactive quiz at the end</span>
+          </div>
+        </div>
+
+        <div class="steps-section">
+          <div class="section-label">📝 Step-by-Step Instructions</div>
+          
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Put on your VR headset</h4>
+              <p>Make sure it's charged and connected properly</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Launch the Solar System app</h4>
+              <p>Click the "Launch" button to start the experience</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Explore each planet</h4>
+              <p>Point at planets to learn facts about them</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Complete the quiz</h4>
+              <p>Answer questions to earn points!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="guided-footer">
+        <button class="try-btn">
+          <span>🚀</span>
+          <span>Try it now!</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-content">
+      <button class="nav-item" onclick="location.href='student-dashboard-full.html'">
+        <span class="icon">🏠</span>
+        <span class="label">Home</span>
+      </button>
+      <button class="nav-item active">
+        <span class="icon">📚</span>
+        <span class="label">Learn</span>
+      </button>
+      <button class="nav-item" onclick="location.href='practice.html'">
+        <span class="icon">✏️</span>
+        <span class="label">Practice</span>
+      </button>
+      <button class="nav-item" onclick="location.href='leaderboard.html'">
+        <span class="icon">🏆</span>
+        <span class="label">Leaders</span>
+      </button>
+      <button class="nav-item" onclick="location.href='progress.html'">
+        <span class="icon">📊</span>
+        <span class="label">Progress</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    // Filter tabs
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        const filter = this.textContent.toLowerCase();
+        document.querySelectorAll('.subject-card').forEach(card => {
+          const type = card.dataset.type;
+          if (filter.includes('all') || filter.includes(type)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = filter.includes(type) ? 'block' : 'none';
+          }
+        });
+      });
+    });
+
+    // Guided screen
+    function openGuided(subject, activity) {
+      const titles = {
+        'ar-vr': {
+          'learn': 'Learn: Solar System Explorer',
+          'build': 'Build: AR Science Model',
+          'present': 'Present: Show Your Creation'
+        },
+        'ai-tech': {
+          'learn': 'Learn: AI Basics',
+          'build': 'Build: Train a Chatbot'
+        },
+        'creativity': {
+          'learn': 'Learn: Digital Art Basics',
+          'build': 'Build: Design an Avatar'
+        }
+      };
+
+      const title = titles[subject]?.[activity] || 'Activity';
+      document.getElementById('guidedTitle').textContent = title;
+      document.getElementById('guidedModal').classList.add('active');
+    }
+
+    function closeGuided(e) {
+      if (!e || e.target === e.currentTarget) {
+        document.getElementById('guidedModal').classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>

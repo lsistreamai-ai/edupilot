@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { source: '/teacher', destination: '/teacher-dashboard.html' },
       { source: '/teacher-full', destination: '/teacher-dashboard-full.html' },
       { source: '/subjects', destination: '/subjects.html' },
+      { source: '/subjects-all', destination: '/subjects-all.html' },
       { source: '/practice', destination: '/practice.html' },
       { source: '/leaderboard', destination: '/leaderboard.html' },
       { source: '/progress', destination: '/progress.html' },
