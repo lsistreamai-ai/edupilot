@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
       { source: '/create-class', destination: '/create-class.html' },
       { source: '/join-class', destination: '/join-class.html' },
       { source: '/edit-profile', destination: '/edit-profile.html' },
+      { source: '/settings', destination: '/settings.html' },
     ];
   },
 };

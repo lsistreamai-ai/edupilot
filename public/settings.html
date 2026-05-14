@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Settings - EduPilot</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
+      background: #f8fafc;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 22px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      padding: 8px 12px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: rgba(255,255,255,0.3);
+      color: white;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 20px 16px;
+      padding-bottom: 100px;
+    }
+
+    /* Settings Sections */
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    /* Settings Card */
+    .settings-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .settings-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border-bottom: 1px solid #f1f5f9;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .settings-item:last-child {
+      border-bottom: none;
+    }
+
+    .settings-item:hover {
+      background: #f8fafc;
+    }
+
+    .settings-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .settings-icon.blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .settings-icon.purple { background: linear-gradient(135deg, #e9d5ff, #d8b4fe); }
+    .settings-icon.orange { background: linear-gradient(135deg, #fed7aa, #fdba74); }
+    .settings-icon.green { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+    .settings-icon.red { background: linear-gradient(135deg, #fee2e2, #fecaca); }
+
+    .settings-content {
+      flex: 1;
+    }
+
+    .settings-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .settings-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .settings-arrow {
+      color: #94a3b8;
+      font-size: 18px;
+    }
+
+    .settings-item.logout .settings-label {
+      color: #ef4444;
+    }
+
+    /* Version */
+    .version {
+      text-align: center;
+      padding: 20px;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 2px solid #e2e8f0;
+      z-index: 50;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 12px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .nav-item.active { color: #3b82f6; }
+    .nav-item .icon { font-size: 28px; }
+    .nav-item .label { font-size: 12px; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
+        <span class="header-title" data-en="Settings" data-zh="設定">Settings</span>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Account Section -->
+    <div class="section">
+      <div class="section-title" data-en="Account" data-zh="帳戶">Account</div>
+      <div class="settings-card">
+        <div class="settings-item" onclick="location.href='edit-profile.html'">
+          <div class="settings-icon blue">👤</div>
+          <div class="settings-content">
+            <div class="settings-label" data-en="Edit Profile" data-zh="編輯資料">Edit Profile</div>
+            <div class="settings-desc" data-en="Name, avatar, email" data-zh="名稱、頭像、電郵">Name, avatar, email</div>
+          </div>
+          <span class="settings-arrow">→</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Section -->
+    <div class="section">
+      <div class="section-title" data-en="Learning" data-zh="學習">Learning</div>
+      <div class="settings-card">
+        <div class="settings-item" onclick="location.href='join-class.html'">
+          <div class="settings-icon purple">🎒</div>
+          <div class="settings-content">
+            <div class="settings-label" data-en="My Class" data-zh="我的班級">My Class</div>
+            <div class="settings-desc" data-en="Join or leave class" data-zh="加入或離開班級">Join or leave class</div>
+          </div>
+          <span class="settings-arrow">→</span>
+        </div>
+        <div class="settings-item" onclick="location.href='progress.html'">
+          <div class="settings-icon green">📊</div>
+          <div class="settings-content">
+            <div class="settings-label" data-en="My Progress" data-zh="我的進度">My Progress</div>
+            <div class="settings-desc" data-en="View your learning history" data-zh="查看學習記錄">View your learning history</div>
+          </div>
+          <span class="settings-arrow">→</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notifications Section -->
+    <div class="section">
+      <div class="section-title" data-en="Notifications" data-zh="通知">Notifications</div>
+      <div class="settings-card">
+        <div class="settings-item">
+          <div class="settings-icon orange">🔔</div>
+          <div class="settings-content">
+            <div class="settings-label" data-en="Push Notifications" data-zh="推送通知">Push Notifications</div>
+            <div class="settings-desc" data-en="Get alerts for new activities" data-zh="接收新活動通知">Get alerts for new activities</div>
+          </div>
+          <span style="color: #22c55e; font-weight: 700;">ON</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logout Section -->
+    <div class="section">
+      <div class="section-title" data-en="Account" data-zh="帳戶">Account</div>
+      <div class="settings-card">
+        <div class="settings-item logout" onclick="logout()">
+          <div class="settings-icon red">🚪</div>
+          <div class="settings-content">
+            <div class="settings-label" data-en="Logout" data-zh="登出">Logout</div>
+            <div class="settings-desc" data-en="Sign out of your account" data-zh="登出你的帳戶">Sign out of your account</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Version -->
+    <div class="version">
+      EduPilot v1.0.0
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-content">
+      <button class="nav-item" onclick="location.href='student-dashboard-full.html'">
+        <span class="icon">🏠</span>
+        <span class="label" data-en="Home" data-zh="主頁">Home</span>
+      </button>
+      <button class="nav-item" onclick="location.href='subjects-all.html'">
+        <span class="icon">📚</span>
+        <span class="label" data-en="Learn" data-zh="學習">Learn</span>
+      </button>
+      <button class="nav-item" onclick="location.href='leaderboard-full.html'">
+        <span class="icon">🏆</span>
+        <span class="label" data-en="Ranks" data-zh="排名">Ranks</span>
+      </button>
+      <button class="nav-item active">
+        <span class="icon" style="font-size: 24px;">⚙️</span>
+        <span class="label" data-en="Me" data-zh="我">Me</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    // Language
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      if (lang === 'en') {
+        document.querySelector('.lang-btn:first-child').classList.add('active');
+      } else {
+        document.querySelector('.lang-btn:last-child').classList.add('active');
+      }
+      
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
+      
+      localStorage.setItem('lang', lang);
+    }
+
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) setLang(savedLang);
+
+    // Logout
+    function logout() {
+      if (confirm(currentLang === 'zh' ? '確定要登出嗎？' : 'Are you sure you want to logout?')) {
+        location.href = 'index.html';
+      }
+    }
+  </script>
+</body>
+</html>
