@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 export default function HomePage() {
@@ -13,8 +14,19 @@ export default function HomePage() {
   const [subject, setSubject] = useState('')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const router = useRouter()
 
-  // Primary (TSA) + Secondary (DSE)
+  useEffect(() => {
+    checkSession()
+  }, [])
+
+  async function checkSession() {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) {
+      router.push('/dashboard')
+    }
+  }
+
   const primaryGrades = ['Primary 1', 'Primary 2', 'Primary 3', 'Primary 4', 'Primary 5', 'Primary 6']
   const secondaryGrades = ['Secondary 1', 'Secondary 2', 'Secondary 3', 'Secondary 4', 'Secondary 5', 'Secondary 6']
   const allGrades = [...primaryGrades, ...secondaryGrades]
@@ -50,7 +62,7 @@ export default function HomePage() {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        setMessage('Login successful!')
+        router.push('/dashboard')
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -73,10 +85,6 @@ export default function HomePage() {
 
     setLoading(false)
   }
-
-  // Filter subjects based on selected grade
-  const isPrimary = grade.startsWith('Primary')
-  const availableSubjects = isPrimary ? primarySubjects : secondarySubjects
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 flex items-center justify-center p-4">
