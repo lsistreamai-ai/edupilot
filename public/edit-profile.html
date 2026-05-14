@@ -11,7 +11,6 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
       background: #f0f9ff;
       min-height: 100vh;
-      padding-bottom: 80px;
     }
 
     /* Header */
@@ -20,89 +19,132 @@
       top: 0;
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
-      z-index: 50;
+      z-index: 100;
     }
 
     .header-content {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
       padding: 14px 16px;
-      max-width: 600px;
-      margin: 0 auto;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .back-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 22px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      padding: 8px 12px;
       background: none;
       border: none;
-      color: white;
-      font-size: 26px;
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 700;
       cursor: pointer;
     }
 
-    .header h1 {
-      font-size: 20px;
-      font-weight: 800;
+    .lang-btn.active {
+      background: rgba(255,255,255,0.3);
+      color: white;
     }
 
     /* Main Content */
     .main {
-      padding: 16px;
-      max-width: 600px;
-      margin: 0 auto;
+      padding: 20px 16px;
+      padding-bottom: 100px;
     }
 
-    /* Profile Card */
-    .profile-card {
-      background: white;
-      border-radius: 20px;
-      padding: 24px;
+    /* Avatar Section */
+    .avatar-section {
       text-align: center;
-      margin-bottom: 20px;
-      border: 2px solid #f1f5f9;
+      margin-bottom: 24px;
     }
 
-    .avatar-large {
-      width: 80px;
-      height: 80px;
+    .avatar-display {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
+      font-size: 50px;
       margin: 0 auto 16px;
-    }
-
-    .profile-name {
-      font-size: 22px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 4px;
-    }
-
-    .profile-email {
-      font-size: 14px;
-      color: #64748b;
-    }
-
-    /* Form */
-    .form-section {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-      border: 2px solid #f1f5f9;
+      border: 4px solid white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
     .section-title {
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 800;
       color: #1e293b;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+    }
+
+    /* Avatar Picker */
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .avatar-option {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #f8fafc;
+      border: 3px solid #e2e8f0;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .avatar-option:hover {
+      border-color: #3b82f6;
+    }
+
+    .avatar-option.selected {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      transform: scale(1.1);
+    }
+
+    /* Form Card */
+    .form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 2px solid #f1f5f9;
     }
 
     .form-group {
@@ -115,127 +157,47 @@
 
     .form-label {
       display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: #475569;
-      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
     }
 
     .form-input {
       width: 100%;
-      padding: 12px 14px;
+      padding: 14px 16px;
       border: 2px solid #e2e8f0;
       border-radius: 12px;
-      font-size: 15px;
-      outline: none;
+      font-size: 16px;
+      transition: border-color 0.2s;
     }
 
     .form-input:focus {
+      outline: none;
       border-color: #3b82f6;
     }
 
-    .form-select {
+    .form-hint {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+
+    /* Save Button */
+    .save-btn {
       width: 100%;
-      padding: 12px 14px;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 15px;
-      background: white;
-      outline: none;
-    }
-
-    /* Language Toggle */
-    .lang-options {
-      display: flex;
-      gap: 10px;
-    }
-
-    .lang-btn {
-      flex: 1;
-      padding: 12px;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      background: white;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .lang-btn.active {
+      padding: 16px;
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
-      border-color: transparent;
-    }
-
-    /* Buttons */
-    .btn-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 15px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      margin-bottom: 12px;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
-    }
-
-    .btn-danger {
-      background: white;
-      color: #ef4444;
-      border: 2px solid #ef4444;
-    }
-
-    .btn-save {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: white;
-    }
-
-    /* Info Box */
-    .info-box {
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
-    }
-
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    .info-row:last-child {
-      border-bottom: none;
-    }
-
-    .info-label {
-      font-size: 14px;
-      color: #64748b;
-    }
-
-    .info-value {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1e293b;
-    }
-
-    /* Bottom Nav */
+    /* Bottom Navigation */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -250,329 +212,165 @@
     .nav-content {
       display: flex;
       justify-content: space-around;
-      padding: 6px 0 8px;
-      max-width: 600px;
-      margin: 0 auto;
+      padding: 8px 0 12px;
     }
 
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
-      padding: 4px 10px;
+      gap: 4px;
+      padding: 8px 16px;
       background: none;
       border: none;
       color: #94a3b8;
       cursor: pointer;
-      min-width: 70px;
     }
 
     .nav-item.active { color: #3b82f6; }
-    .nav-item .icon { font-size: 22px; }
-    .nav-item .label { font-size: 10px; font-weight: 600; }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1e293b;
-      color: white;
-      padding: 14px 24px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      z-index: 200;
-      display: none;
-    }
-
-    .toast.show {
-      display: block;
-      animation: fadeInOut 2s ease-in-out;
-    }
-
-    @keyframes fadeInOut {
-      0%, 100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-      20%, 80% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
+    .nav-item .icon { font-size: 28px; }
+    .nav-item .label { font-size: 12px; font-weight: 700; }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
-      <h1 id="pageTitle">👤 Edit Profile</h1>
+      <div class="header-left">
+        <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
+        <span class="header-title" data-en="Edit Profile" data-zh="編輯資料">Edit Profile</span>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      </div>
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="main">
-    <!-- Profile Card -->
-    <div class="profile-card">
-      <div class="avatar-large">👦</div>
-      <div class="profile-name" id="displayName">Tommy Tsang</div>
-      <div class="profile-email">tommy@lsi.edu</div>
+    <!-- Avatar Display -->
+    <div class="avatar-section">
+      <div class="avatar-display" id="avatarDisplay">👦</div>
     </div>
 
-    <!-- Account Info -->
-    <div class="form-section">
-      <div class="section-title" id="sectionInfo">📋 Account Information</div>
-      
-      <div class="info-box">
-        <div class="info-row">
-          <span class="info-label" id="labelLevel">Level</span>
-          <span class="info-value">⭐ 9</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label" id="labelPoints">Points</span>
-          <span class="info-value">2,050</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label" id="labelClass">Class</span>
-          <span class="info-value">P4 - Class A</span>
-        </div>
-        <div class="info-row">
-          <span class="info-label" id="labelSchool">School</span>
-          <span class="info-value">LSI Learning Academy</span>
-        </div>
+    <!-- Avatar Picker -->
+    <div class="form-card">
+      <div class="section-title" data-en="Choose Avatar" data-zh="選擇頭像">Choose Avatar</div>
+      <div class="avatar-grid">
+        <div class="avatar-option selected" onclick="selectAvatar(this, '👦')">👦</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '👧')">👧</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '🧒')">🧒</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '👦🏻')">👦🏻</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '👧🏻')">👧🏻</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '🧑')">🧑</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '👩')">👩</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '👨')">👨</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '🧑‍🎓')">🧑‍🎓</div>
+        <div class="avatar-option" onclick="selectAvatar(this, '🎭')">🎭</div>
       </div>
     </div>
 
-    <!-- Edit Profile -->
-    <div class="form-section">
-      <div class="section-title" id="sectionEdit">✏️ Edit Profile</div>
-      
+    <!-- Name Input -->
+    <div class="form-card">
       <div class="form-group">
-        <label class="form-label" id="labelName">Display Name</label>
-        <input type="text" class="form-input" id="inputName" value="Tommy Tsang">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" id="labelAvatar">Avatar</label>
-        <div style="display: flex; gap: 10px;">
-          <button class="lang-btn active" onclick="selectAvatar(this, '👦')">👦</button>
-          <button class="lang-btn" onclick="selectAvatar(this, '👧')">👧</button>
-          <button class="lang-btn" onclick="selectAvatar(this, '🧒')">🧒</button>
-          <button class="lang-btn" onclick="selectAvatar(this, '👦🏻')">👦🏻</button>
-          <button class="lang-btn" onclick="selectAvatar(this, '👧🏻')">👧🏻</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Language Settings -->
-    <div class="form-section">
-      <div class="section-title" id="sectionLang">🌐 Language / 語言</div>
-      
-      <div class="lang-options">
-        <button class="lang-btn active" id="btnEnglish" onclick="setLanguage('en')">
-          🇺🇸 English
-        </button>
-        <button class="lang-btn" id="btnChinese" onclick="setLanguage('zh')">
-          🇭🇰 繁體中文
-        </button>
-      </div>
-    </div>
-
-    <!-- Notification Settings -->
-    <div class="form-section">
-      <div class="section-title" id="sectionNotif">🔔 Notifications</div>
-      
-      <div class="form-group">
-        <label class="form-label" id="labelEmailNotif">Email Notifications</label>
-        <select class="form-select" id="emailNotif">
-          <option value="all" id="optAll">All notifications</option>
-          <option value="important" id="optImportant">Important only</option>
-          <option value="none" id="optNone">None</option>
-        </select>
+        <label class="form-label" data-en="Display Name" data-zh="顯示名稱">Display Name</label>
+        <input type="text" class="form-input" id="userName" placeholder="Tommy Tsang" maxlength="20">
+        <div class="form-hint" data-en="This is how others will see you" data-zh="這是其他人會看到的名稱">This is how others will see you</div>
       </div>
     </div>
 
     <!-- Save Button -->
-    <div class="btn-group">
-      <button class="btn btn-save" onclick="saveProfile()">
-        <span>💾</span>
-        <span id="btnSave">Save Changes</span>
-      </button>
-    </div>
-
-    <!-- Logout -->
-    <div class="btn-group">
-      <button class="btn btn-danger" onclick="logout()">
-        <span>🚪</span>
-        <span id="btnLogout">Logout</span>
-      </button>
-    </div>
+    <button class="save-btn" onclick="saveProfile()">
+      <span data-en="Save Changes" data-zh="儲存變更">Save Changes</span>
+    </button>
   </main>
-
-  <!-- Toast -->
-  <div class="toast" id="toast">✅ Saved successfully!</div>
 
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-content">
       <button class="nav-item" onclick="location.href='student-dashboard-full.html'">
         <span class="icon">🏠</span>
-        <span class="label" id="navHome">Home</span>
+        <span class="label" data-en="Home" data-zh="主頁">Home</span>
       </button>
-      <button class="nav-item" onclick="location.href='subjects-all.html'">
+      <button class="nav-item">
         <span class="icon">📚</span>
-        <span class="label" id="navLearn">Learn</span>
+        <span class="label" data-en="Learn" data-zh="學習">Learn</span>
       </button>
-      <button class="nav-item" onclick="location.href='leaderboard-full.html'">
+      <button class="nav-item">
         <span class="icon">🏆</span>
-        <span class="label" id="navRanks">Ranks</span>
+        <span class="label" data-en="Ranks" data-zh="排名">Ranks</span>
       </button>
-      <button class="nav-item active" onclick="location.href='student-dashboard-full.html'">
-        <span class="icon">☰</span>
-        <span class="label" id="navMenu">Menu</span>
+      <button class="nav-item active">
+        <span class="icon" style="font-size: 24px;">👦</span>
+        <span class="label" data-en="Me" data-zh="我">Me</span>
       </button>
     </div>
   </nav>
 
   <script>
+    // Language
     let currentLang = 'en';
-    let currentAvatar = '👦';
 
-    const translations = {
-      en: {
-        title: '👤 Edit Profile',
-        sectionInfo: '📋 Account Information',
-        sectionEdit: '✏️ Edit Profile',
-        sectionLang: '🌐 Language',
-        sectionNotif: '🔔 Notifications',
-        labelLevel: 'Level',
-        labelPoints: 'Points',
-        labelClass: 'Class',
-        labelSchool: 'School',
-        labelName: 'Display Name',
-        labelAvatar: 'Avatar',
-        labelEmailNotif: 'Email Notifications',
-        optAll: 'All notifications',
-        optImportant: 'Important only',
-        optNone: 'None',
-        btnSave: 'Save Changes',
-        btnLogout: 'Logout',
-        navHome: 'Home',
-        navLearn: 'Learn',
-        navRanks: 'Ranks',
-        navMenu: 'Menu',
-        saved: '✅ Saved successfully!',
-        confirmLogout: 'Are you sure you want to logout?'
-      },
-      zh: {
-        title: '👤 編輯個人資料',
-        sectionInfo: '📋 帳戶資料',
-        sectionEdit: '✏️ 編輯資料',
-        sectionLang: '🌐 語言',
-        sectionNotif: '🔔 通知設定',
-        labelLevel: '等級',
-        labelPoints: '積分',
-        labelClass: '班級',
-        labelSchool: '學校',
-        labelName: '顯示名稱',
-        labelAvatar: '頭像',
-        labelEmailNotif: '電郵通知',
-        optAll: '所有通知',
-        optImportant: '只限重要通知',
-        optNone: '關閉',
-        btnSave: '儲存變更',
-        btnLogout: '登出',
-        navHome: '主頁',
-        navLearn: '學習',
-        navRanks: '排名',
-        navMenu: '選單',
-        saved: '✅ 儲存成功！',
-        confirmLogout: '確定要登出嗎？'
-      }
-    };
-
-    function setLanguage(lang) {
+    function setLang(lang) {
       currentLang = lang;
       
-      // Update buttons
-      document.getElementById('btnEnglish').classList.toggle('active', lang === 'en');
-      document.getElementById('btnChinese').classList.toggle('active', lang === 'zh');
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      if (lang === 'en') {
+        document.querySelector('.lang-btn:first-child').classList.add('active');
+      } else {
+        document.querySelector('.lang-btn:last-child').classList.add('active');
+      }
       
-      // Update all text
-      const t = translations[lang];
-      document.getElementById('pageTitle').textContent = t.title;
-      document.getElementById('sectionInfo').textContent = t.sectionInfo;
-      document.getElementById('sectionEdit').textContent = t.sectionEdit;
-      document.getElementById('sectionLang').textContent = t.sectionLang;
-      document.getElementById('sectionNotif').textContent = t.sectionNotif;
-      document.getElementById('labelLevel').textContent = t.labelLevel;
-      document.getElementById('labelPoints').textContent = t.labelPoints;
-      document.getElementById('labelClass').textContent = t.labelClass;
-      document.getElementById('labelSchool').textContent = t.labelSchool;
-      document.getElementById('labelName').textContent = t.labelName;
-      document.getElementById('labelAvatar').textContent = t.labelAvatar;
-      document.getElementById('labelEmailNotif').textContent = t.labelEmailNotif;
-      document.getElementById('optAll').textContent = t.optAll;
-      document.getElementById('optImportant').textContent = t.optImportant;
-      document.getElementById('optNone').textContent = t.optNone;
-      document.getElementById('btnSave').textContent = t.btnSave;
-      document.getElementById('btnLogout').textContent = t.btnLogout;
-      document.getElementById('navHome').textContent = t.navHome;
-      document.getElementById('navLearn').textContent = t.navLearn;
-      document.getElementById('navRanks').textContent = t.navRanks;
-      document.getElementById('navMenu').textContent = t.navMenu;
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${lang}`);
+      });
       
-      // Save preference
-      localStorage.setItem('language', lang);
+      localStorage.setItem('lang', lang);
     }
 
-    function selectAvatar(btn, avatar) {
-      currentAvatar = avatar;
-      document.querySelectorAll('.form-group .lang-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelector('.avatar-large').textContent = avatar;
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) setLang(savedLang);
+
+    // Avatar Selection
+    let selectedAvatar = '👦';
+
+    function selectAvatar(el, emoji) {
+      document.querySelectorAll('.avatar-option').forEach(a => a.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedAvatar = emoji;
+      document.getElementById('avatarDisplay').textContent = emoji;
     }
 
+    // Load saved data
+    const savedName = localStorage.getItem('userName');
+    const savedAvatar = localStorage.getItem('userAvatar');
+    
+    if (savedName) document.getElementById('userName').value = savedName;
+    if (savedAvatar) {
+      selectedAvatar = savedAvatar;
+      document.getElementById('avatarDisplay').textContent = savedAvatar;
+      document.querySelectorAll('.avatar-option').forEach(a => {
+        if (a.textContent === savedAvatar) a.classList.add('selected');
+        else a.classList.remove('selected');
+      });
+    }
+
+    // Save Profile
     function saveProfile() {
-      const name = document.getElementById('inputName').value;
+      const name = document.getElementById('userName').value.trim();
+      
+      if (!name) {
+        alert(currentLang === 'zh' ? '請輸入你的名稱' : 'Please enter your name');
+        return;
+      }
+      
       localStorage.setItem('userName', name);
-      localStorage.setItem('userAvatar', currentAvatar);
-      localStorage.setItem('language', currentLang);
+      localStorage.setItem('userAvatar', selectedAvatar);
       
-      // Update display
-      document.getElementById('displayName').textContent = name;
-      
-      // Show toast
-      const t = translations[currentLang];
-      document.getElementById('toast').textContent = t.saved;
-      document.getElementById('toast').classList.add('show');
-      setTimeout(() => {
-        document.getElementById('toast').classList.remove('show');
-      }, 2000);
+      alert(currentLang === 'zh' ? '已儲存!' : 'Saved!');
+      location.href = 'student-dashboard-full.html';
     }
-
-    function logout() {
-      const t = translations[currentLang];
-      if (confirm(t.confirmLogout)) {
-        location.href = 'index.html';
-      }
-    }
-
-    // Load saved preferences
-    document.addEventListener('DOMContentLoaded', () => {
-      const savedLang = localStorage.getItem('language') || 'en';
-      setLanguage(savedLang);
-      
-      const savedName = localStorage.getItem('userName');
-      if (savedName) {
-        document.getElementById('inputName').value = savedName;
-        document.getElementById('displayName').textContent = savedName;
-      }
-      
-      const savedAvatar = localStorage.getItem('userAvatar');
-      if (savedAvatar) {
-        currentAvatar = savedAvatar;
-        document.querySelector('.avatar-large').textContent = savedAvatar;
-      }
-    });
   </script>
 </body>
 </html>
