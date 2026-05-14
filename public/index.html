@@ -9,7 +9,7 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
-      background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 50%, #faf5ff 100%);
+      background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -18,22 +18,19 @@
     /* Main Content */
     .main {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      text-align: center;
+      padding: 20px 16px;
+      padding-bottom: 24px;
     }
 
     /* Logo */
     .logo {
+      text-align: center;
       margin-bottom: 20px;
     }
 
     .logo-icon {
       font-size: 56px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .logo-text {
@@ -43,7 +40,7 @@
     }
 
     .logo-tagline {
-      font-size: 13px;
+      font-size: 12px;
       color: #64748b;
       margin-top: 4px;
     }
@@ -56,10 +53,13 @@
       overflow: hidden;
       margin-bottom: 16px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      max-width: 200px;
+      margin: 0 auto 16px;
     }
 
     .lang-btn {
-      padding: 8px 16px;
+      flex: 1;
+      padding: 8px;
       background: none;
       border: none;
       color: #64748b;
@@ -73,137 +73,215 @@
       color: white;
     }
 
-    /* Subject Showcase Box */
-    .subject-showcase {
+    /* Tab Switcher */
+    .tab-switcher {
+      display: flex;
+      background: white;
+      border-radius: 14px;
+      padding: 4px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+    }
+
+    /* Form */
+    .form-card {
       background: white;
       border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 16px;
-      width: 100%;
-      max-width: 420px;
+      padding: 24px 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
     }
 
-    .showcase-title {
-      font-size: 15px;
+    .form-title {
+      font-size: 20px;
       font-weight: 800;
       color: #1e293b;
-      margin-bottom: 12px;
-    }
-
-    .subject-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    .subject-item {
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 12px 6px;
+      margin-bottom: 20px;
       text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 2px solid transparent;
     }
 
-    .subject-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    .form-group {
+      margin-bottom: 16px;
     }
 
-    .subject-item:active {
-      transform: scale(0.95);
-    }
-
-    .subject-item.subj-chinese { background: linear-gradient(135deg, #fef3c7, #fde68a); }
-    .subject-item.subj-english { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-    .subject-item.subj-math { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
-    .subject-item.subj-gs { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
-    .subject-item.subj-science { background: linear-gradient(135deg, #fae8ff, #e9d5ff); }
-    .subject-item.subj-putonghua { background: linear-gradient(135deg, #fed7aa, #fdba74); }
-    .subject-item.subj-pe { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
-    .subject-item.subj-music { background: linear-gradient(135deg, #ccfbf1, #99f6e4); }
-    .subject-item.subj-art { background: linear-gradient(135deg, #fef3c7, #fde68a); }
-    .subject-item.subj-it { background: linear-gradient(135deg, #cffafe, #a5f3fc); }
-    .subject-item.subj-library { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); }
-    .subject-item.subj-bible { background: linear-gradient(135deg, #fee2e2, #fecaca); }
-
-    .subject-item-icon {
-      font-size: 24px;
-      margin-bottom: 4px;
-    }
-
-    .subject-item-name {
-      font-size: 10px;
-      font-weight: 700;
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
       color: #475569;
-      line-height: 1.2;
+      margin-bottom: 6px;
     }
 
-    /* Bottom Buttons */
-    .bottom-section {
+    .form-input {
       width: 100%;
-      max-width: 420px;
-      padding: 16px;
-      background: white;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+      padding: 14px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: border-color 0.2s;
     }
 
-    .bottom-section h2 {
-      font-size: 14px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 10px;
-      text-align: center;
+    .form-input:focus {
+      outline: none;
+      border-color: #3b82f6;
     }
 
-    .btn-grid {
+    .form-input::placeholder {
+      color: #94a3b8;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .role-select {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
 
-    .role-btn {
-      padding: 16px 12px;
-      border-radius: 14px;
-      border: 3px solid #f1f5f9;
-      background: white;
-      cursor: pointer;
+    .role-option {
+      padding: 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
       text-align: center;
+      cursor: pointer;
       transition: all 0.2s;
     }
 
-    .role-btn:hover {
-      border-color: #3b82f6;
-      transform: translateY(-2px);
-    }
-
-    .role-btn.student {
-      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    .role-option:hover {
       border-color: #3b82f6;
     }
 
-    .role-btn.teacher {
-      background: linear-gradient(135deg, #faf5ff, #f3e8ff);
-      border-color: #8b5cf6;
+    .role-option.selected {
+      border-color: #3b82f6;
+      background: #eff6ff;
     }
 
     .role-icon {
-      font-size: 32px;
+      font-size: 28px;
       margin-bottom: 4px;
     }
 
-    .role-name {
-      font-size: 14px;
-      font-weight: 800;
+    .role-label {
+      font-size: 13px;
+      font-weight: 600;
       color: #1e293b;
     }
 
-    .role-desc {
-      font-size: 10px;
-      color: #64748b;
-      margin-top: 2px;
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Forgot Password Link */
+    .forgot-link {
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .forgot-link a {
+      color: #3b82f6;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .divider-text {
+      padding: 0 16px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* Social Login */
+    .social-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      background: white;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+    }
+
+    .social-btn:hover {
+      border-color: #3b82f6;
+    }
+
+    .social-icon {
+      font-size: 20px;
+    }
+
+    /* Hide signup fields by default */
+    .signup-fields {
+      display: none;
+    }
+
+    .signup-fields.show {
+      display: block;
     }
   </style>
 </head>
@@ -223,78 +301,93 @@
       <button class="lang-btn" onclick="setLang('zh')">中文</button>
     </div>
 
-    <!-- Subject Showcase Box -->
-    <div class="subject-showcase">
-      <div class="showcase-title" data-en="📚 All Primary Subjects" data-zh="📚 小學全科">📚 All Primary Subjects</div>
-      <div class="subject-grid">
-        <div class="subject-item subj-chinese" onclick="location.href='subjects-all.html?subj=chinese'">
-          <div class="subject-item-icon">中</div>
-          <div class="subject-item-name" data-en="Chinese" data-zh="中文">Chinese</div>
+    <!-- Tab Switcher -->
+    <div class="tab-switcher">
+      <button class="tab-btn active" id="loginTab" onclick="showLogin()" data-en="Login" data-zh="登入">Login</button>
+      <button class="tab-btn" id="signupTab" onclick="showSignup()" data-en="Sign Up" data-zh="註冊">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-card" id="loginForm">
+      <div class="form-title" data-en="Welcome Back!" data-zh="歡迎回來!">Welcome Back!</div>
+      
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label" data-en="Email" data-zh="電郵">Email</label>
+          <input type="email" class="form-input" placeholder="your@email.com" required>
         </div>
-        <div class="subject-item subj-english" onclick="location.href='subjects-all.html?subj=english'">
-          <div class="subject-item-icon">En</div>
-          <div class="subject-item-name" data-en="English" data-zh="英文">English</div>
+        
+        <div class="form-group">
+          <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
+          <input type="password" class="form-input" placeholder="••••••••" required>
         </div>
-        <div class="subject-item subj-math" onclick="location.href='subjects-all.html?subj=math'">
-          <div class="subject-item-icon">123</div>
-          <div class="subject-item-name" data-en="Math" data-zh="數學">Math</div>
-        </div>
-        <div class="subject-item subj-gs" onclick="location.href='subjects-all.html?subj=gs'">
-          <div class="subject-item-icon">🌍</div>
-          <div class="subject-item-name" data-en="G.S." data-zh="常識">G.S.</div>
-        </div>
-        <div class="subject-item subj-science" onclick="location.href='subjects-all.html?subj=science'">
-          <div class="subject-item-icon">🔬</div>
-          <div class="subject-item-name" data-en="Science" data-zh="科學">Science</div>
-        </div>
-        <div class="subject-item subj-putonghua" onclick="location.href='subjects-all.html?subj=putonghua'">
-          <div class="subject-item-icon">普</div>
-          <div class="subject-item-name" data-en="Putonghua" data-zh="普通話">Putonghua</div>
-        </div>
-        <div class="subject-item subj-pe" onclick="location.href='subjects-all.html?subj=pe'">
-          <div class="subject-item-icon">⚽</div>
-          <div class="subject-item-name" data-en="P.E." data-zh="體育">P.E.</div>
-        </div>
-        <div class="subject-item subj-music" onclick="location.href='subjects-all.html?subj=music'">
-          <div class="subject-item-icon">🎵</div>
-          <div class="subject-item-name" data-en="Music" data-zh="音樂">Music</div>
-        </div>
-        <div class="subject-item subj-art" onclick="location.href='subjects-all.html?subj=art'">
-          <div class="subject-item-icon">🎨</div>
-          <div class="subject-item-name" data-en="Art" data-zh="視藝">Art</div>
-        </div>
-        <div class="subject-item subj-it" onclick="location.href='subjects-all.html?subj=it'">
-          <div class="subject-item-icon">💻</div>
-          <div class="subject-item-name" data-en="I.T." data-zh="電腦">I.T.</div>
-        </div>
-        <div class="subject-item subj-library" onclick="location.href='subjects-all.html?subj=library'">
-          <div class="subject-item-icon">📖</div>
-          <div class="subject-item-name" data-en="Library" data-zh="圖書">Library</div>
-        </div>
-        <div class="subject-item subj-bible" onclick="location.href='subjects-all.html?subj=bible'">
-          <div class="subject-item-icon">✝️</div>
-          <div class="subject-item-name" data-en="Bible" data-zh="聖經">Bible</div>
-        </div>
+        
+        <button type="submit" class="submit-btn" data-en="Login" data-zh="登入">Login</button>
+      </form>
+      
+      <div class="forgot-link">
+        <a href="#" data-en="Forgot password?" data-zh="忘記密碼?">Forgot password?</a>
       </div>
     </div>
-  </main>
 
-  <!-- Bottom Section with Two Buttons -->
-  <div class="bottom-section">
-    <h2 data-en="I am a..." data-zh="我是...">I am a...</h2>
-    <div class="btn-grid">
-      <button class="role-btn student" onclick="location.href='student-dashboard-full.html'">
-        <div class="role-icon">👦</div>
-        <div class="role-name" data-en="Student" data-zh="學生">Student</div>
-        <div class="role-desc" data-en="Start learning!" data-zh="開始學習!">Start learning!</div>
+    <!-- Signup Form -->
+    <div class="form-card" id="signupForm" style="display: none;">
+      <div class="form-title" data-en="Create Account" data-zh="建立帳戶">Create Account</div>
+      
+      <form onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label class="form-label" data-en="Full Name" data-zh="姓名">Full Name</label>
+          <input type="text" class="form-input" placeholder="Tommy Tsang" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" data-en="Email" data-zh="電郵">Email</label>
+          <input type="email" class="form-input" placeholder="your@email.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
+          <input type="password" class="form-input" placeholder="••••••••" required minlength="6">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" data-en="I am a..." data-zh="我是...">I am a...</label>
+          <div class="role-select">
+            <div class="role-option" onclick="selectRole(this, 'student')">
+              <div class="role-icon">👦</div>
+              <div class="role-label" data-en="Student" data-zh="學生">Student</div>
+            </div>
+            <div class="role-option" onclick="selectRole(this, 'teacher')">
+              <div class="role-icon">👨‍🏫</div>
+              <div class="role-label" data-en="Teacher" data-zh="老師">Teacher</div>
+            </div>
+          </div>
+          <input type="hidden" id="selectedRole" value="">
+        </div>
+        
+        <button type="submit" class="submit-btn" data-en="Create Account" data-zh="建立帳戶">Create Account</button>
+      </form>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-text" data-en="or continue with" data-zh="或使用">or continue with</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Social Login -->
+    <div class="social-btns">
+      <button class="social-btn" onclick="socialLogin('google')">
+        <span class="social-icon">🔷</span>
+        <span>Google</span>
       </button>
-      <button class="role-btn teacher" onclick="location.href='teacher'">
-        <div class="role-icon">👨‍🏫</div>
-        <div class="role-name" data-en="Teacher" data-zh="老師">Teacher</div>
-        <div class="role-desc" data-en="Manage classes" data-zh="管理班級">Manage classes</div>
+      <button class="social-btn" onclick="socialLogin('apple')">
+        <span class="social-icon">🍎</span>
+        <span>Apple</span>
       </button>
     </div>
-  </div>
+  </main>
 
   <script>
     // Language
@@ -319,6 +412,55 @@
 
     const savedLang = localStorage.getItem('lang');
     if (savedLang) setLang(savedLang);
+
+    // Tab Switching
+    function showLogin() {
+      document.getElementById('loginForm').style.display = 'block';
+      document.getElementById('signupForm').style.display = 'none';
+      document.getElementById('loginTab').classList.add('active');
+      document.getElementById('signupTab').classList.remove('active');
+    }
+
+    function showSignup() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('signupForm').style.display = 'block';
+      document.getElementById('loginTab').classList.remove('active');
+      document.getElementById('signupTab').classList.add('active');
+    }
+
+    // Role Selection
+    function selectRole(el, role) {
+      document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('selectedRole').value = role;
+    }
+
+    // Form Handlers
+    function handleLogin(e) {
+      e.preventDefault();
+      // TODO: Connect to Supabase auth
+      alert(currentLang === 'zh' ? '登入成功!' : 'Login successful!');
+      location.href = 'student-dashboard-full.html';
+    }
+
+    function handleSignup(e) {
+      e.preventDefault();
+      const role = document.getElementById('selectedRole').value;
+      
+      if (!role) {
+        alert(currentLang === 'zh' ? '請選擇學生或老師' : 'Please select Student or Teacher');
+        return;
+      }
+      
+      // TODO: Connect to Supabase auth
+      alert(currentLang === 'zh' ? '註冊成功!' : 'Account created!');
+      location.href = role === 'teacher' ? 'teacher' : 'student-dashboard-full.html';
+    }
+
+    function socialLogin(provider) {
+      // TODO: Connect to Supabase OAuth
+      alert(currentLang === 'zh' ? `${provider} 登入中...` : `Signing in with ${provider}...`);
+    }
   </script>
 </body>
 </html>
