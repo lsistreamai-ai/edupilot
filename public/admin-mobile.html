@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Admin - EduPilot</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
+      background: #f8fafc;
+      min-height: 100vh;
+      padding-bottom: 70px;
+    }
+
+    /* Mobile Header */
+    .mobile-header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      z-index: 100;
+      padding: 0 16px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-btn {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      font-size: 22px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .header-btn {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Quick Stats Bar */
+    .quick-stats {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .quick-stat {
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.1);
+      padding: 10px 16px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .quick-stat-value {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .quick-stat-label {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    /* Slide-out Menu */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .slide-menu {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 280px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+      z-index: 201;
+      overflow-y: auto;
+    }
+
+    .menu-overlay.active .slide-menu {
+      transform: translateX(0);
+    }
+
+    .menu-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-header h2 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .close-menu {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 18px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .menu-section {
+      padding: 16px;
+    }
+
+    .menu-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 4px;
+    }
+
+    .menu-item:hover, .menu-item.active {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .menu-item.active {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    }
+
+    .menu-icon { font-size: 18px; }
+    .menu-text { font-size: 14px; font-weight: 500; flex: 1; }
+    .menu-badge {
+      background: #ef4444;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 16px;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .add-btn {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      border: 2px solid #f1f5f9;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .stat-icon.purple { background: #faf5ff; }
+    .stat-icon.blue { background: #eff6ff; }
+    .stat-icon.green { background: #f0fdf4; }
+    .stat-icon.orange { background: #fff7ed; }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* Data Cards */
+    .data-card {
+      background: white;
+      border-radius: 16px;
+      border: 2px solid #f1f5f9;
+      margin-bottom: 16px;
+    }
+
+    .card-header {
+      padding: 16px;
+      border-bottom: 2px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    /* User List */
+    .user-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .user-item:last-child {
+      border-bottom: none;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .user-meta {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .status-badge.active { background: #dcfce7; color: #16a34a; }
+    .status-badge.pending { background: #fef3c7; color: #d97706; }
+
+    .action-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 2px solid #f1f5f9;
+      z-index: 50;
+      padding-bottom: max(10px, env(safe-area-inset-bottom));
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .nav-item.active { color: #8b5cf6; }
+    .nav-item .icon { font-size: 22px; }
+    .nav-item .label { font-size: 10px; font-weight: 600; }
+
+    /* Activity Feed */
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .activity-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-text {
+      font-size: 14px;
+      color: #1e293b;
+    }
+
+    .activity-time {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    .activity-points {
+      font-size: 14px;
+      font-weight: 700;
+      color: #22c55e;
+    }
+
+    /* Edit Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 300;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .edit-modal {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      max-height: 85vh;
+      border-radius: 24px 24px 0 0;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-header {
+      padding: 20px;
+      border-bottom: 2px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .modal-close {
+      background: #f8fafc;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+    }
+
+    .form-input:focus {
+      border-color: #8b5cf6;
+      outline: none;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      background: white;
+    }
+
+    .modal-footer {
+      padding: 16px 20px;
+      border-top: 2px solid #f1f5f9;
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 14px;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-save {
+      flex: 2;
+      padding: 14px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Panels */
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    /* Search */
+    .search-bar {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 14px 12px 40px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 14px;
+      background: white;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+    }
+
+    /* Row item for tables */
+    .row-item {
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      border: 2px solid #f1f5f9;
+    }
+
+    .row-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .row-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .row-icon.purple { background: #faf5ff; }
+    .row-icon.blue { background: #eff6ff; }
+    .row-icon.green { background: #f0fdf4; }
+
+    .row-content {
+      flex: 1;
+    }
+
+    .row-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .row-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .row-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .row-badge.active { background: #dcfce7; color: #16a34a; }
+  </style>
+</head>
+<body>
+  <!-- Mobile Header -->
+  <header class="mobile-header">
+    <div class="header-top">
+      <div class="header-left">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <div class="logo">
+          <div class="logo-icon">🎓</div>
+          <div class="logo-text">Admin</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="header-btn" onclick="location.href='index.html'">🏠</button>
+        <button class="header-btn">👋</button>
+      </div>
+    </div>
+    <div class="quick-stats">
+      <div class="quick-stat">
+        <div class="quick-stat-value">156</div>
+        <div class="quick-stat-label">Users</div>
+      </div>
+      <div class="quick-stat">
+        <div class="quick-stat-value">8</div>
+        <div class="quick-stat-label">Schools</div>
+      </div>
+      <div class="quick-stat">
+        <div class="quick-stat-value">234</div>
+        <div class="quick-stat-label">Submissions</div>
+      </div>
+      <div class="quick-stat">
+        <div class="quick-stat-value">12.5K</div>
+        <div class="quick-stat-label">Points</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Slide Menu -->
+  <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()">
+    <div class="slide-menu" onclick="event.stopPropagation()">
+      <div class="menu-header">
+        <h2>📋 Menu</h2>
+        <button class="close-menu" onclick="toggleMenu()">✕</button>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-label">Overview</div>
+        <div class="menu-item active" onclick="showPanel('dashboard')">
+          <span class="menu-icon">📊</span>
+          <span class="menu-text">Dashboard</span>
+        </div>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-label">Users & Org</div>
+        <div class="menu-item" onclick="showPanel('users')">
+          <span class="menu-icon">👥</span>
+          <span class="menu-text">Users</span>
+          <span class="menu-badge">156</span>
+        </div>
+        <div class="menu-item" onclick="showPanel('schools')">
+          <span class="menu-icon">🏫</span>
+          <span class="menu-text">Schools</span>
+        </div>
+        <div class="menu-item" onclick="showPanel('classes')">
+          <span class="menu-icon">📚</span>
+          <span class="menu-text">Classes</span>
+        </div>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-label">Content</div>
+        <div class="menu-item" onclick="showPanel('subjects')">
+          <span class="menu-icon">📖</span>
+          <span class="menu-text">Subjects</span>
+        </div>
+        <div class="menu-item" onclick="showPanel('activities')">
+          <span class="menu-icon">🎯</span>
+          <span class="menu-text">Activities</span>
+        </div>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-label">Learning</div>
+        <div class="menu-item" onclick="showPanel('submissions')">
+          <span class="menu-icon">📝</span>
+          <span class="menu-text">Submissions</span>
+          <span class="menu-badge">23</span>
+        </div>
+        <div class="menu-item" onclick="showPanel('sessions')">
+          <span class="menu-icon">✏️</span>
+          <span class="menu-text">Sessions</span>
+        </div>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-label">Gamification</div>
+        <div class="menu-item" onclick="showPanel('leaderboards')">
+          <span class="menu-icon">🏆</span>
+          <span class="menu-text">Leaderboards</span>
+        </div>
+        <div class="menu-item" onclick="showPanel('points')">
+          <span class="menu-icon">⭐</span>
+          <span class="menu-text">Points</span>
+        </div>
+      </div>
+
+      <div class="menu-section">
+        <div class="menu-label">System</div>
+        <div class="menu-item" onclick="showPanel('settings')">
+          <span class="menu-icon">⚙️</span>
+          <span class="menu-text">Settings</span>
+        </div>
+        <div class="menu-item" onclick="showPanel('analytics')">
+          <span class="menu-icon">📈</span>
+          <span class="menu-text">Analytics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Dashboard Panel -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="page-header">
+        <h1 class="page-title">📊 Dashboard</h1>
+        <button class="add-btn">+ Add</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon purple">👥</div>
+          <div class="stat-value">156</div>
+          <div class="stat-label">Users</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">🏫</div>
+          <div class="stat-value">8</div>
+          <div class="stat-label">Schools</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">📝</div>
+          <div class="stat-value">234</div>
+          <div class="stat-label">Submissions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">⭐</div>
+          <div class="stat-value">12.5K</div>
+          <div class="stat-label">Points</div>
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="card-header">
+          <h2 class="card-title">Recent Activity</h2>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon">👦</div>
+          <div class="activity-content">
+            <div class="activity-text">Tommy completed AR/VR Lesson</div>
+            <div class="activity-time">2 min ago</div>
+          </div>
+          <div class="activity-points">+20</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon">👧</div>
+          <div class="activity-content">
+            <div class="activity-text">Emily submitted Practice Project</div>
+            <div class="activity-time">5 min ago</div>
+          </div>
+          <div class="activity-points">+30</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon">👨‍🏫</div>
+          <div class="activity-content">
+            <div class="activity-text">Mr. Patrick created new activity</div>
+            <div class="activity-time">12 min ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Panel -->
+    <div class="panel" id="panel-users">
+      <div class="page-header">
+        <h1 class="page-title">👥 Users</h1>
+        <button class="add-btn" onclick="openEditModal()">+ Add</button>
+      </div>
+
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" placeholder="Search users...">
+      </div>
+
+      <div class="row-item" onclick="openEditModal()">
+        <div class="row-main">
+          <div class="avatar">👦</div>
+          <div class="row-content">
+            <div class="row-title">Tommy Tsang</div>
+            <div class="row-subtitle">Student • P4-A • Level 9</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item" onclick="openEditModal()">
+        <div class="row-main">
+          <div class="avatar">👧</div>
+          <div class="row-content">
+            <div class="row-title">Emily Chen</div>
+            <div class="row-subtitle">Student • P4-A • Level 12</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item" onclick="openEditModal()">
+        <div class="row-main">
+          <div class="avatar">👨‍🏫</div>
+          <div class="row-content">
+            <div class="row-title">Mr. Patrick</div>
+            <div class="row-subtitle">Teacher • 2 classes</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item" onclick="openEditModal()">
+        <div class="row-main">
+          <div class="avatar">👶</div>
+          <div class="row-content">
+            <div class="row-title">Jayden Lee</div>
+            <div class="row-subtitle">Student • P4-A • Level 11</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subjects Panel -->
+    <div class="panel" id="panel-subjects">
+      <div class="page-header">
+        <h1 class="page-title">📖 Subjects</h1>
+        <button class="add-btn">+ Add</button>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon purple">🥽</div>
+          <div class="row-content">
+            <div class="row-title">AR/VR Experience</div>
+            <div class="row-subtitle">P1-S6 • 6 activities</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon blue">🤖</div>
+          <div class="row-content">
+            <div class="row-title">AI & Technology</div>
+            <div class="row-subtitle">P4-S6 • 8 activities</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon green">🎨</div>
+          <div class="row-content">
+            <div class="row-title">Digital Creativity</div>
+            <div class="row-subtitle">P1-S6 • 5 activities</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon purple">🎲</div>
+          <div class="row-content">
+            <div class="row-title">3D Design</div>
+            <div class="row-subtitle">S1-S6 • 4 activities</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submissions Panel -->
+    <div class="panel" id="panel-submissions">
+      <div class="page-header">
+        <h1 class="page-title">📝 Submissions</h1>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="avatar">👦</div>
+          <div class="row-content">
+            <div class="row-title">Tommy Tsang</div>
+            <div class="row-subtitle">AR Solar System • 2:15 PM</div>
+          </div>
+          <div class="status-badge pending">Review</div>
+        </div>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="avatar">👧</div>
+          <div class="row-content">
+            <div class="row-title">Emily Chen</div>
+            <div class="row-subtitle">AI Prompt Practice • 1:30 PM</div>
+          </div>
+          <div class="status-badge active">Reviewed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Points Panel -->
+    <div class="panel" id="panel-points">
+      <div class="page-header">
+        <h1 class="page-title">⭐ Points</h1>
+        <button class="add-btn" onclick="openEditModal()">Edit</button>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon blue">📖</div>
+          <div class="row-content">
+            <div class="row-title">Lesson Completion</div>
+            <div class="row-subtitle">Base: 20 pts • Max: +10</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon green">✏️</div>
+          <div class="row-content">
+            <div class="row-title">Practice Completion</div>
+            <div class="row-subtitle">Base: 15 pts • Max: +5</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon purple">🎯</div>
+          <div class="row-content">
+            <div class="row-title">Project Submission</div>
+            <div class="row-subtitle">Base: 30 pts • Max: +20</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon purple">🤝</div>
+          <div class="row-content">
+            <div class="row-title">Helping Peers</div>
+            <div class="row-subtitle">Base: 10 pts • No bonus</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schools Panel -->
+    <div class="panel" id="panel-schools">
+      <div class="page-header">
+        <h1 class="page-title">🏫 Schools</h1>
+        <button class="add-btn">+ Add</button>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon blue">🏛️</div>
+          <div class="row-content">
+            <div class="row-title">LSI Learning Academy</div>
+            <div class="row-subtitle">12 classes • 156 students</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Classes Panel -->
+    <div class="panel" id="panel-classes">
+      <div class="page-header">
+        <h1 class="page-title">📚 Classes</h1>
+        <button class="add-btn">+ Add</button>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon purple">📚</div>
+          <div class="row-content">
+            <div class="row-title">P4 - Class A</div>
+            <div class="row-subtitle">Mr. Patrick • 24 students</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activities Panel -->
+    <div class="panel" id="panel-activities">
+      <div class="page-header">
+        <h1 class="page-title">🎯 Activities</h1>
+        <button class="add-btn">+ Add</button>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon blue">🥽</div>
+          <div class="row-content">
+            <div class="row-title">Solar System Explorer</div>
+            <div class="row-subtitle">AR/VR • Learn • 20 pts</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon purple">🤖</div>
+          <div class="row-content">
+            <div class="row-title">AI Prompt Practice</div>
+            <div class="row-subtitle">AI & Tech • Build • 30 pts</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sessions Panel -->
+    <div class="panel" id="panel-sessions">
+      <div class="page-header">
+        <h1 class="page-title">✏️ Sessions</h1>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="avatar">👦</div>
+          <div class="row-content">
+            <div class="row-title">Tommy Tsang</div>
+            <div class="row-subtitle">AI Practice • 12 min • 85%</div>
+          </div>
+          <div class="status-badge active">Done</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboards Panel -->
+    <div class="panel" id="panel-leaderboards">
+      <div class="page-header">
+        <h1 class="page-title">🏆 Leaderboards</h1>
+      </div>
+
+      <div class="row-item">
+        <div class="row-main">
+          <div class="row-icon purple">🏆</div>
+          <div class="row-content">
+            <div class="row-title">Term 2, 2025-26</div>
+            <div class="row-subtitle">Jan 6 - Jun 30, 2026</div>
+          </div>
+          <div class="status-badge active">Active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="panel" id="panel-settings">
+      <div class="page-header">
+        <h1 class="page-title">⚙️ Settings</h1>
+      </div>
+
+      <div class="data-card">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Platform Name</label>
+            <input type="text" class="form-input" value="EduPilot Learning Platform">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Default Language</label>
+            <select class="form-select">
+              <option>English</option>
+              <option>繁體中文</option>
+              <option>简体中文</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Points per Level</label>
+            <input type="number" class="form-input" value="500">
+          </div>
+          <button class="btn-save" style="width: 100%; margin-top: 8px;">💾 Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Panel -->
+    <div class="panel" id="panel-analytics">
+      <div class="page-header">
+        <h1 class="page-title">📈 Analytics</h1>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">89%</div>
+          <div class="stat-label">Active Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">4.2</div>
+          <div class="stat-label">Sessions/User</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">23m</div>
+          <div class="stat-label">Avg Time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">67%</div>
+          <div class="stat-label">Completion</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="editModal" onclick="closeEditModal(event)">
+    <div class="edit-modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit User</h3>
+        <button class="modal-close" onclick="closeEditModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Display Name</label>
+            <input type="text" class="form-input" value="Tommy Tsang">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role</label>
+            <select class="form-select">
+              <option selected>Student</option>
+              <option>Teacher</option>
+              <option>Admin</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" value="tommy@lsi.edu">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Class</label>
+            <select class="form-select">
+              <option selected>P4 - Class A</option>
+              <option>P4 - Class B</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Level</label>
+            <input type="number" class="form-input" value="9">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Points</label>
+          <input type="number" class="form-input" value="2050">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+        <button class="btn-save">💾 Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-content">
+      <button class="nav-item active">
+        <span class="icon">📊</span>
+        <span class="label">Dashboard</span>
+      </button>
+      <button class="nav-item" onclick="showPanel('users')">
+        <span class="icon">👥</span>
+        <span class="label">Users</span>
+      </button>
+      <button class="nav-item" onclick="showPanel('subjects')">
+        <span class="icon">📖</span>
+        <span class="label">Content</span>
+      </button>
+      <button class="nav-item" onclick="showPanel('submissions')">
+        <span class="icon">📝</span>
+        <span class="label">Review</span>
+      </button>
+      <button class="nav-item" onclick="toggleMenu()">
+        <span class="icon">☰</span>
+        <span class="label">More</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('menuOverlay').classList.toggle('active');
+    }
+
+    function showPanel(panelName) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + panelName).classList.add('active');
+      document.getElementById('menuOverlay').classList.remove('active');
+    }
+
+    function openEditModal() {
+      document.getElementById('editModal').classList.add('active');
+    }
+
+    function closeEditModal(e) {
+      if (!e || e.target === e.currentTarget) {
+        document.getElementById('editModal').classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>
