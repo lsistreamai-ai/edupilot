@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Student Dashboard - LSI Learning</title>
+  <title>Student Dashboard - EduPilot</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
@@ -11,92 +11,297 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
       background: #f0f9ff;
       min-height: 100vh;
-      padding-bottom: 90px;
+      padding-bottom: 70px;
     }
 
-    /* Top Header */
-    .top-header {
-      position: fixed;
+    /* Header */
+    .header {
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      padding: 18px 20px;
-      color: white;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+      background: white;
+      border-bottom: 2px solid #e2e8f0;
+      z-index: 50;
     }
 
     .header-content {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    .student-info {
+    .user-greeting {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
     }
 
-    .student-avatar {
-      width: 52px;
-      height: 52px;
-      background: white;
+    .avatar {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      color: white;
+      font-size: 18px;
     }
 
-    .student-details h2 {
-      font-size: 20px;
+    .greeting-text h2 {
+      font-size: 16px;
       font-weight: 800;
-      margin-bottom: 4px;
+      color: #1e293b;
     }
 
-    .level-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.25);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 700;
+    .greeting-text p {
+      font-size: 11px;
+      color: #64748b;
     }
 
     .header-actions {
       display: flex;
-      gap: 12px;
-    }
-
-    .help-btn {
-      width: 48px;
-      height: 48px;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      border-radius: 50%;
-      font-size: 26px;
-      cursor: pointer;
-    }
-
-    .badges-btn {
-      width: 48px;
-      height: 48px;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      border-radius: 50%;
-      font-size: 26px;
-      cursor: pointer;
+      gap: 8px;
       position: relative;
     }
 
-    /* Bottom Navigation */
+    .header-btn {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .settings-dropdown {
+      position: absolute;
+      right: 0;
+      top: 48px;
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      width: 160px;
+      display: none;
+      z-index: 100;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .settings-dropdown.show {
+      display: block;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-item:hover {
+      background: #f8fafc;
+    }
+
+    .dropdown-item.logout {
+      color: #ef4444;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 16px;
+    }
+
+    /* Level Card */
+    .level-card {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 20px;
+      padding: 20px;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .level-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .level-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .level-icon {
+      font-size: 28px;
+    }
+
+    .level-number {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .level-label {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .points-display {
+      text-align: right;
+    }
+
+    .points-value {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .points-label {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .progress-bar {
+      background: rgba(255,255,255,0.3);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: white;
+      height: 100%;
+      width: 82%;
+      border-radius: 4px;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .action-card {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      border: 2px solid #f1f5f9;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .action-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .action-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .see-all {
+      font-size: 13px;
+      color: #3b82f6;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* Subject Cards */
+    .subject-card {
+      background: white;
+      border-radius: 14px;
+      padding: 14px;
+      border: 2px solid #f1f5f9;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .subject-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .subject-icon.purple { background: #faf5ff; }
+    .subject-icon.blue { background: #eff6ff; }
+    .subject-icon.green { background: #f0fdf4; }
+
+    .subject-info {
+      flex: 1;
+    }
+
+    .subject-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .subject-progress {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .subject-arrow {
+      font-size: 18px;
+      color: #94a3b8;
+    }
+
+    /* Bottom Nav - Fixed 4 items */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -104,14 +309,14 @@
       right: 0;
       background: white;
       border-top: 2px solid #e2e8f0;
-      z-index: 100;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      z-index: 50;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .nav-content {
       display: flex;
       justify-content: space-around;
-      padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+      padding: 6px 0 8px;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -120,785 +325,184 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
+      gap: 2px;
+      padding: 4px 8px;
       background: none;
       border: none;
-      cursor: pointer;
       color: #94a3b8;
+      cursor: pointer;
       min-width: 60px;
     }
 
-    .nav-item.active {
-      color: #3b82f6;
-    }
-
-    .nav-item .icon {
-      font-size: 28px;
-    }
-
-    .nav-item .label {
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .nav-item.active .label {
-      color: #3b82f6;
-    }
-
-    /* Main Content */
-    .main-content {
-      padding: 100px 20px 20px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* How to Start Card */
-    .how-to-start {
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
-      border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 24px;
-      border: 2px solid #f59e0b;
-    }
-
-    .how-to-start h3 {
-      font-size: 20px;
-      font-weight: 800;
-      color: #92400e;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .step {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: white;
-      padding: 16px;
-      border-radius: 16px;
-    }
-
-    .step-number {
-      width: 44px;
-      height: 44px;
-      background: #f59e0b;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: 800;
-      color: white;
-      flex-shrink: 0;
-    }
-
-    .step-text {
-      font-size: 16px;
-      font-weight: 600;
-      color: #451a03;
-    }
-
-    .step-icon {
-      font-size: 28px;
-      margin-left: auto;
-    }
-
-    /* Section Title */
-    .section-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    /* Today's Learning */
-    .today-card {
-      background: white;
-      border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      border: 2px solid #e2e8f0;
-    }
-
-    .today-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .today-badge {
-      background: #fef3c7;
-      color: #b45309;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .countdown {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: #dc2626;
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    .lesson-card {
-      background: linear-gradient(135deg, #eff6ff, #dbeafe);
-      border-radius: 20px;
-      padding: 20px;
-      border: 2px solid #3b82f6;
-    }
-
-    .lesson-icon {
-      width: 72px;
-      height: 72px;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      margin-bottom: 16px;
-      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-    }
-
-    .lesson-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 8px;
-    }
-
-    .lesson-subtitle {
-      font-size: 16px;
-      color: #64748b;
-      margin-bottom: 16px;
-    }
-
-    .start-lesson-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
-      border: none;
-      border-radius: 16px;
-      font-size: 20px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    /* Subject Tiles */
-    .subjects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .subject-tile {
-      background: white;
-      border-radius: 20px;
-      padding: 20px 12px;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      border: 2px solid transparent;
-      transition: all 0.2s;
-    }
-
-    .subject-tile:hover {
-      border-color: #3b82f6;
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
-    }
-
-    .subject-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      margin: 0 auto 12px;
-    }
-
-    .subject-icon.english { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-    .subject-icon.math { background: linear-gradient(135deg, #fef3c7, #fde68a); }
-    .subject-icon.science { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
-    .subject-icon.art { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
-    .subject-icon.coding { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
-    .subject-icon.music { background: linear-gradient(135deg, #fae8ff, #e9d5ff); }
-
-    .subject-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    /* Practice Space */
-    .practice-card {
-      background: white;
-      border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      border: 2px solid #8b5cf6;
-    }
-
-    .practice-header {
-      margin-bottom: 20px;
-    }
-
-    .skill-select {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .skill-option {
-      padding: 16px;
-      border: 2px solid #e2e8f0;
-      border-radius: 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .skill-option:hover {
-      border-color: #8b5cf6;
-      background: #faf5ff;
-    }
-
-    .skill-option.selected {
-      border-color: #8b5cf6;
-      background: linear-gradient(135deg, #faf5ff, #f3e8ff);
-    }
-
-    .skill-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .skill-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1e293b;
-    }
-
-    .start-practice-btn {
-      width: 100%;
-      padding: 20px;
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-      color: white;
-      border: none;
-      border-radius: 18px;
-      font-size: 20px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    /* Leaderboard */
-    .leaderboard-card {
-      background: white;
-      border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      border: 2px solid #f59e0b;
-    }
-
-    .your-rank {
-      background: linear-gradient(135deg, #eff6ff, #dbeafe);
-      border: 3px solid #3b82f6;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .rank-label {
-      font-size: 14px;
-      color: #64748b;
-      margin-bottom: 8px;
-    }
-
-    .rank-number {
-      font-size: 48px;
-      font-weight: 900;
-      color: #3b82f6;
-    }
-
-    .leaderboard-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .leader-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px;
-      background: #f8fafc;
-      border-radius: 16px;
-    }
-
-    .leader-item.gold { background: linear-gradient(135deg, #fffbeb, #fef3c7); }
-    .leader-item.silver { background: linear-gradient(135deg, #f8fafc, #f1f5f9); }
-    .leader-item.bronze { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
-    .leader-item.you { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #3b82f6; }
-
-    .leader-rank {
-      width: 36px;
-      font-size: 22px;
-      text-align: center;
-    }
-
-    .leader-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #c4b5fd, #f0abfc);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
-
-    .leader-name {
-      flex: 1;
-      font-size: 16px;
-      font-weight: 700;
-      color: #1e293b;
-    }
-
-    .leader-points {
-      font-size: 18px;
-      font-weight: 800;
-      color: #f59e0b;
-    }
-
-    /* My Progress */
-    .progress-card {
-      background: white;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-      border: 2px solid #22c55e;
-    }
-
-    .progress-item {
-      margin-bottom: 20px;
-    }
-
-    .progress-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .progress-subject {
-      font-size: 16px;
-      font-weight: 700;
-      color: #1e293b;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .progress-percent {
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .progress-bar {
-      height: 16px;
-      background: #f1f5f9;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      border-radius: 8px;
-      transition: width 0.5s;
-    }
-
-    /* Checklist */
-    .checklist {
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 2px solid #f1f5f9;
-    }
-
-    .checklist-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 16px;
-    }
-
-    .checklist-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px;
-      background: #f8fafc;
-      border-radius: 14px;
-      margin-bottom: 10px;
-    }
-
-    .checklist-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-    }
-
-    .checklist-icon.not-started { background: #fee2e2; }
-    .checklist-icon.in-progress { background: #fef3c7; }
-    .checklist-icon.completed { background: #dcfce7; }
-
-    .checklist-text {
-      flex: 1;
-      font-size: 16px;
-      font-weight: 600;
-      color: #1e293b;
-    }
-
-    .checklist-status {
-      font-size: 13px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 10px;
-    }
-
-    .checklist-status.not-started { background: #fee2e2; color: #dc2626; }
-    .checklist-status.in-progress { background: #fef3c7; color: #b45309; }
-    .checklist-status.completed { background: #dcfce7; color: #16a34a; }
+    .nav-item.active { color: #3b82f6; }
+    .nav-item .icon { font-size: 22px; }
+    .nav-item .label { font-size: 10px; font-weight: 600; }
   </style>
 </head>
 <body>
-  <!-- Top Header -->
-  <header class="top-header">
+  <!-- Header -->
+  <header class="header">
     <div class="header-content">
-      <div class="student-info">
-        <div class="student-avatar">👦</div>
-        <div class="student-details">
-          <h2>Tommy! 👋</h2>
-          <div class="level-badge">
-            <span>⭐</span>
-            <span>Level 9</span>
-          </div>
+      <div class="user-greeting">
+        <div class="avatar">👦</div>
+        <div class="greeting-text">
+          <h2>Hi, Tommy! 👋</h2>
+          <p>Primary 4 • Class A</p>
         </div>
       </div>
       <div class="header-actions">
-        <button class="badges-btn">🏅</button>
-        <button class="help-btn">❓</button>
+        <button class="header-btn" onclick="location.href='join-class.html'">🎒</button>
+        <button class="header-btn" onclick="toggleSettings()">⚙️</button>
+        <div class="settings-dropdown" id="settingsDropdown">
+          <div class="dropdown-item" onclick="editProfile()">
+            <span>👤</span>
+            <span>Edit Profile</span>
+          </div>
+          <div class="dropdown-item logout" onclick="logout()">
+            <span>🚪</span>
+            <span>Logout</span>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="main-content">
-    <!-- How to Start -->
-    <div class="how-to-start">
-      <h3>🚀 How to Start Learning</h3>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <div class="step-text">Pick a Subject</div>
-          <div class="step-icon">👆</div>
+  <main class="main">
+    <h1 class="page-title">Welcome back! 🎉</h1>
+
+    <!-- Level Card -->
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-badge">
+          <span class="level-icon">⭐</span>
+          <div>
+            <div class="level-number">Level 9</div>
+            <div class="level-label">Keep learning!</div>
+          </div>
         </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <div class="step-text">Start Practice</div>
-          <div class="step-icon">✏️</div>
+        <div class="points-display">
+          <div class="points-value">2,050</div>
+          <div class="points-label">Total Points</div>
         </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <div class="step-text">Submit or Finish</div>
-          <div class="step-icon">✅</div>
-        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <div class="progress-text">450 points to Level 10 🎯</div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="action-card" onclick="location.href='subjects-all.html'">
+        <div class="action-icon">📚</div>
+        <div class="action-name">Learn</div>
+      </div>
+      <div class="action-card" onclick="location.href='practice-full.html'">
+        <div class="action-icon">✏️</div>
+        <div class="action-name">Practice</div>
       </div>
     </div>
 
-    <!-- Today's Learning -->
-    <section>
-      <h2 class="section-title">📚 Today's Learning</h2>
-      <div class="today-card">
-        <div class="today-header">
-          <span class="today-badge">⭐ Today's Lesson</span>
-          <div class="countdown">
-            <span>⏰</span>
-            <span>Due in 2 hours</span>
-          </div>
-        </div>
-        <div class="lesson-card">
-          <div class="lesson-icon">📐</div>
-          <div class="lesson-title">Fractions Made Easy</div>
-          <div class="lesson-subtitle">Learn about halves, quarters, and thirds!</div>
-          <button class="start-lesson-btn">
-            <span>▶️</span>
-            <span>Start Learning</span>
-          </button>
-        </div>
+    <!-- Subjects Section -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">My Subjects</h2>
+        <a href="subjects-all.html" class="see-all">See all →</a>
       </div>
-    </section>
-
-    <!-- Subjects -->
-    <section>
-      <h2 class="section-title">📖 My Subjects</h2>
-      <div class="subjects-grid">
-        <div class="subject-tile">
-          <div class="subject-icon english">📖</div>
-          <div class="subject-name">English</div>
+      
+      <div class="subject-card" onclick="location.href='subjects-all.html'">
+        <div class="subject-icon purple">🥽</div>
+        <div class="subject-info">
+          <div class="subject-name">AR/VR Experience</div>
+          <div class="subject-progress">3/6 activities completed</div>
         </div>
-        <div class="subject-tile">
-          <div class="subject-icon math">📐</div>
-          <div class="subject-name">Math</div>
-        </div>
-        <div class="subject-tile">
-          <div class="subject-icon science">🔬</div>
-          <div class="subject-name">Science</div>
-        </div>
-        <div class="subject-tile">
-          <div class="subject-icon art">🎨</div>
-          <div class="subject-name">Art</div>
-        </div>
-        <div class="subject-tile">
-          <div class="subject-icon coding">💻</div>
-          <div class="subject-name">Coding</div>
-        </div>
-        <div class="subject-tile">
-          <div class="subject-icon music">🎵</div>
-          <div class="subject-name">Music</div>
-        </div>
+        <span class="subject-arrow">→</span>
       </div>
-    </section>
 
-    <!-- Practice Space -->
-    <section>
-      <h2 class="section-title">✏️ Practice Space</h2>
-      <div class="practice-card">
-        <div class="practice-header">
-          <p style="font-size: 16px; color: #64748b;">Choose a skill to practice:</p>
+      <div class="subject-card" onclick="location.href='subjects-all.html'">
+        <div class="subject-icon blue">🤖</div>
+        <div class="subject-info">
+          <div class="subject-name">AI & Technology</div>
+          <div class="subject-progress">5/8 activities completed</div>
         </div>
-        <div class="skill-select">
-          <div class="skill-option selected">
-            <div class="skill-icon">➕</div>
-            <div class="skill-name">Addition</div>
-          </div>
-          <div class="skill-option">
-            <div class="skill-icon">➖</div>
-            <div class="skill-name">Subtraction</div>
-          </div>
-          <div class="skill-option">
-            <div class="skill-icon">✖️</div>
-            <div class="skill-name">Multiply</div>
-          </div>
-          <div class="skill-option">
-            <div class="skill-icon">➗</div>
-            <div class="skill-name">Division</div>
-          </div>
-        </div>
-        <button class="start-practice-btn">
-          <span>🎯</span>
-          <span>Start Practice</span>
-        </button>
+        <span class="subject-arrow">→</span>
       </div>
-    </section>
 
-    <!-- Leaderboard -->
-    <section>
-      <h2 class="section-title">🏆 Leaderboard</h2>
-      <div class="leaderboard-card">
-        <div class="your-rank">
-          <div class="rank-label">Your Rank</div>
-          <div class="rank-number">#4</div>
+      <div class="subject-card" onclick="location.href='subjects-all.html'">
+        <div class="subject-icon green">🎨</div>
+        <div class="subject-info">
+          <div class="subject-name">Digital Creativity</div>
+          <div class="subject-progress">2/5 activities completed</div>
         </div>
-        <div class="leaderboard-list">
-          <div class="leader-item gold">
-            <div class="leader-rank">🥇</div>
-            <div class="leader-avatar">👧</div>
-            <div class="leader-name">Emily Wong</div>
-            <div class="leader-points">2,450 ⭐</div>
-          </div>
-          <div class="leader-item silver">
-            <div class="leader-rank">🥈</div>
-            <div class="leader-avatar">👦</div>
-            <div class="leader-name">Jason Lee</div>
-            <div class="leader-points">2,320 ⭐</div>
-          </div>
-          <div class="leader-item bronze">
-            <div class="leader-rank">🥉</div>
-            <div class="leader-avatar">👧</div>
-            <div class="leader-name">Sophie Chan</div>
-            <div class="leader-points">2,180 ⭐</div>
-          </div>
-          <div class="leader-item you">
-            <div class="leader-rank">4</div>
-            <div class="leader-avatar">👦</div>
-            <div class="leader-name">Tommy (You)</div>
-            <div class="leader-points">2,050 ⭐</div>
-          </div>
-        </div>
+        <span class="subject-arrow">→</span>
       </div>
-    </section>
+    </div>
 
-    <!-- My Progress -->
-    <section>
-      <h2 class="section-title">📊 My Progress</h2>
-      <div class="progress-card">
-        <div class="progress-item">
-          <div class="progress-header">
-            <div class="progress-subject">
-              <span>📐</span>
-              <span>Math</span>
-            </div>
-            <div class="progress-percent" style="color: #3b82f6;">80%</div>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
-          </div>
-        </div>
-
-        <div class="progress-item">
-          <div class="progress-header">
-            <div class="progress-subject">
-              <span>📖</span>
-              <span>English</span>
-            </div>
-            <div class="progress-percent" style="color: #8b5cf6;">60%</div>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 60%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
-          </div>
-        </div>
-
-        <div class="progress-item">
-          <div class="progress-header">
-            <div class="progress-subject">
-              <span>🔬</span>
-              <span>Science</span>
-            </div>
-            <div class="progress-percent" style="color: #22c55e;">70%</div>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 70%; background: linear-gradient(90deg, #22c55e, #4ade80);"></div>
-          </div>
-        </div>
-
-        <!-- Checklist -->
-        <div class="checklist">
-          <div class="checklist-title">✅ My Checklist</div>
-          <div class="checklist-item">
-            <div class="checklist-icon completed">✅</div>
-            <div class="checklist-text">Morning Quiz</div>
-            <span class="checklist-status completed">Done! 🎉</span>
-          </div>
-          <div class="checklist-item">
-            <div class="checklist-icon in-progress">🔄</div>
-            <div class="checklist-text">Fractions Lesson</div>
-            <span class="checklist-status in-progress">In Progress</span>
-          </div>
-          <div class="checklist-item">
-            <div class="checklist-icon not-started">⭕</div>
-            <div class="checklist-text">Art Project</div>
-            <span class="checklist-status not-started">Not Started</span>
-          </div>
-        </div>
+    <!-- Leaderboard Preview -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Leaderboard</h2>
+        <a href="leaderboard-full.html" class="see-all">See all →</a>
       </div>
-    </section>
+      
+      <div class="subject-card" onclick="location.href='leaderboard-full.html'">
+        <div class="subject-icon" style="background: #fef3c7;">🏆</div>
+        <div class="subject-info">
+          <div class="subject-name">Your Rank: #4</div>
+          <div class="subject-progress">Emily is #1 with 3,240 pts</div>
+        </div>
+        <span class="subject-arrow">→</span>
+      </div>
+    </div>
   </main>
 
-  <!-- Bottom Navigation -->
+  <!-- Bottom Nav - Only 4 items -->
   <nav class="bottom-nav">
     <div class="nav-content">
       <button class="nav-item active">
         <span class="icon">🏠</span>
         <span class="label">Home</span>
       </button>
-      <button class="nav-item">
+      <button class="nav-item" onclick="location.href='subjects-all.html'">
         <span class="icon">📚</span>
         <span class="label">Learn</span>
       </button>
-      <button class="nav-item">
-        <span class="icon">✏️</span>
-        <span class="label">Practice</span>
-      </button>
-      <button class="nav-item">
+      <button class="nav-item" onclick="location.href='leaderboard-full.html'">
         <span class="icon">🏆</span>
-        <span class="label">Leaders</span>
+        <span class="label">Ranks</span>
       </button>
-      <button class="nav-item">
+      <button class="nav-item" onclick="location.href='progress.html'">
         <span class="icon">📊</span>
-        <span class="label">Progress</span>
+        <span class="label">Me</span>
       </button>
     </div>
   </nav>
 
   <script>
-    // Navigation
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-      });
+    function toggleSettings() {
+      const dropdown = document.getElementById('settingsDropdown');
+      dropdown.classList.toggle('show');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('settingsDropdown');
+      if (!e.target.closest('.header-actions')) {
+        dropdown.classList.remove('show');
+      }
     });
 
-    // Skill selection
-    document.querySelectorAll('.skill-option').forEach(option => {
-      option.addEventListener('click', function() {
-        document.querySelectorAll('.skill-option').forEach(o => o.classList.remove('selected'));
-        this.classList.add('selected');
-      });
-    });
+    function editProfile() {
+      alert('Edit Profile coming soon!');
+      toggleSettings();
+    }
 
-    // Subject tiles
-    document.querySelectorAll('.subject-tile').forEach(tile => {
-      tile.addEventListener('click', function() {
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          this.style.transform = '';
-        }, 150);
-      });
-    });
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        location.href = 'index.html';
+      }
+    }
   </script>
 </body>
 </html>
