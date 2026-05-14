@@ -1,9 +1,7 @@
 -- EduPilot Database Schema
 -- Run this in Supabase SQL Editor
 
--- ============================================
--- 1. SCHOOLS
--- ============================================
+-- SCHOOLS
 CREATE TABLE IF NOT EXISTS schools (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name_en VARCHAR(255) NOT NULL,
@@ -14,9 +12,7 @@ CREATE TABLE IF NOT EXISTS schools (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================
--- 2. USERS (Teachers & Students)
--- ============================================
+-- USERS
 CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   auth_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -33,9 +29,7 @@ CREATE TABLE IF NOT EXISTS users (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================
--- 3. CLASSES
--- ============================================
+-- CLASSES
 CREATE TABLE IF NOT EXISTS classes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(255) NOT NULL,
@@ -51,9 +45,7 @@ CREATE TABLE IF NOT EXISTS classes (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================
--- 4. CLASS MEMBERSHIPS (Students in classes)
--- ============================================
+-- CLASS MEMBERSHIPS
 CREATE TABLE IF NOT EXISTS class_memberships (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   class_id UUID REFERENCES classes(id) ON DELETE CASCADE,
@@ -63,9 +55,7 @@ CREATE TABLE IF NOT EXISTS class_memberships (
   UNIQUE(class_id, student_id)
 );
 
--- ============================================
--- 5. SUBJECTS
--- ============================================
+-- SUBJECTS
 CREATE TABLE IF NOT EXISTS subjects (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name_en VARCHAR(100) NOT NULL,
@@ -78,9 +68,7 @@ CREATE TABLE IF NOT EXISTS subjects (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================
--- 6. ACTIVITIES
--- ============================================
+-- ACTIVITIES
 CREATE TABLE IF NOT EXISTS activities (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   subject_id UUID REFERENCES subjects(id),
@@ -98,9 +86,7 @@ CREATE TABLE IF NOT EXISTS activities (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================
--- 7. SUBMISSIONS
--- ============================================
+-- SUBMISSIONS
 CREATE TABLE IF NOT EXISTS submissions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   activity_id UUID REFERENCES activities(id) ON DELETE CASCADE,
@@ -119,9 +105,7 @@ CREATE TABLE IF NOT EXISTS submissions (
   UNIQUE(activity_id, student_id)
 );
 
--- ============================================
--- 8. POINTS TRANSACTIONS
--- ============================================
+-- POINTS TRANSACTIONS
 CREATE TABLE IF NOT EXISTS points_transactions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id),
@@ -132,9 +116,7 @@ CREATE TABLE IF NOT EXISTS points_transactions (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================
--- 9. ACHIEVEMENTS
--- ============================================
+-- ACHIEVEMENTS
 CREATE TABLE IF NOT EXISTS achievements (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name_en VARCHAR(100) NOT NULL,
@@ -146,9 +128,7 @@ CREATE TABLE IF NOT EXISTS achievements (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================
--- 10. USER ACHIEVEMENTS
--- ============================================
+-- USER ACHIEVEMENTS
 CREATE TABLE IF NOT EXISTS user_achievements (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id),
@@ -157,9 +137,7 @@ CREATE TABLE IF NOT EXISTS user_achievements (
   UNIQUE(user_id, achievement_id)
 );
 
--- ============================================
 -- INDEXES
--- ============================================
 CREATE INDEX IF NOT EXISTS idx_users_auth_id ON users(auth_id);
 CREATE INDEX IF NOT EXISTS idx_users_school_id ON users(school_id);
 CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
@@ -169,33 +147,16 @@ CREATE INDEX IF NOT EXISTS idx_class_memberships_student_id ON class_memberships
 CREATE INDEX IF NOT EXISTS idx_submissions_student_id ON submissions(student_id);
 CREATE INDEX IF NOT EXISTS idx_points_transactions_user_id ON points_transactions(user_id);
 
--- ============================================
--- ROW LEVEL SECURITY (RLS)
--- ============================================
+-- ROW LEVEL SECURITY
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE classes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE class_memberships ENABLE ROW LEVEL SECURITY;
 ALTER TABLE activities ENABLE ROW LEVEL SECURITY;
 ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
 
--- Users can read own data
 CREATE POLICY "Users can read own data" ON users
   FOR SELECT USING (auth.uid() = auth_id);
 
--- Teachers can read students in their classes
-CREATE POLICY "Teachers can read their students" ON users
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM classes c
-      WHERE c.teacher_id = users.id
-      AND c.id IN (
-        SELECT class_id FROM class_memberships 
-        WHERE student_id = users.id
-      )
-    )
-  );
-
--- Students can read their class info
 CREATE POLICY "Students can read their classes" ON classes
   FOR SELECT USING (
     teacher_id = auth.uid() OR
@@ -207,15 +168,10 @@ CREATE POLICY "Students can read their classes" ON classes
     )
   );
 
--- Teachers can manage their classes
 CREATE POLICY "Teachers can manage their classes" ON classes
   FOR ALL USING (teacher_id = auth.uid());
 
--- ============================================
 -- FUNCTIONS
--- ============================================
-
--- Update points after submission graded
 CREATE OR REPLACE FUNCTION update_user_points()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -232,26 +188,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger for points update
 DROP TRIGGER IF EXISTS on_submission_graded ON submissions;
+
 CREATE TRIGGER on_submission_graded
   AFTER UPDATE ON submissions
-  WHEN (NEW.status = 'graded' AND OLD.status != 'graded')
+  FOR EACH ROW
   EXECUTE FUNCTION update_user_points();
-
--- ============================================
--- GRANTS
--- ============================================
-GRANT ALL ON ALL TABLES TO authenticated;
-GRANT ALL ON ALL SEQUENCES TO authenticated;
-GRANT ALL ON ALL FUNCTIONS TO authenticated;
-
--- ============================================
--- DONE!
--- ============================================
--- Edge Cases Handled:
--- 1. Cascade deletes for class_memberships
--- 2. Unique constraints for class codes
--- 3. RLS policies for multi-tenant security
--- 4. Automatic points calculation
--- 5. Level calculation (500 pts per level)

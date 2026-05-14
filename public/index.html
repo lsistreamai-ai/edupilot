@@ -9,86 +9,88 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
-      background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
     }
 
     /* Header */
     .header {
-      position: sticky;
-      top: 0;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
-      z-index: 100;
-    }
-
-    .header-content {
       display: flex;
-      align-items: center;
       justify-content: flex-end;
-      padding: 12px 16px;
+      margin-bottom: 20px;
     }
 
-    /* Language Toggle */
     .lang-toggle {
       display: flex;
-      background: rgba(255,255,255,0.2);
+      background: white;
       border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     .lang-btn {
-      padding: 6px 12px;
+      padding: 6px 14px;
       background: none;
       border: none;
-      color: rgba(255,255,255,0.7);
-      font-size: 11px;
+      color: #64748b;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
     }
 
     .lang-btn.active {
-      background: rgba(255,255,255,0.3);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
-    }
-
-    /* Main Content */
-    .main {
-      padding: 20px 16px;
-      padding-bottom: 24px;
     }
 
     /* Logo */
     .logo {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 28px;
     }
 
     .logo-icon {
-      font-size: 56px;
-      margin-bottom: 8px;
+      font-size: 64px;
+      margin-bottom: 12px;
     }
 
     .logo-text {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 900;
       color: #1e293b;
+      letter-spacing: -0.5px;
     }
 
     .logo-tagline {
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 4px;
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+
+    /* Card */
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     }
 
     /* Tab Switcher */
     .tab-switcher {
       display: flex;
-      background: white;
-      border-radius: 14px;
+      background: #f8fafc;
+      border-radius: 12px;
       padding: 4px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
     }
 
     .tab-btn {
@@ -96,37 +98,32 @@
       padding: 12px;
       border: none;
       background: none;
-      border-radius: 12px;
+      border-radius: 10px;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 600;
       color: #64748b;
       cursor: pointer;
+      transition: all 0.2s;
     }
 
     .tab-btn.active {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
+      background: white;
+      color: #3b82f6;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      font-weight: 700;
     }
 
     /* Form */
-    .form-card {
-      background: white;
-      border-radius: 20px;
-      padding: 24px 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      margin-bottom: 20px;
-    }
-
     .form-title {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 800;
       color: #1e293b;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       text-align: center;
     }
 
     .form-group {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .form-label {
@@ -134,7 +131,7 @@
       font-size: 13px;
       font-weight: 600;
       color: #475569;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .form-input {
@@ -143,12 +140,14 @@
       border: 2px solid #e2e8f0;
       border-radius: 12px;
       font-size: 15px;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
+      background: #f8fafc;
     }
 
     .form-input:focus {
       outline: none;
       border-color: #3b82f6;
+      background: white;
     }
 
     .form-input::placeholder {
@@ -158,20 +157,22 @@
     .role-select {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      gap: 12px;
     }
 
     .role-option {
-      padding: 14px;
+      padding: 16px;
       border: 2px solid #e2e8f0;
       border-radius: 12px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s;
+      background: #f8fafc;
     }
 
     .role-option:hover {
       border-color: #3b82f6;
+      background: white;
     }
 
     .role-option.selected {
@@ -180,12 +181,12 @@
     }
 
     .role-icon {
-      font-size: 28px;
-      margin-bottom: 4px;
+      font-size: 32px;
+      margin-bottom: 6px;
     }
 
     .role-label {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       color: #1e293b;
     }
@@ -196,20 +197,22 @@
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
       border: none;
-      border-radius: 14px;
+      border-radius: 12px;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
       margin-top: 8px;
+      transition: all 0.2s;
     }
 
     .submit-btn:hover {
-      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
     }
 
     .forgot-link {
       text-align: center;
-      margin-top: 16px;
+      margin-top: 18px;
     }
 
     .forgot-link a {
@@ -221,18 +224,15 @@
   </style>
 </head>
 <body>
-  <!-- Header with Language Toggle -->
-  <header class="header">
-    <div class="header-content">
+  <div class="container">
+    <!-- Language Toggle -->
+    <div class="header">
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en')">EN</button>
         <button class="lang-btn" onclick="setLang('zh')">中文</button>
       </div>
     </div>
-  </header>
 
-  <!-- Main Content -->
-  <main class="main">
     <!-- Logo -->
     <div class="logo">
       <div class="logo-icon">🎓</div>
@@ -240,74 +240,77 @@
       <div class="logo-tagline" data-en="Learn • Play • Grow" data-zh="學習 • 遊戲 • 成長">Learn • Play • Grow</div>
     </div>
 
-    <!-- Tab Switcher -->
-    <div class="tab-switcher">
-      <button class="tab-btn active" id="loginTab" onclick="showLogin()" data-en="Login" data-zh="登入">Login</button>
-      <button class="tab-btn" id="signupTab" onclick="showSignup()" data-en="Sign Up" data-zh="註冊">Sign Up</button>
-    </div>
+    <!-- Card -->
+    <div class="card">
+      <!-- Tab Switcher -->
+      <div class="tab-switcher">
+        <button class="tab-btn active" id="loginTab" onclick="showLogin()" data-en="Login" data-zh="登入">Login</button>
+        <button class="tab-btn" id="signupTab" onclick="showSignup()" data-en="Sign Up" data-zh="註冊">Sign Up</button>
+      </div>
 
-    <!-- Login Form -->
-    <div class="form-card" id="loginForm">
-      <div class="form-title" data-en="Welcome Back!" data-zh="歡迎回來!">Welcome Back!</div>
-      
-      <form onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <label class="form-label" data-en="Email" data-zh="電郵">Email</label>
-          <input type="email" class="form-input" placeholder="your@email.com" required>
-        </div>
+      <!-- Login Form -->
+      <div id="loginForm">
+        <div class="form-title" data-en="Welcome Back!" data-zh="歡迎回來!">Welcome Back!</div>
         
-        <div class="form-group">
-          <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
-          <input type="password" class="form-input" placeholder="••••••••" required>
-        </div>
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label" data-en="Email" data-zh="電郵">Email</label>
+            <input type="email" class="form-input" placeholder="your@email.com" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
+            <input type="password" class="form-input" placeholder="••••••••" required>
+          </div>
+          
+          <button type="submit" class="submit-btn" data-en="Login" data-zh="登入">Login</button>
+        </form>
         
-        <button type="submit" class="submit-btn" data-en="Login" data-zh="登入">Login</button>
-      </form>
-      
-      <div class="forgot-link">
-        <a href="#" data-en="Forgot password?" data-zh="忘記密碼?">Forgot password?</a>
+        <div class="forgot-link">
+          <a href="#" data-en="Forgot password?" data-zh="忘記密碼?">Forgot password?</a>
+        </div>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signupForm" style="display: none;">
+        <div class="form-title" data-en="Create Account" data-zh="建立帳戶">Create Account</div>
+        
+        <form onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label class="form-label" data-en="Full Name" data-zh="姓名">Full Name</label>
+            <input type="text" class="form-input" placeholder="Tommy Tsang" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" data-en="Email" data-zh="電郵">Email</label>
+            <input type="email" class="form-input" placeholder="your@email.com" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
+            <input type="password" class="form-input" placeholder="••••••••" required minlength="6">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" data-en="I am a..." data-zh="我是...">I am a...</label>
+            <div class="role-select">
+              <div class="role-option" onclick="selectRole(this, 'student')">
+                <div class="role-icon">👦</div>
+                <div class="role-label" data-en="Student" data-zh="學生">Student</div>
+              </div>
+              <div class="role-option" onclick="selectRole(this, 'teacher')">
+                <div class="role-icon">👨‍🏫</div>
+                <div class="role-label" data-en="Teacher" data-zh="老師">Teacher</div>
+              </div>
+            </div>
+            <input type="hidden" id="selectedRole" value="">
+          </div>
+          
+          <button type="submit" class="submit-btn" data-en="Create Account" data-zh="建立帳戶">Create Account</button>
+        </form>
       </div>
     </div>
-
-    <!-- Signup Form -->
-    <div class="form-card" id="signupForm" style="display: none;">
-      <div class="form-title" data-en="Create Account" data-zh="建立帳戶">Create Account</div>
-      
-      <form onsubmit="handleSignup(event)">
-        <div class="form-group">
-          <label class="form-label" data-en="Full Name" data-zh="姓名">Full Name</label>
-          <input type="text" class="form-input" placeholder="Tommy Tsang" required>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" data-en="Email" data-zh="電郵">Email</label>
-          <input type="email" class="form-input" placeholder="your@email.com" required>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
-          <input type="password" class="form-input" placeholder="••••••••" required minlength="6">
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label" data-en="I am a..." data-zh="我是...">I am a...</label>
-          <div class="role-select">
-            <div class="role-option" onclick="selectRole(this, 'student')">
-              <div class="role-icon">👦</div>
-              <div class="role-label" data-en="Student" data-zh="學生">Student</div>
-            </div>
-            <div class="role-option" onclick="selectRole(this, 'teacher')">
-              <div class="role-icon">👨‍🏫</div>
-              <div class="role-label" data-en="Teacher" data-zh="老師">Teacher</div>
-            </div>
-          </div>
-          <input type="hidden" id="selectedRole" value="">
-        </div>
-        
-        <button type="submit" class="submit-btn" data-en="Create Account" data-zh="建立帳戶">Create Account</button>
-      </form>
-    </div>
-  </main>
+  </div>
 
   <script>
     let currentLang = 'en';
