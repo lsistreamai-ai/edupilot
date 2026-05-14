@@ -773,3 +773,106 @@ CREATE POLICY "Teachers see class students" ON student_classes
   );
 ```
 
+
+---
+
+## SQL Seed Data (May 2026)
+
+### File: `supabase-seed.sql`
+
+This file contains all demo data used in the platform:
+
+**Schools (3):**
+- LSI Learning Academy
+- APlus Education Centre
+- HK Future Learning Centre
+
+**Teachers (3):**
+- Mr. Patrick Siu (LSI)
+- Ms. Sarah Wong (LSI)
+- Mr. David Lee (APlus)
+
+**Classes (4):**
+- P4-A (P4CS21) - Mr. Patrick
+- P4-B (P4CS22) - Mr. Patrick
+- P5-A (P5CS11) - Ms. Sarah
+- S1-A (S1CS01) - Mr. David
+
+**Students (14):**
+- Tommy, Emily, Jayden, Sophie, Ryan, Mia, Lucas, Chloe, Oscar, Ava (P4-A)
+- Ethan, Hannah (P4-B)
+- Nathan, Lily (P5-A)
+
+**Subjects (6):**
+- AR/VR Experience
+- AI & Technology
+- Digital Creativity
+- 3D Design
+- VR/Metaverse
+- DSE Prep
+
+**Activities (12):**
+See table above for details
+
+**Point Rules (6):**
+- Lesson: 20 pts
+- Practice: 15 pts
+- Project: 30 pts
+- Help peer: 10 pts
+- On-time bonus: +10 pts
+- Perfect score: +20 pts
+
+---
+
+## Running the SQL
+
+### In Supabase SQL Editor:
+
+1. Go to your Supabase project
+2. Click "SQL Editor" in sidebar
+3. Copy contents of `supabase-schema.sql` and run
+4. Copy contents of `supabase-seed.sql` and run
+5. Verify data with: `SELECT * FROM users LIMIT 10;`
+
+### Via Supabase CLI:
+
+```bash
+# Initialize Supabase locally
+supabase init
+
+# Start local instance
+supabase start
+
+# Run migrations
+supabase db push
+
+# Seed data
+supabase db seed
+```
+
+---
+
+## Data Migration Notes
+
+When moving from static HTML to Supabase:
+
+1. **Authentication**
+   - Use Supabase Auth for login
+   - Email/password or OAuth providers
+   - RLS policies enforce data access
+
+2. **Read Data**
+   - Replace static HTML with dynamic queries
+   - Use Supabase client: `supabase.from('users').select()`
+   - Subscribe to real-time updates
+
+3. **Write Data**
+   - Form submissions → Supabase insert
+   - Use optimistic updates for better UX
+   - Handle errors gracefully
+
+4. **Real-time Updates**
+   - Subscribe to leaderboard changes
+   - Show live student progress
+   - Instant notifications
+
