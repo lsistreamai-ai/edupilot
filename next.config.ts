@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     return [
       { source: '/', destination: '/index.html' },
       { source: '/student', destination: '/student-dashboard.html' },
+      { source: '/student-full', destination: '/student-dashboard-full.html' },
       { source: '/teacher', destination: '/teacher-dashboard.html' },
       { source: '/teacher-full', destination: '/teacher-dashboard-full.html' },
       { source: '/subjects', destination: '/subjects.html' },
