@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Practice Area - LSI Learning</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
+      background: #faf5ff;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      z-index: 50;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Practice Type Cards */
+    .practice-types {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .practice-type-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      border: 2px solid #e2e8f0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .practice-type-card:hover {
+      border-color: #8b5cf6;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+    }
+
+    .type-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .type-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .type-icon.ai { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+    .type-icon.art { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .type-icon.model { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+    .type-icon.ar { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .type-icon.vr { background: linear-gradient(135deg, #fae8ff, #e9d5ff); }
+
+    .type-info {
+      flex: 1;
+    }
+
+    .type-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .type-count {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .type-tasks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .task-tag {
+      padding: 6px 12px;
+      background: #f8fafc;
+      border-radius: 10px;
+      font-size: 12px;
+      color: #475569;
+      font-weight: 500;
+    }
+
+    .start-btn {
+      padding: 10px 18px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Session Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .session-screen {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      border-radius: 24px;
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .session-header {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      padding: 20px;
+      position: relative;
+    }
+
+    .session-type {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .session-title {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .session-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    /* Skill Goal */
+    .skill-goal {
+      background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .goal-icon {
+      font-size: 24px;
+    }
+
+    .goal-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #6b21a8;
+    }
+
+    /* Instructions */
+    .instructions {
+      margin-bottom: 20px;
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .instruction-step {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .instruction-step:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    /* Timer/Progress */
+    .timer-section {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .timer-display {
+      font-size: 36px;
+      font-weight: 800;
+      color: #8b5cf6;
+      margin-bottom: 8px;
+    }
+
+    .timer-label {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .progress-checklist {
+      text-align: left;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .checklist-item input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      accent-color: #8b5cf6;
+    }
+
+    .checklist-text {
+      font-size: 14px;
+      color: #1e293b;
+      flex: 1;
+    }
+
+    .checklist-check {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #e2e8f0;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .checklist-check.checked {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: white;
+    }
+
+    /* Practice Input Area */
+    .practice-input {
+      margin-bottom: 20px;
+    }
+
+    .practice-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      font-size: 14px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .practice-textarea:focus {
+      border-color: #8b5cf6;
+    }
+
+    .input-tools {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tool-btn {
+      padding: 8px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Feedback */
+    .feedback-area {
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .feedback-area.correct {
+      display: block;
+      background: #dcfce7;
+      border: 2px solid #22c55e;
+    }
+
+    .feedback-area.try-again {
+      display: block;
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+    }
+
+    .feedback-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .feedback-text {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .feedback-hint {
+      font-size: 13px;
+      color: #475569;
+      margin-top: 8px;
+    }
+
+    /* Session Footer */
+    .session-footer {
+      padding: 16px 20px;
+      border-top: 2px solid #f1f5f9;
+      background: #fafafa;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .action-btn.submit {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+    }
+
+    .action-btn.save-draft {
+      background: white;
+      color: #64748b;
+      border: 2px solid #e2e8f0;
+    }
+
+    .action-btn.check {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 2px solid #e2e8f0;
+      z-index: 50;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+    }
+
+    .nav-item.active { color: #8b5cf6; }
+    .nav-item .icon { font-size: 24px; }
+    .nav-item .label { font-size: 11px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
+      <h1>✏️ Practice Area</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- AI Practice -->
+    <div class="practice-type-card" onclick="openPractice('ai')">
+      <div class="type-header">
+        <div class="type-icon ai">🤖</div>
+        <div class="type-info">
+          <div class="type-name">AI Practice</div>
+          <div class="type-count">5 activities available</div>
+        </div>
+        <button class="start-btn">Start →</button>
+      </div>
+      <div class="type-tasks">
+        <span class="task-tag">📝 Prompt Practice</span>
+        <span class="task-tag">🔄 Revise Output</span>
+        <span class="task-tag">✅ Choose Best Version</span>
+      </div>
+    </div>
+
+    <!-- Art Practice -->
+    <div class="practice-type-card" onclick="openPractice('art')">
+      <div class="type-header">
+        <div class="type-icon art">🎨</div>
+        <div class="type-info">
+          <div class="type-name">Art Practice</div>
+          <div class="type-count">8 activities available</div>
+        </div>
+        <button class="start-btn">Start →</button>
+      </div>
+      <div class="type-tasks">
+        <span class="task-tag">🖌️ Color Exercises</span>
+        <span class="task-tag">🎨 Design Tools</span>
+        <span class="task-tag">📐 Templates</span>
+      </div>
+    </div>
+
+    <!-- 3D Practice -->
+    <div class="practice-type-card" onclick="openPractice('model')">
+      <div class="type-header">
+        <div class="type-icon model">🎲</div>
+        <div class="type-info">
+          <div class="type-name">3D Practice</div>
+          <div class="type-count">4 activities available</div>
+        </div>
+        <button class="start-btn">Start →</button>
+      </div>
+      <div class="type-tasks">
+        <span class="task-tag">🔨 Build a Model</span>
+        <span class="task-tag">📐 Step-by-Step</span>
+        <span class="task-tag">🧩 Simple Tasks</span>
+      </div>
+    </div>
+
+    <!-- AR Practice -->
+    <div class="practice-type-card" onclick="openPractice('ar')">
+      <div class="type-header">
+        <div class="type-icon ar">🥽</div>
+        <div class="type-info">
+          <div class="type-name">AR Practice</div>
+          <div class="type-count">6 activities available</div>
+        </div>
+        <button class="start-btn">Start →</button>
+      </div>
+      <div class="type-tasks">
+        <span class="task-tag">📸 Scan & Observe</span>
+        <span class="task-tag">❓ Answer Questions</span>
+        <span class="task-tag">🔍 Identify Objects</span>
+      </div>
+    </div>
+
+    <!-- VR Practice -->
+    <div class="practice-type-card" onclick="openPractice('vr')">
+      <div class="type-header">
+        <div class="type-icon vr">🌐</div>
+        <div class="type-info">
+          <div class="type-name">VR Practice</div>
+          <div class="type-count">3 activities available</div>
+        </div>
+        <button class="start-btn">Start →</button>
+      </div>
+      <div class="type-tasks">
+        <span class="task-tag">🎢 World Navigation</span>
+        <span class="task-tag">🏗️ Build & Place</span>
+        <span class="task-tag">🎯 Simple Challenges</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Practice Session Modal -->
+  <div class="modal-overlay" id="practiceModal" onclick="closePractice(event)">
+    <div class="session-screen" onclick="event.stopPropagation()">
+      <div class="session-header">
+        <button class="close-modal" onclick="closePractice()">✕</button>
+        <div class="session-type" id="sessionType">🤖 AI Practice</div>
+        <div class="session-title" id="sessionTitle">Prompt Practice: Create a Story</div>
+      </div>
+
+      <div class="session-body">
+        <!-- Skill Goal -->
+        <div class="skill-goal">
+          <span class="goal-icon">🎯</span>
+          <span class="goal-text" id="goalText">Learn to write clear and specific AI prompts that produce better results.</span>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+          <div class="section-label">📝 Instructions</div>
+          <div id="instructionsList">
+            <div class="instruction-step">
+              <div class="step-num">1</div>
+              <div class="step-text">Read the task description below carefully</div>
+            </div>
+            <div class="instruction-step">
+              <div class="step-num">2</div>
+              <div class="step-text">Write your answer in the text area</div>
+            </div>
+            <div class="instruction-step">
+              <div class="step-num">3</div>
+              <div class="step-text">Click "Check Answer" to see if you're correct</div>
+            </div>
+            <div class="instruction-step">
+              <div class="step-num">4</div>
+              <div class="step-text">Review feedback and improve if needed</div>
+            </div>
+            <div class="instruction-step">
+              <div class="step-num">5</div>
+              <div class="step-text">Submit when you're happy with your answer!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timer/Progress -->
+        <div class="timer-section" id="timerSection">
+          <div class="timer-display" id="timerDisplay">05:00</div>
+          <div class="timer-label">Time Remaining</div>
+        </div>
+
+        <!-- Progress Checklist (alternative to timer) -->
+        <div class="progress-checklist" id="progressSection" style="display: none;">
+          <div class="section-label">✅ Progress Checklist</div>
+          <div class="checklist-item">
+            <div class="checklist-check" onclick="this.classList.toggle('checked')">✓</div>
+            <div class="checklist-text">Understand the task</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-check" onclick="this.classList.toggle('checked')">✓</div>
+            <div class="checklist-text">Work on your answer</div>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-check" onclick="this.classList.toggle('checked')">✓</div>
+            <div class="checklist-text">Check your work</div>
+          </div>
+        </div>
+
+        <!-- Practice Input -->
+        <div class="practice-input">
+          <div class="section-label">💼 Your Task</div>
+          <p style="margin-bottom: 12px; color: #475569; font-size: 14px;" id="taskDescription">
+            Write an AI prompt that asks the AI to create a short story about a robot who learns to make friends.
+            <br><br>
+            Your prompt should be clear and include:
+            <br>• The main character (robot)
+            <br>• The setting (future city)
+            <br>• A clear goal (make friends)
+          </p>
+          <textarea class="practice-textarea" id="practiceInput" placeholder="Write your answer here..."></textarea>
+          <div class="input-tools">
+            <button class="tool-btn">📎 Attach</button>
+            <button class="tool-btn">🎤 Voice</button>
+            <button class="tool-btn">💡 Hint</button>
+          </div>
+        </div>
+
+        <!-- Feedback Area -->
+        <div class="feedback-area" id="feedbackArea">
+          <div class="feedback-icon" id="feedbackIcon">✅</div>
+          <div class="feedback-text" id="feedbackText">Great job! Your prompt is clear and specific.</div>
+          <div class="feedback-hint" id="feedbackHint">You included all the required elements!</div>
+        </div>
+      </div>
+
+      <div class="session-footer">
+        <div class="action-buttons">
+          <button class="action-btn check" id="checkBtn" onclick="checkAnswer()">✓ Check Answer</button>
+          <button class="action-btn save-draft" onclick="saveDraft()">💾 Save Draft</button>
+          <button class="action-btn submit" id="submitBtn" onclick="submitPractice()" style="display: none;">📤 Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-content">
+      <button class="nav-item" onclick="location.href='student-dashboard-full.html'">
+        <span class="icon">🏠</span>
+        <span class="label">Home</span>
+      </button>
+      <button class="nav-item" onclick="location.href='subjects-all.html'">
+        <span class="icon">📚</span>
+        <span class="label">Learn</span>
+      </button>
+      <button class="nav-item active">
+        <span class="icon">✏️</span>
+        <span class="label">Practice</span>
+      </button>
+      <button class="nav-item" onclick="location.href='leaderboard.html'">
+        <span class="icon">🏆</span>
+        <span class="label">Leaders</span>
+      </button>
+      <button class="nav-item" onclick="location.href='progress.html'">
+        <span class="icon">📊</span>
+        <span class="label">Progress</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    // Practice data
+    const practiceData = {
+      ai: {
+        type: '🤖 AI Practice',
+        title: 'Prompt Practice: Create a Story',
+        goal: 'Learn to write clear and specific AI prompts that produce better results.',
+        timerMode: true,
+        task: 'Write an AI prompt that asks the AI to create a short story about a robot who learns to make friends.\n\nYour prompt should include:\n• The main character (robot)\n• The setting (future city)\n• A clear goal (make friends)'
+      },
+      art: {
+        type: '🎨 Art Practice',
+        title: 'Color Theory: Warm vs Cool Colors',
+        goal: 'Learn to identify and use warm and cool colors in your artwork.',
+        timerMode: false,
+        task: 'Look at the color palette below. Group the colors into "Warm" and "Cool" categories.\n\nWarm colors: Red, Orange, Yellow\nCool colors: Blue, Green, Purple\n\nList 3 warm colors and 3 cool colors.'
+      },
+      model: {
+        type: '🎲 3D Practice',
+        title: 'Build a Simple House Model',
+        goal: 'Learn to create basic 3D shapes and assemble them into a model.',
+        timerMode: false,
+        task: 'Step-by-step task:\n\n1. Create a cube for the house base\n2. Add a triangular prism for the roof\n3. Add a small cube for the chimney\n4. Color your house\n\nCheck each step when done!'
+      },
+      ar: {
+        type: '🥽 AR Practice',
+        title: 'AR Object Hunt: Find the Shapes',
+        goal: 'Practice identifying 3D objects in augmented reality environments.',
+        timerMode: true,
+        task: 'Scan your surroundings using the AR camera.\n\nFind and identify:\n• 3 circular objects\n• 2 rectangular objects\n• 1 triangular object\n\nDescribe what you found!'
+      },
+      vr: {
+        type: '🌐 VR Practice',
+        title: 'VR World Navigation Challenge',
+        goal: 'Navigate through a virtual world and complete simple placement tasks.',
+        timerMode: true,
+        task: 'You are in a VR virtual park!\n\nTasks:\n1. Walk to the fountain in the center\n2. Place a red flower near the bench\n3. Find the hidden treasure chest\n\nDescribe your journey!'
+      }
+    };
+
+    let timer = null;
+    let timeLeft = 300;
+    let currentPractice = 'ai';
+
+    function openPractice(type) {
+      currentPractice = type;
+      const data = practiceData[type];
+      
+      document.getElementById('sessionType').textContent = data.type;
+      document.getElementById('sessionTitle').textContent = data.title;
+      document.getElementById('goalText').textContent = data.goal;
+      document.getElementById('taskDescription').innerHTML = data.task.replace(/\n/g, '<br>');
+      
+      // Show timer or checklist
+      document.getElementById('timerSection').style.display = data.timerMode ? 'block' : 'none';
+      document.getElementById('progressSection').style.display = data.timerMode ? 'none' : 'block';
+      
+      // Reset
+      document.getElementById('practiceInput').value = '';
+      document.getElementById('feedbackArea').style.display = 'none';
+      document.getElementById('checkBtn').style.display = 'flex';
+      document.getElementById('submitBtn').style.display = 'none';
+      
+      // Start timer if needed
+      if (data.timerMode) {
+        timeLeft = 300;
+        updateTimer();
+        startTimer();
+      }
+      
+      document.getElementById('practiceModal').classList.add('active');
+    }
+
+    function closePractice(e) {
+      if (!e || e.target === e.currentTarget) {
+        document.getElementById('practiceModal').classList.remove('active');
+        if (timer) clearInterval(timer);
+      }
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          alert('Time is up! Submit your work.');
+        }
+      }, 1000);
+    }
+
+    function updateTimer() {
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      document.getElementById('timerDisplay').textContent = 
+        `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById('practiceInput').value;
+      if (!input.trim()) {
+        alert('Please write your answer first!');
+        return;
+      }
+      
+      // Simulate feedback
+      const feedback = document.getElementById('feedbackArea');
+      const icon = document.getElementById('feedbackIcon');
+      const text = document.getElementById('feedbackText');
+      const hint = document.getElementById('feedbackHint');
+      
+      // Simple check for demonstration
+      if (input.length > 20) {
+        feedback.className = 'feedback-area correct';
+        icon.textContent = '✅';
+        text.textContent = 'Great job! Your answer shows good understanding.';
+        hint.textContent = 'You can submit now or try to improve further!';
+        document.getElementById('checkBtn').style.display = 'none';
+        document.getElementById('submitBtn').style.display = 'flex';
+      } else {
+        feedback.className = 'feedback-area try-again';
+        icon.textContent = '🔄';
+        text.textContent = 'Good start! Try adding more detail.';
+        hint.textContent = 'Hint: Include specific examples or explanations.';
+      }
+      
+      feedback.style.display = 'block';
+    }
+
+    function saveDraft() {
+      const input = document.getElementById('practiceInput').value;
+      localStorage.setItem('practice_draft', input);
+      alert('✅ Draft saved!');
+    }
+
+    function submitPractice() {
+      const input = document.getElementById('practiceInput').value;
+      alert('🎉 Submitted successfully!\n\nYour teacher will review your work and provide feedback.');
+      closePractice();
+    }
+  </script>
+</body>
+</html>
