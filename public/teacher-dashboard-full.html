@@ -9,134 +9,241 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
-      background: linear-gradient(180deg, #faf5ff 0%, #ffffff 50%, #eff6ff 100%);
+      background: #f8fafc;
       min-height: 100vh;
-      padding-bottom: 80px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Header */
-    .header {
-      position: sticky;
-      top: 0;
-      background: white;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      z-index: 50;
-    }
-
-    .header-content {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 20px;
-      max-width: 600px;
-      margin: 0 auto;
     }
 
-    .logo {
+    /* Left Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 220px;
+      background: white;
+      border-right: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .sidebar-logo {
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-
-    .logo-icon { font-size: 28px; }
-
-    .logo-text {
       font-weight: 800;
-      font-size: 18px;
+      font-size: 16px;
       color: #1e293b;
     }
 
-    .header-right {
+    .sidebar-logo span { font-size: 24px; }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 12px;
+    }
+
+    .nav-section {
+      margin-bottom: 20px;
+    }
+
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
+
+    .nav-item {
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-
-    .icon-btn {
-      background: none;
-      border: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      color: #64748b;
       cursor: pointer;
-      font-size: 24px;
-      position: relative;
-      padding: 4px;
+      transition: all 0.2s;
+      margin-bottom: 4px;
     }
 
-    .notification-dot {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      width: 10px;
-      height: 10px;
+    .nav-item:hover {
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+      color: white;
+    }
+
+    .nav-icon { font-size: 18px; }
+    .nav-label { font-size: 14px; font-weight: 600; }
+
+    .nav-badge {
+      margin-left: auto;
       background: #ef4444;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      border: 2px solid white;
+      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .user-info h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .user-info p {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #fef2f2;
+      color: #ef4444;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .logout-btn:hover {
+      background: #fee2e2;
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 150;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid #e2e8f0;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Sidebar Overlay (Mobile) */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 99;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
     }
 
     /* Main Content */
-    .main {
-      padding: 20px;
-      max-width: 600px;
+    .main-content {
+      flex: 1;
+      margin-left: 220px;
+      min-height: 100vh;
+    }
+
+    .main-inner {
+      max-width: 900px;
       margin: 0 auto;
+      padding: 24px 32px;
     }
 
     /* Welcome Banner */
     .welcome-banner {
       background: linear-gradient(135deg, #7c3aed, #8b5cf6);
-      border-radius: 24px;
-      padding: 28px;
+      border-radius: 20px;
+      padding: 28px 32px;
       color: white;
       margin-bottom: 24px;
-      box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .welcome-banner::before {
-      content: '';
-      position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 150px;
-      height: 150px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.25);
     }
 
     .welcome-banner h1 {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 800;
       margin-bottom: 6px;
     }
 
     .welcome-banner p {
       font-size: 14px;
-      opacity: 0.95;
-      margin-bottom: 18px;
+      opacity: 0.9;
+      margin-bottom: 20px;
     }
 
     .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      display: flex;
+      gap: 16px;
     }
 
     .stat-box {
       background: rgba(255,255,255,0.2);
       backdrop-filter: blur(10px);
-      border-radius: 16px;
-      padding: 14px;
+      border-radius: 14px;
+      padding: 16px 20px;
       text-align: center;
+      flex: 1;
     }
 
-    .stat-box .value {
-      font-size: 18px;
+    .stat-value {
+      font-size: 22px;
       font-weight: 800;
     }
 
-    .stat-box .label {
+    .stat-label {
       font-size: 11px;
-      opacity: 0.95;
+      opacity: 0.9;
       margin-top: 4px;
     }
 
@@ -149,11 +256,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .section-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
       color: #1e293b;
     }
@@ -161,23 +268,22 @@
     .section-link {
       font-size: 14px;
       color: #7c3aed;
-      text-decoration: none;
       font-weight: 600;
       cursor: pointer;
     }
 
-    /* Quick Actions Grid */
+    /* Action Grid */
     .action-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 14px;
+      margin-bottom: 8px;
     }
 
     .action-card {
       background: white;
-      border-radius: 18px;
+      border-radius: 16px;
       padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
       border: 1px solid #f1f5f9;
       text-align: center;
       cursor: pointer;
@@ -186,19 +292,19 @@
 
     .action-card:hover {
       border-color: #7c3aed;
-      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
       transform: translateY(-2px);
     }
 
     .action-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      margin: 0 auto 12px;
+      font-size: 24px;
+      margin: 0 auto 10px;
     }
 
     .action-icon.purple { background: linear-gradient(135deg, #c4b5fd, #a78bfa); }
@@ -213,18 +319,22 @@
     }
 
     .action-sub {
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 4px;
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 3px;
     }
 
-    /* Class Card */
+    /* Class Grid */
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
     .class-card {
       background: white;
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border-radius: 16px;
+      padding: 20px;
       border: 1px solid #f1f5f9;
       cursor: pointer;
       transition: all 0.2s;
@@ -232,14 +342,14 @@
 
     .class-card:hover {
       border-color: #7c3aed;
-      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);
     }
 
     .class-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .class-info h3 {
@@ -257,22 +367,22 @@
     .class-badge {
       background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
       padding: 6px 12px;
-      border-radius: 12px;
-      font-size: 13px;
+      border-radius: 10px;
+      font-size: 12px;
       font-weight: 700;
       color: #7c3aed;
     }
 
     .class-stats {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       padding-top: 14px;
       border-top: 1px solid #f1f5f9;
     }
 
     .class-stat {
-      text-align: center;
       flex: 1;
+      text-align: center;
     }
 
     .class-stat-value {
@@ -282,33 +392,41 @@
     }
 
     .class-stat-label {
-      font-size: 11px;
+      font-size: 10px;
       color: #94a3b8;
       margin-top: 2px;
     }
 
-    /* Student Item */
+    /* Student List */
+    .student-list {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #f1f5f9;
+      overflow: hidden;
+    }
+
     .student-item {
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 16px;
-      background: white;
-      border-radius: 16px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-      border: 1px solid #f1f5f9;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+      cursor: pointer;
+      transition: background 0.2s;
     }
 
+    .student-item:last-child { border-bottom: none; }
+    .student-item:hover { background: #f8fafc; }
+
     .student-avatar {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, #c4b5fd, #f0abfc);
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
+      background: linear-gradient(135deg, #c4b5fd, #f0abfc);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .student-info { flex: 1; }
@@ -319,256 +437,298 @@
       color: #1e293b;
     }
 
-    .student-progress {
+    .student-meta {
       font-size: 12px;
       color: #64748b;
       margin-top: 2px;
     }
 
     .student-score {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
-      padding: 6px 12px;
-      border-radius: 12px;
+      padding: 6px 14px;
+      border-radius: 10px;
     }
 
     .score-high { background: #dcfce7; color: #16a34a; }
     .score-medium { background: #fef9c3; color: #ca8a04; }
     .score-low { background: #fee2e2; color: #dc2626; }
 
-    /* Bottom Nav */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      border-top: 1px solid #f1f5f9;
-      z-index: 50;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .action-grid { grid-template-columns: repeat(2, 1fr); }
+      .class-grid { grid-template-columns: 1fr; }
     }
 
-    .bottom-nav-content {
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0 max(10px, env(safe-area-inset-bottom));
-      max-width: 600px;
-      margin: 0 auto;
+    @media (max-width: 768px) {
+      .menu-toggle { display: flex; align-items: center; justify-content: center; }
+      .sidebar-overlay { display: block; }
+      
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      
+      .sidebar.active {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+      }
+      
+      .main-inner {
+        padding: 80px 16px 24px;
+      }
+      
+      .action-grid { grid-template-columns: repeat(2, 1fr); }
+      
+      .stats-row {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 8px 20px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #94a3b8;
-      transition: all 0.2s;
-    }
-
-    .nav-item.active { color: #7c3aed; }
-
-    .nav-item .icon { font-size: 22px; }
-    .nav-item .label { font-size: 11px; font-weight: 600; }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="header-content">
-      <div class="logo">
-        <span class="logo-icon">🎓</span>
-        <span class="logo-text">LSI Learning</span>
-      </div>
-      <div class="header-right">
-        <button class="icon-btn">
-          🔔
-          <span class="notification-dot"></span>
-        </button>
-        <button class="icon-btn" onclick="location.href='index.html'">⚙️</button>
+  <!-- Mobile Menu Toggle -->
+  <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+  
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- Left Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span>🎓</span>
+        <span>LSI Learning</span>
       </div>
     </div>
-  </header>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Main</div>
+        <div class="nav-item active">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">👨‍🎓</span>
+          <span class="nav-label">Students</span>
+          <span class="nav-badge">42</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">📚</span>
+          <span class="nav-label">Resources</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">🏆</span>
+          <span class="nav-label">Leaderboard</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Tools</div>
+        <div class="nav-item">
+          <span class="nav-icon">📝</span>
+          <span class="nav-label">Create Quiz</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">🎯</span>
+          <span class="nav-label">Assign Activity</span>
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Reports</span>
+          <span class="nav-badge" style="background: #22c55e;">3</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Account</div>
+        <div class="nav-item">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </div>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="user-avatar">👨‍🏫</div>
+        <div class="user-info">
+          <h4>Mr. Patrick</h4>
+          <p>P4 Teacher</p>
+        </div>
+      </div>
+      <button class="logout-btn">
+        <span>🚪</span>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
 
   <!-- Main Content -->
-  <main class="main">
-    <!-- Welcome Banner -->
-    <div class="welcome-banner">
-      <h1>Welcome, Mr. Patrick! 👨‍🏫</h1>
-      <p>Primary 4 • Chinese & Math Teacher</p>
-      <div class="stats-row">
-        <div class="stat-box">
-          <div class="value">👨‍🎓 42</div>
-          <div class="label">Students</div>
-        </div>
-        <div class="stat-box">
-          <div class="value">📚 3</div>
-          <div class="label">Classes</div>
-        </div>
-        <div class="stat-box">
-          <div class="value">89%</div>
-          <div class="label">Avg Score</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">⚡ Quick Actions</h2>
-      </div>
-      <div class="action-grid">
-        <div class="action-card">
-          <div class="action-icon purple">📝</div>
-          <div class="action-title">Create Quiz</div>
-          <div class="action-sub">AI-powered</div>
-        </div>
-        <div class="action-card">
-          <div class="action-icon blue">🎯</div>
-          <div class="action-title">Assign Activity</div>
-          <div class="action-sub">AR/VR, AI, DSE</div>
-        </div>
-        <div class="action-card">
-          <div class="action-icon green">📊</div>
-          <div class="action-title">View Reports</div>
-          <div class="action-sub">Analytics</div>
-        </div>
-        <div class="action-card">
-          <div class="action-icon orange">🏆</div>
-          <div class="action-title">Update Points</div>
-          <div class="action-sub">Leaderboard</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- My Classes -->
-    <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">📚 My Classes</h2>
-        <span class="section-link">View All →</span>
-      </div>
-
-      <div class="class-card">
-        <div class="class-header">
-          <div class="class-info">
-            <h3>P4A - Chinese 中文</h3>
-            <p>Mon, Wed, Fri • 9:00 AM</p>
+  <main class="main-content">
+    <div class="main-inner">
+      <!-- Welcome Banner -->
+      <div class="welcome-banner">
+        <h1>Welcome, Mr. Patrick! 👨‍🏫</h1>
+        <p>Primary 4 • Chinese & Math Teacher</p>
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-value">👨‍🎓 42</div>
+            <div class="stat-label">Students</div>
           </div>
-          <span class="class-badge">18 students</span>
-        </div>
-        <div class="class-stats">
-          <div class="class-stat">
-            <div class="class-stat-value">92%</div>
-            <div class="class-stat-label">Avg Score</div>
+          <div class="stat-box">
+            <div class="stat-value">📚 3</div>
+            <div class="stat-label">Classes</div>
           </div>
-          <div class="class-stat">
-            <div class="class-stat-value">85%</div>
-            <div class="class-stat-label">Completion</div>
-          </div>
-          <div class="class-stat">
-            <div class="class-stat-value">3</div>
-            <div class="class-stat-label">Pending</div>
+          <div class="stat-box">
+            <div class="stat-value">89%</div>
+            <div class="stat-label">Avg Score</div>
           </div>
         </div>
       </div>
 
-      <div class="class-card">
-        <div class="class-header">
-          <div class="class-info">
-            <h3>P4B - Math 數學</h3>
-            <p>Tue, Thu • 10:30 AM</p>
+      <!-- Quick Actions -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">⚡ Quick Actions</h2>
+        </div>
+        <div class="action-grid">
+          <div class="action-card">
+            <div class="action-icon purple">📝</div>
+            <div class="action-title">Create Quiz</div>
+            <div class="action-sub">AI-powered</div>
           </div>
-          <span class="class-badge">15 students</span>
-        </div>
-        <div class="class-stats">
-          <div class="class-stat">
-            <div class="class-stat-value">88%</div>
-            <div class="class-stat-label">Avg Score</div>
+          <div class="action-card">
+            <div class="action-icon blue">🎯</div>
+            <div class="action-title">Assign Activity</div>
+            <div class="action-sub">AR/VR, AI, DSE</div>
           </div>
-          <div class="class-stat">
-            <div class="class-stat-value">91%</div>
-            <div class="class-stat-label">Completion</div>
+          <div class="action-card">
+            <div class="action-icon green">📊</div>
+            <div class="action-title">View Reports</div>
+            <div class="action-sub">Analytics</div>
           </div>
-          <div class="class-stat">
-            <div class="class-stat-value">1</div>
-            <div class="class-stat-label">Pending</div>
+          <div class="action-card">
+            <div class="action-icon orange">🏆</div>
+            <div class="action-title">Update Points</div>
+            <div class="action-sub">Leaderboard</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Recent Submissions -->
-    <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">📝 Recent Submissions</h2>
-        <span class="section-link">View All →</span>
+      <!-- My Classes -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">📚 My Classes</h2>
+          <span class="section-link">View All →</span>
+        </div>
+        <div class="class-grid">
+          <div class="class-card">
+            <div class="class-header">
+              <div class="class-info">
+                <h3>P4A - Chinese 中文</h3>
+                <p>Mon, Wed, Fri • 9:00 AM</p>
+              </div>
+              <span class="class-badge">18 students</span>
+            </div>
+            <div class="class-stats">
+              <div class="class-stat">
+                <div class="class-stat-value">92%</div>
+                <div class="class-stat-label">Avg Score</div>
+              </div>
+              <div class="class-stat">
+                <div class="class-stat-value">85%</div>
+                <div class="class-stat-label">Completion</div>
+              </div>
+              <div class="class-stat">
+                <div class="class-stat-value">3</div>
+                <div class="class-stat-label">Pending</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="class-card">
+            <div class="class-header">
+              <div class="class-info">
+                <h3>P4B - Math 數學</h3>
+                <p>Tue, Thu • 10:30 AM</p>
+              </div>
+              <span class="class-badge">15 students</span>
+            </div>
+            <div class="class-stats">
+              <div class="class-stat">
+                <div class="class-stat-value">88%</div>
+                <div class="class-stat-label">Avg Score</div>
+              </div>
+              <div class="class-stat">
+                <div class="class-stat-value">91%</div>
+                <div class="class-stat-label">Completion</div>
+              </div>
+              <div class="class-stat">
+                <div class="class-stat-value">1</div>
+                <div class="class-stat-label">Pending</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="student-item">
-        <div class="student-avatar">👧</div>
-        <div class="student-info">
-          <div class="student-name">Emily Wong</div>
-          <div class="student-progress">Fractions Quiz • Completed</div>
+      <!-- Recent Submissions -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">📝 Recent Submissions</h2>
+          <span class="section-link">View All →</span>
         </div>
-        <div class="student-score score-high">98%</div>
-      </div>
+        <div class="student-list">
+          <div class="student-item">
+            <div class="student-avatar">👧</div>
+            <div class="student-info">
+              <div class="student-name">Emily Wong</div>
+              <div class="student-meta">Fractions Quiz • P4A</div>
+            </div>
+            <div class="student-score score-high">98%</div>
+          </div>
 
-      <div class="student-item">
-        <div class="student-avatar">👦</div>
-        <div class="student-info">
-          <div class="student-name">Jason Lee</div>
-          <div class="student-progress">閱讀理解 • Needs Review</div>
-        </div>
-        <div class="student-score score-medium">72%</div>
-      </div>
+          <div class="student-item">
+            <div class="student-avatar">👦</div>
+            <div class="student-info">
+              <div class="student-name">Jason Lee</div>
+              <div class="student-meta">閱讀理解 • P4A</div>
+            </div>
+            <div class="student-score score-medium">72%</div>
+          </div>
 
-      <div class="student-item">
-        <div class="student-avatar">👧</div>
-        <div class="student-info">
-          <div class="student-name">Sophie Chan</div>
-          <div class="student-progress">Past Tense • Excellent</div>
-        </div>
-        <div class="student-score score-high">95%</div>
-      </div>
+          <div class="student-item">
+            <div class="student-avatar">👧</div>
+            <div class="student-info">
+              <div class="student-name">Sophie Chan</div>
+              <div class="student-meta">Past Tense • P4A</div>
+            </div>
+            <div class="student-score score-high">95%</div>
+          </div>
 
-      <div class="student-item">
-        <div class="student-avatar">👦</div>
-        <div class="student-info">
-          <div class="student-name">Tommy Tsang</div>
-          <div class="student-progress">Geometry • In Progress</div>
+          <div class="student-item">
+            <div class="student-avatar">👦</div>
+            <div class="student-info">
+              <div class="student-name">Tommy Tsang</div>
+              <div class="student-meta">Geometry • P4B</div>
+            </div>
+            <div class="student-score score-medium">84%</div>
+          </div>
         </div>
-        <div class="student-score score-medium">84%</div>
       </div>
     </div>
   </main>
 
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <div class="bottom-nav-content">
-      <button class="nav-item active">
-        <span class="icon">🏠</span>
-        <span class="label">Home</span>
-      </button>
-      <button class="nav-item">
-        <span class="icon">👨‍🎓</span>
-        <span class="label">Students</span>
-      </button>
-      <button class="nav-item">
-        <span class="icon">📚</span>
-        <span class="label">Resources</span>
-      </button>
-      <button class="nav-item">
-        <span class="icon">🏆</span>
-        <span class="label">Leaderboard</span>
-      </button>
-      <button class="nav-item">
-        <span class="icon">📊</span>
-        <span class="label">Reports</span>
-      </button>
-    </div>
-  </nav>
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+      document.getElementById('sidebarOverlay').classList.toggle('active');
+    }
+  </script>
 </body>
 </html>
