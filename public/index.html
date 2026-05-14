@@ -102,7 +102,26 @@
       border-radius: 14px;
       padding: 14px 8px;
       text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
     }
+
+    .subject-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .subject-item:active {
+      transform: scale(0.95);
+    }
+
+    .subject-item.subj-chinese { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .subject-item.subj-english { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .subject-item.subj-math { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+    .subject-item.subj-science { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+    .subject-item.subj-arvr { background: linear-gradient(135deg, #fae8ff, #e9d5ff); }
+    .subject-item.subj-dse { background: linear-gradient(135deg, #fed7aa, #fdba74); }
 
     .subject-item-icon {
       font-size: 28px;
@@ -114,13 +133,6 @@
       font-weight: 700;
       color: #475569;
     }
-
-    .subject-item.subj-chinese { background: linear-gradient(135deg, #fef3c7, #fde68a); }
-    .subject-item.subj-english { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-    .subject-item.subj-math { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
-    .subject-item.subj-science { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
-    .subject-item.subj-arvr { background: linear-gradient(135deg, #fae8ff, #e9d5ff); }
-    .subject-item.subj-dse { background: linear-gradient(135deg, #fed7aa, #fdba74); }
 
     /* Bottom Buttons */
     .bottom-section {
@@ -208,27 +220,27 @@
     <div class="subject-showcase">
       <div class="showcase-title" data-en="📚 Learn from All Subjects" data-zh="📚 學習各種科目">📚 Learn from All Subjects</div>
       <div class="subject-grid">
-        <div class="subject-item subj-chinese">
+        <div class="subject-item subj-chinese" onclick="location.href='subjects-all.html?subj=chinese'">
           <div class="subject-item-icon">中文</div>
           <div class="subject-item-name" data-en="Chinese" data-zh="中文">Chinese</div>
         </div>
-        <div class="subject-item subj-english">
+        <div class="subject-item subj-english" onclick="location.href='subjects-all.html?subj=english'">
           <div class="subject-item-icon">ABC</div>
           <div class="subject-item-name" data-en="English" data-zh="英文">English</div>
         </div>
-        <div class="subject-item subj-math">
+        <div class="subject-item subj-math" onclick="location.href='subjects-all.html?subj=math'">
           <div class="subject-item-icon">123</div>
           <div class="subject-item-name" data-en="Math" data-zh="數學">Math</div>
         </div>
-        <div class="subject-item subj-science">
+        <div class="subject-item subj-science" onclick="location.href='subjects-all.html?subj=science'">
           <div class="subject-item-icon">🔬</div>
           <div class="subject-item-name" data-en="Science" data-zh="科學">Science</div>
         </div>
-        <div class="subject-item subj-arvr">
+        <div class="subject-item subj-arvr" onclick="location.href='subjects-all.html?subj=arvr'">
           <div class="subject-item-icon">🥽</div>
           <div class="subject-item-name" data-en="AR/VR" data-zh="AR/VR">AR/VR</div>
         </div>
-        <div class="subject-item subj-dse">
+        <div class="subject-item subj-dse" onclick="location.href='subjects-all.html?subj=dse'">
           <div class="subject-item-icon">🎯</div>
           <div class="subject-item-name" data-en="DSE" data-zh="DSE">DSE</div>
         </div>
