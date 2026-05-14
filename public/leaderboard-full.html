@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Leaderboard - LSI Learning</title>
+  <title>Leaderboard - EduPilot</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
@@ -11,7 +11,7 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
       background: linear-gradient(180deg, #fef3c7 0%, #f0f9ff 100%);
       min-height: 100vh;
-      padding-bottom: 80px;
+      padding-bottom: 70px;
     }
 
     /* Header */
@@ -26,48 +26,54 @@
     .header-content {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 18px 20px;
+      gap: 12px;
+      padding: 14px 16px;
       max-width: 600px;
       margin: 0 auto;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
     }
 
     .back-btn {
       background: none;
       border: none;
       color: white;
-      font-size: 28px;
+      font-size: 26px;
       cursor: pointer;
     }
 
     .header h1 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
+    }
+
+    .menu-btn {
+      margin-left: auto;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
     }
 
     /* Your Rank Card */
     .your-rank-card {
-      margin: 20px;
+      margin: 16px;
       padding: 20px;
       background: white;
       border-radius: 20px;
       border: 3px solid #f59e0b;
       box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
-      max-width: 560px;
+      max-width: 568px;
       margin-left: auto;
       margin-right: auto;
     }
 
     .rank-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 16px;
     }
 
@@ -134,15 +140,9 @@
       margin-top: 4px;
     }
 
-    .goal-action {
-      font-size: 12px;
-      color: #60a5fa;
-      font-weight: 600;
-    }
-
     /* Filter Tabs */
     .filter-section {
-      padding: 0 20px;
+      padding: 0 16px;
       max-width: 600px;
       margin: 0 auto 16px;
     }
@@ -155,11 +155,11 @@
     }
 
     .filter-tab {
-      padding: 10px 16px;
+      padding: 8px 14px;
       background: white;
       border: 2px solid #e2e8f0;
       border-radius: 12px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #64748b;
       cursor: pointer;
@@ -175,7 +175,7 @@
 
     /* Leaderboard List */
     .leaderboard-section {
-      padding: 0 20px;
+      padding: 0 16px;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -202,10 +202,16 @@
       gap: 14px;
       padding: 16px;
       border-bottom: 1px solid #f1f5f9;
+      cursor: pointer;
+      transition: background 0.2s;
     }
 
     .leaderboard-item:last-child {
       border-bottom: none;
+    }
+
+    .leaderboard-item:hover {
+      background: #f8fafc;
     }
 
     .leaderboard-item.you {
@@ -271,77 +277,227 @@
       color: #22c55e;
     }
 
-    /* Points Breakdown */
-    .points-breakdown {
-      margin: 20px;
-      padding: 20px;
-      background: white;
-      border-radius: 20px;
-      max-width: 560px;
-      margin-left: auto;
-      margin-right: auto;
+    .chevron {
+      color: #94a3b8;
+      font-size: 18px;
     }
 
-    .breakdown-title {
-      font-size: 16px;
+    /* Student Detail Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .student-modal {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      max-height: 85vh;
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      padding: 20px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 18px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .modal-student {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .modal-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .modal-name {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .modal-rank {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .modal-body {
+      padding: 20px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    /* Section */
+    .detail-section {
+      margin-bottom: 20px;
+    }
+
+    .detail-title {
+      font-size: 14px;
       font-weight: 700;
       color: #1e293b;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .breakdown-item {
+    /* Skills */
+    .skill-item {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 12px;
       padding: 12px;
       background: #f8fafc;
       border-radius: 12px;
       margin-bottom: 8px;
     }
 
-    .breakdown-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      color: #475569;
-      font-weight: 500;
-    }
-
-    .breakdown-icon {
+    .skill-icon {
       font-size: 20px;
     }
 
-    .breakdown-value {
-      font-size: 16px;
-      font-weight: 700;
+    .skill-info {
+      flex: 1;
+    }
+
+    .skill-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .skill-level {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .skill-progress {
+      background: #e2e8f0;
+      height: 6px;
+      border-radius: 3px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .skill-fill.high { background: #22c55e; }
+    .skill-fill.medium { background: #3b82f6; }
+    .skill-fill.low { background: #f59e0b; }
+
+    /* Activities Completed */
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+
+    .activity-icon {
+      font-size: 18px;
+    }
+
+    .activity-name {
+      flex: 1;
+      font-size: 13px;
+      color: #1e293b;
+      font-weight: 500;
+    }
+
+    .activity-points {
+      font-size: 12px;
+      font-weight: 600;
       color: #22c55e;
     }
 
-    /* Season Filter */
-    .season-filter {
+    /* Badges */
+    .badges-grid {
       display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .season-btn {
-      padding: 8px 14px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
+    .badge-item {
+      padding: 8px 12px;
+      background: #fef3c7;
       border-radius: 10px;
       font-size: 12px;
       font-weight: 600;
-      color: #64748b;
-      cursor: pointer;
-    }
-
-    .season-btn.active {
-      background: #1e293b;
-      color: white;
+      color: #92400e;
     }
 
     /* Bottom Nav */
@@ -353,12 +509,13 @@
       background: white;
       border-top: 2px solid #e2e8f0;
       z-index: 50;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .nav-content {
       display: flex;
       justify-content: space-around;
-      padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+      padding: 6px 0 8px;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -367,27 +524,27 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      padding: 8px 16px;
+      gap: 2px;
+      padding: 4px 10px;
       background: none;
       border: none;
-      cursor: pointer;
       color: #94a3b8;
+      cursor: pointer;
+      min-width: 70px;
     }
 
     .nav-item.active { color: #f59e0b; }
-    .nav-item .icon { font-size: 24px; }
-    .nav-item .label { font-size: 11px; font-weight: 600; }
+    .nav-item .icon { font-size: 22px; }
+    .nav-item .label { font-size: 10px; font-weight: 600; }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <div class="header-left">
-        <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
-        <h1>🏆 Leaderboard</h1>
-      </div>
+      <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
+      <h1>🏆 Leaderboard</h1>
+      <button class="menu-btn" onclick="location.href='student-dashboard-full.html'">☰</button>
     </div>
   </header>
 
@@ -411,23 +568,15 @@
         <div class="goal-text">Reach Level 10!</div>
         <div class="goal-progress">450 more points needed</div>
       </div>
-      <span class="goal-action">Keep going! →</span>
     </div>
   </div>
 
   <!-- Filter Section -->
   <div class="filter-section">
-    <div class="season-filter">
-      <button class="season-btn active">This Term</button>
-      <button class="season-btn">This Month</button>
-      <button class="season-btn">All Time</button>
-    </div>
     <div class="filter-tabs">
-      <div class="filter-tab active">All Subjects</div>
-      <div class="filter-tab">🤖 AI & Tech</div>
-      <div class="filter-tab">🎨 Art</div>
-      <div class="filter-tab">🎲 3D</div>
-      <div class="filter-tab">🥽 AR/VR</div>
+      <div class="filter-tab active">This Term</div>
+      <div class="filter-tab">This Month</div>
+      <div class="filter-tab">All Time</div>
     </div>
   </div>
 
@@ -436,180 +585,234 @@
     <div class="section-title">Top 10 in Your Class</div>
     <div class="leaderboard-list">
       <!-- 1st Place -->
-      <div class="leaderboard-item">
+      <div class="leaderboard-item" onclick="openStudentDetail('emily')">
         <div class="rank-pos gold">1</div>
         <div class="student-avatar">👧</div>
         <div class="student-info">
           <div class="student-name">Emily Chen</div>
-          <div class="student-level">⭐ Level 12</div>
+          <div class="student-level">⭐ Level 12 • Primary 4</div>
         </div>
         <div class="student-points">
           <div class="points-num">3,240</div>
           <div class="points-diff">+120 today</div>
         </div>
+        <span class="chevron">›</span>
       </div>
 
       <!-- 2nd Place -->
-      <div class="leaderboard-item">
+      <div class="leaderboard-item" onclick="openStudentDetail('jayden')">
         <div class="rank-pos silver">2</div>
         <div class="student-avatar">👦</div>
         <div class="student-info">
           <div class="student-name">Jayden Lee</div>
-          <div class="student-level">⭐ Level 11</div>
+          <div class="student-level">⭐ Level 11 • Primary 4</div>
         </div>
         <div class="student-points">
           <div class="points-num">2,890</div>
           <div class="points-diff">+85 today</div>
         </div>
+        <span class="chevron">›</span>
       </div>
 
       <!-- 3rd Place -->
-      <div class="leaderboard-item">
+      <div class="leaderboard-item" onclick="openStudentDetail('sophie')">
         <div class="rank-pos bronze">3</div>
         <div class="student-avatar">👧</div>
         <div class="student-info">
           <div class="student-name">Sophie Wong</div>
-          <div class="student-level">⭐ Level 10</div>
+          <div class="student-level">⭐ Level 10 • Primary 4</div>
         </div>
         <div class="student-points">
           <div class="points-num">2,670</div>
           <div class="points-diff">+60 today</div>
         </div>
+        <span class="chevron">›</span>
       </div>
 
       <!-- 4th Place (You) -->
-      <div class="leaderboard-item you">
+      <div class="leaderboard-item you" onclick="openStudentDetail('tommy')">
         <div class="rank-pos normal">4</div>
         <div class="student-avatar">👦</div>
         <div class="student-info">
           <div class="student-name">You (Tommy)</div>
-          <div class="student-level">⭐ Level 9</div>
+          <div class="student-level">⭐ Level 9 • Primary 4</div>
         </div>
         <div class="student-points">
           <div class="points-num">2,050</div>
           <div class="points-diff">+95 today</div>
         </div>
+        <span class="chevron">›</span>
       </div>
 
       <!-- 5th Place -->
-      <div class="leaderboard-item">
+      <div class="leaderboard-item" onclick="openStudentDetail('ryan')">
         <div class="rank-pos normal">5</div>
         <div class="student-avatar">👦</div>
         <div class="student-info">
           <div class="student-name">Ryan Ng</div>
-          <div class="student-level">⭐ Level 8</div>
+          <div class="student-level">⭐ Level 8 • Primary 4</div>
         </div>
         <div class="student-points">
           <div class="points-num">1,820</div>
           <div class="points-diff">+40 today</div>
         </div>
+        <span class="chevron">›</span>
       </div>
 
       <!-- 6th Place -->
-      <div class="leaderboard-item">
+      <div class="leaderboard-item" onclick="openStudentDetail('mia')">
         <div class="rank-pos normal">6</div>
         <div class="student-avatar">👧</div>
         <div class="student-info">
           <div class="student-name">Mia Lam</div>
-          <div class="student-level">⭐ Level 8</div>
+          <div class="student-level">⭐ Level 8 • Primary 4</div>
         </div>
         <div class="student-points">
           <div class="points-num">1,680</div>
           <div class="points-diff">+55 today</div>
         </div>
+        <span class="chevron">›</span>
       </div>
 
       <!-- 7th Place -->
-      <div class="leaderboard-item">
+      <div class="leaderboard-item" onclick="openStudentDetail('lucas')">
         <div class="rank-pos normal">7</div>
         <div class="student-avatar">👦</div>
         <div class="student-info">
           <div class="student-name">Lucas Ho</div>
-          <div class="student-level">⭐ Level 7</div>
+          <div class="student-level">⭐ Level 7 • Primary 4</div>
         </div>
         <div class="student-points">
           <div class="points-num">1,540</div>
           <div class="points-diff">+30 today</div>
         </div>
+        <span class="chevron">›</span>
       </div>
 
-      <!-- 8th Place -->
-      <div class="leaderboard-item">
-        <div class="rank-pos normal">8</div>
-        <div class="student-avatar">👧</div>
-        <div class="student-info">
-          <div class="student-name">Chloe Chan</div>
-          <div class="student-level">⭐ Level 7</div>
-        </div>
-        <div class="student-points">
-          <div class="points-num">1,420</div>
-          <div class="points-diff">+45 today</div>
-        </div>
-      </div>
-
-      <!-- 9th Place -->
-      <div class="leaderboard-item">
-        <div class="rank-pos normal">9</div>
-        <div class="student-avatar">👦</div>
-        <div class="student-info">
-          <div class="student-name">Oscar Yip</div>
-          <div class="student-level">⭐ Level 6</div>
-        </div>
-        <div class="student-points">
-          <div class="points-num">1,290</div>
-          <div class="points-diff">+25 today</div>
-        </div>
-      </div>
-
-      <!-- 10th Place -->
-      <div class="leaderboard-item">
-        <div class="rank-pos normal">10</div>
-        <div class="student-avatar">👧</div>
-        <div class="student-info">
-          <div class="student-name">Ava Tsang</div>
-          <div class="student-level">⭐ Level 6</div>
-        </div>
-        <div class="student-points">
-          <div class="points-num">1,180</div>
-          <div class="points-diff">+35 today</div>
-        </div>
-      </div>
+      <!-- 8th-10th would continue... -->
     </div>
   </div>
 
-  <!-- Points Breakdown -->
-  <div class="points-breakdown">
-    <div class="breakdown-title">
-      <span>📊</span>
-      <span>How You Earned Points</span>
-    </div>
-    <div class="breakdown-item">
-      <div class="breakdown-label">
-        <span class="breakdown-icon">📖</span>
-        <span>Lessons Completed</span>
+  <!-- Student Detail Modal -->
+  <div class="modal-overlay" id="studentModal" onclick="closeStudentDetail(event)">
+    <div class="student-modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <button class="modal-close" onclick="closeStudentDetail()">✕</button>
+        <div class="modal-student">
+          <div class="modal-avatar" id="modalAvatar">👧</div>
+          <div>
+            <div class="modal-name" id="modalName">Emily Chen</div>
+            <div class="modal-rank" id="modalRank">🏆 Rank #1 • 3,240 points</div>
+          </div>
+        </div>
       </div>
-      <div class="breakdown-value">+850</div>
-    </div>
-    <div class="breakdown-item">
-      <div class="breakdown-label">
-        <span class="breakdown-icon">✏️</span>
-        <span>Practice Finished</span>
+
+      <div class="modal-body">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-value" id="modalLevel">12</div>
+            <div class="stat-label">Level</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="modalGrade">P4</div>
+            <div class="stat-label">Grade</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="modalActivities">24</div>
+            <div class="stat-label">Activities</div>
+          </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="detail-section">
+          <div class="detail-title">🧠 Skills & Progress</div>
+          
+          <div class="skill-item">
+            <span class="skill-icon">🥽</span>
+            <div class="skill-info">
+              <div class="skill-name">AR/VR Experience</div>
+              <div class="skill-level">Advanced • 95%</div>
+              <div class="skill-progress">
+                <div class="skill-fill high" style="width: 95%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <span class="skill-icon">🤖</span>
+            <div class="skill-info">
+              <div class="skill-name">AI & Technology</div>
+              <div class="skill-level">Expert • 92%</div>
+              <div class="skill-progress">
+                <div class="skill-fill high" style="width: 92%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <span class="skill-icon">🎨</span>
+            <div class="skill-info">
+              <div class="skill-name">Digital Creativity</div>
+              <div class="skill-level">Intermediate • 78%</div>
+              <div class="skill-progress">
+                <div class="skill-fill medium" style="width: 78%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-item">
+            <span class="skill-icon">🎲</span>
+            <div class="skill-info">
+              <div class="skill-name">3D Design</div>
+              <div class="skill-level">Beginner • 45%</div>
+              <div class="skill-progress">
+                <div class="skill-fill low" style="width: 45%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="detail-section">
+          <div class="detail-title">📋 Completed Activities</div>
+          
+          <div class="activity-item">
+            <span class="activity-icon">🥽</span>
+            <span class="activity-name">Solar System Explorer</span>
+            <span class="activity-points">+20 pts</span>
+          </div>
+
+          <div class="activity-item">
+            <span class="activity-icon">🤖</span>
+            <span class="activity-name">AI Prompt Practice</span>
+            <span class="activity-points">+30 pts</span>
+          </div>
+
+          <div class="activity-item">
+            <span class="activity-icon">🤖</span>
+            <span class="activity-name">Train a Chatbot</span>
+            <span class="activity-points">+35 pts</span>
+          </div>
+
+          <div class="activity-item">
+            <span class="activity-icon">🎨</span>
+            <span class="activity-name">Design an Avatar</span>
+            <span class="activity-points">+15 pts</span>
+          </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="detail-section">
+          <div class="detail-title">🏅 Badges Earned</div>
+          <div class="badges-grid">
+            <div class="badge-item">🏆 Top Learner</div>
+            <div class="badge-item">🤖 AI Master</div>
+            <div class="badge-item">⭐ Super Achiever</div>
+            <div class="badge-item">🎨 Creative Mind</div>
+          </div>
+        </div>
       </div>
-      <div class="breakdown-value">+620</div>
-    </div>
-    <div class="breakdown-item">
-      <div class="breakdown-label">
-        <span class="breakdown-icon">🎯</span>
-        <span>Projects Submitted</span>
-      </div>
-      <div class="breakdown-value">+400</div>
-    </div>
-    <div class="breakdown-item">
-      <div class="breakdown-label">
-        <span class="breakdown-icon">🤝</span>
-        <span>Helping Friends</span>
-      </div>
-      <div class="breakdown-value">+180</div>
     </div>
   </div>
 
@@ -624,31 +827,146 @@
         <span class="icon">📚</span>
         <span class="label">Learn</span>
       </button>
-      <button class="nav-item" onclick="location.href='practice-full.html'">
-        <span class="icon">✏️</span>
-        <span class="label">Practice</span>
-      </button>
       <button class="nav-item active">
         <span class="icon">🏆</span>
-        <span class="label">Leaders</span>
+        <span class="label">Ranks</span>
       </button>
-      <button class="nav-item" onclick="location.href='progress.html'">
-        <span class="icon">📊</span>
-        <span class="label">Progress</span>
+      <button class="nav-item" onclick="location.href='student-dashboard-full.html'">
+        <span class="icon">☰</span>
+        <span class="label">Menu</span>
       </button>
     </div>
   </nav>
 
   <script>
-    // Season filter
-    document.querySelectorAll('.season-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
+    // Student data
+    const students = {
+      emily: {
+        name: 'Emily Chen',
+        avatar: '👧',
+        rank: 1,
+        points: 3240,
+        level: 12,
+        grade: 'P4',
+        activities: 24,
+        skills: [
+          { icon: '🥽', name: 'AR/VR Experience', level: 'Advanced', percent: 95 },
+          { icon: '🤖', name: 'AI & Technology', level: 'Expert', percent: 92 },
+          { icon: '🎨', name: 'Digital Creativity', level: 'Intermediate', percent: 78 },
+          { icon: '🎲', name: '3D Design', level: 'Beginner', percent: 45 }
+        ],
+        badges: ['🏆 Top Learner', '🤖 AI Master', '⭐ Super Achiever', '🎨 Creative Mind']
+      },
+      jayden: {
+        name: 'Jayden Lee',
+        avatar: '👦',
+        rank: 2,
+        points: 2890,
+        level: 11,
+        grade: 'P4',
+        activities: 21,
+        skills: [
+          { icon: '🥽', name: 'AR/VR Experience', level: 'Advanced', percent: 88 },
+          { icon: '🤖', name: 'AI & Technology', level: 'Advanced', percent: 85 },
+          { icon: '🎨', name: 'Digital Creativity', level: 'Intermediate', percent: 72 }
+        ],
+        badges: ['🎮 VR Enthusiast', '📖 Bookworm', '⭐ Dedicated Learner']
+      },
+      sophie: {
+        name: 'Sophie Wong',
+        avatar: '👧',
+        rank: 3,
+        points: 2670,
+        level: 10,
+        grade: 'P4',
+        activities: 19,
+        skills: [
+          { icon: '🤖', name: 'AI & Technology', level: 'Advanced', percent: 82 },
+          { icon: '🎨', name: 'Digital Creativity', level: 'Advanced', percent: 88 }
+        ],
+        badges: ['🎨 Creative Mind', '⭐ Rising Star']
+      },
+      tommy: {
+        name: 'Tommy Tsang',
+        avatar: '👦',
+        rank: 4,
+        points: 2050,
+        level: 9,
+        grade: 'P4',
+        activities: 16,
+        skills: [
+          { icon: '🥽', name: 'AR/VR Experience', level: 'Intermediate', percent: 75 },
+          { icon: '🤖', name: 'AI & Technology', level: 'Intermediate', percent: 68 },
+          { icon: '🎨', name: 'Digital Creativity', level: 'Beginner', percent: 55 }
+        ],
+        badges: ['🎮 First VR Experience', '🤖 AI Explorer', '⭐ Rising Star']
+      },
+      ryan: {
+        name: 'Ryan Ng',
+        avatar: '👦',
+        rank: 5,
+        points: 1820,
+        level: 8,
+        grade: 'P4',
+        activities: 14,
+        skills: [
+          { icon: '🥽', name: 'AR/VR Experience', level: 'Intermediate', percent: 70 }
+        ],
+        badges: ['🎮 VR Explorer']
+      },
+      mia: {
+        name: 'Mia Lam',
+        avatar: '👧',
+        rank: 6,
+        points: 1680,
+        level: 8,
+        grade: 'P4',
+        activities: 12,
+        skills: [
+          { icon: '🎨', name: 'Digital Creativity', level: 'Intermediate', percent: 82 }
+        ],
+        badges: ['🎨 Young Artist']
+      },
+      lucas: {
+        name: 'Lucas Ho',
+        avatar: '👦',
+        rank: 7,
+        points: 1540,
+        level: 7,
+        grade: 'P4',
+        activities: 11,
+        skills: [
+          { icon: '🤖', name: 'AI & Technology', level: 'Beginner', percent: 62 }
+        ],
+        badges: ['⭐ Getting Started']
+      }
+    };
 
-    // Subject filter
+    function openStudentDetail(studentId) {
+      const student = students[studentId];
+      if (!student) return;
+
+      // Update modal content
+      document.getElementById('modalAvatar').textContent = student.avatar;
+      document.getElementById('modalName').textContent = student.name;
+      document.getElementById('modalRank').textContent = `🏆 Rank #${student.rank} • ${student.points.toLocaleString()} points`;
+      document.getElementById('modalLevel').textContent = student.level;
+      document.getElementById('modalGrade').textContent = student.grade;
+      document.getElementById('modalActivities').textContent = student.activities;
+
+      // Show modal
+      document.getElementById('studentModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeStudentDetail(e) {
+      if (!e || e.target === e.currentTarget) {
+        document.getElementById('studentModal').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Filter tabs
     document.querySelectorAll('.filter-tab').forEach(tab => {
       tab.addEventListener('click', function() {
         document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
