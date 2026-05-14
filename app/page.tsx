@@ -14,14 +14,31 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
 
-  const grades = [
-    'Primary 1', 'Primary 2', 'Primary 3', 'Primary 4', 'Primary 5', 'Primary 6',
-    'Secondary 1', 'Secondary 2', 'Secondary 3', 'Secondary 4', 'Secondary 5', 'Secondary 6'
+  // Primary (TSA) + Secondary (DSE)
+  const primaryGrades = ['Primary 1', 'Primary 2', 'Primary 3', 'Primary 4', 'Primary 5', 'Primary 6']
+  const secondaryGrades = ['Secondary 1', 'Secondary 2', 'Secondary 3', 'Secondary 4', 'Secondary 5', 'Secondary 6']
+  const allGrades = [...primaryGrades, ...secondaryGrades]
+
+  const primarySubjects = [
+    { code: 'CHIN-P', name: 'Chinese Language' },
+    { code: 'ENG-P', name: 'English Language' },
+    { code: 'MATH-P', name: 'Mathematics' },
+    { code: 'GS-P', name: 'General Studies' },
   ]
 
-  const subjects = [
-    'Chinese Language', 'English Language', 'Mathematics', 'Liberal Studies',
-    'Physics', 'Chemistry', 'Biology', 'Economics', 'History', 'Geography'
+  const secondarySubjects = [
+    { code: 'CHIN-S', name: 'Chinese Language' },
+    { code: 'ENG-S', name: 'English Language' },
+    { code: 'MATH-S', name: 'Mathematics' },
+    { code: 'CSD-S', name: 'Citizenship and Social Development' },
+    { code: 'PHY-S', name: 'Physics' },
+    { code: 'CHEM-S', name: 'Chemistry' },
+    { code: 'BIO-S', name: 'Biology' },
+    { code: 'ECON-S', name: 'Economics' },
+    { code: 'HIST-S', name: 'History' },
+    { code: 'CHIST-S', name: 'Chinese History' },
+    { code: 'GEOG-S', name: 'Geography' },
+    { code: 'ICT-S', name: 'Information and Communication Technology' },
   ]
 
   async function handleSubmit(e: React.FormEvent) {
@@ -31,13 +48,9 @@ export default function HomePage() {
 
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        })
+        const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        setMessage('Login successful! Redirecting...')
-        // TODO: Redirect to dashboard
+        setMessage('Login successful!')
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -47,12 +60,12 @@ export default function HomePage() {
               name,
               role,
               grade: role === 'student' ? grade : undefined,
-              subjects: role === 'teacher' ? [subject] : undefined,
+              subject: role === 'teacher' ? subject : undefined,
             }
           }
         })
         if (error) throw error
-        setMessage('Registration successful! Please check your email to confirm.')
+        setMessage('Registration successful! Please check your email to confirm your account.')
       }
     } catch (error: any) {
       setMessage(error.message)
@@ -60,6 +73,10 @@ export default function HomePage() {
 
     setLoading(false)
   }
+
+  // Filter subjects based on selected grade
+  const isPrimary = grade.startsWith('Primary')
+  const availableSubjects = isPrimary ? primarySubjects : secondarySubjects
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 flex items-center justify-center p-4">
@@ -69,134 +86,93 @@ export default function HomePage() {
           <div className="text-4xl mb-2">✈️</div>
           <h1 className="text-3xl font-bold">EduPilot</h1>
           <p className="text-blue-100 mt-1">Pilot your education journey</p>
+          <p className="text-xs text-blue-200 mt-1">TSA (Primary) & DSE (Secondary)</p>
         </div>
 
         {/* Role Selection */}
         <div className="flex border-b">
-          <button
-            onClick={() => setRole('student')}
-            className={`flex-1 py-4 font-medium transition ${role === 'student' ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
-          >
+          <button onClick={() => setRole('student')}
+            className={`flex-1 py-4 font-medium transition ${role === 'student' ? 'bg-blue-50 text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}>
             👨‍🎓 Student
           </button>
-          <button
-            onClick={() => setRole('teacher')}
-            className={`flex-1 py-4 font-medium transition ${role === 'teacher' ? 'bg-purple-50 text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}
-          >
+          <button onClick={() => setRole('teacher')}
+            className={`flex-1 py-4 font-medium transition ${role === 'teacher' ? 'bg-purple-50 text-purple-600 border-b-2 border-purple-600' : 'text-gray-500'}`}>
             👨‍🏫 Teacher
           </button>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {/* Toggle Login/Register */}
           <div className="text-center text-sm">
-            <span className="text-gray-600">
-              {isLogin ? "Don't have an account? " : "Already have an account? "}
-            </span>
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-blue-600 font-medium hover:underline"
-            >
+            <span className="text-gray-600">{isLogin ? "Don't have an account? " : "Already have an account? "}</span>
+            <button type="button" onClick={() => setIsLogin(!isLogin)} className="text-blue-600 font-medium hover:underline">
               {isLogin ? 'Register' : 'Login'}
             </button>
           </div>
 
-          {/* Name (Register only) */}
           {!isLogin && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Your name"
-              />
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} required
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Your name" />
             </div>
           )}
 
-          {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="you@example.com"
-            />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="you@example.com" />
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="••••••••"
-            />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="••••••••" />
           </div>
 
-          {/* Grade (Student only) */}
           {!isLogin && role === 'student' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Grade</label>
-              <select
-                value={grade}
-                onChange={(e) => setGrade(e.target.value)}
-                required
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
+              <select value={grade} onChange={(e) => setGrade(e.target.value)} required
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
                 <option value="">Select your grade</option>
-                {grades.map(g => <option key={g} value={g}>{g}</option>)}
+                <optgroup label="Primary (TSA)">
+                  {primaryGrades.map(g => <option key={g} value={g}>{g}</option>)}
+                </optgroup>
+                <optgroup label="Secondary (DSE)">
+                  {secondaryGrades.map(g => <option key={g} value={g}>{g}</option>)}
+                </optgroup>
               </select>
             </div>
           )}
 
-          {/* Subject (Teacher only) */}
           {!isLogin && role === 'teacher' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Main Subject</label>
-              <select
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                required
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
+              <select value={subject} onChange={(e) => setSubject(e.target.value)} required
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
                 <option value="">Select your subject</option>
-                {subjects.map(s => <option key={s} value={s}>{s}</option>)}
+                <optgroup label="Primary (TSA)">
+                  {primarySubjects.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
+                </optgroup>
+                <optgroup label="Secondary (DSE)">
+                  {secondarySubjects.map(s => <option key={s.code} value={s.code}>{s.name}</option>)}
+                </optgroup>
               </select>
             </div>
           )}
 
-          {/* Message */}
           {message && (
             <div className={`p-3 rounded-lg text-sm ${message.includes('successful') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
               {message}
             </div>
           )}
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full py-3 rounded-lg font-bold text-white transition ${role === 'teacher' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-blue-600 hover:bg-blue-700'} disabled:opacity-50`}
-          >
+          <button type="submit" disabled={loading}
+            className={`w-full py-3 rounded-lg font-bold text-white transition ${role === 'teacher' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-blue-600 hover:bg-blue-700'} disabled:opacity-50`}>
             {loading ? 'Please wait...' : isLogin ? 'Login' : 'Create Account'}
           </button>
         </form>
-
-        {/* Footer */}
-        <div className="px-6 pb-6 text-center text-xs text-gray-500">
-          By continuing, you agree to our Terms of Service and Privacy Policy
-        </div>
       </div>
     </main>
   )
