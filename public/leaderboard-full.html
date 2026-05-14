@@ -9,9 +9,8 @@
     
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
-      background: linear-gradient(180deg, #fef3c7 0%, #f0f9ff 100%);
+      background: #f8fafc;
       min-height: 100vh;
-      padding-bottom: 70px;
     }
 
     /* Header */
@@ -20,16 +19,22 @@
       top: 0;
       background: linear-gradient(135deg, #f59e0b, #d97706);
       color: white;
-      z-index: 50;
+      z-index: 100;
     }
 
     .header-content {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
       padding: 14px 16px;
       max-width: 600px;
       margin: 0 auto;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .back-btn {
@@ -45,153 +50,137 @@
       font-weight: 800;
     }
 
-    .menu-btn {
-      margin-left: auto;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      font-size: 20px;
-      color: white;
-      cursor: pointer;
-    }
-
-    /* Your Rank Card */
-    .your-rank-card {
-      margin: 16px;
-      padding: 20px;
-      background: white;
-      border-radius: 20px;
-      border: 3px solid #f59e0b;
-      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2);
-      max-width: 568px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .rank-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .rank-badge {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .rank-number {
-      font-size: 48px;
-      font-weight: 900;
-      color: #f59e0b;
-    }
-
-    .rank-label {
-      font-size: 14px;
-      color: #64748b;
-      font-weight: 600;
-    }
-
-    .points-display {
-      text-align: right;
-    }
-
-    .points-value {
-      font-size: 32px;
-      font-weight: 800;
-      color: #1e293b;
-    }
-
-    .points-label {
-      font-size: 12px;
-      color: #64748b;
-    }
-
-    /* Next Goal */
-    .next-goal {
-      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .goal-icon {
-      font-size: 28px;
-    }
-
-    .goal-info {
-      flex: 1;
-    }
-
-    .goal-text {
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e40af;
-    }
-
-    .goal-progress {
-      font-size: 12px;
-      color: #3b82f6;
-      margin-top: 4px;
-    }
-
-    /* Filter Tabs */
-    .filter-section {
-      padding: 0 16px;
-      max-width: 600px;
-      margin: 0 auto 16px;
-    }
-
-    .filter-tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-
-    .filter-tab {
-      padding: 8px 14px;
-      background: white;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #64748b;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .filter-tab.active {
-      background: #fef3c7;
-      border-color: #f59e0b;
-      color: #92400e;
-    }
-
-    /* Leaderboard List */
-    .leaderboard-section {
-      padding: 0 16px;
+    /* Main Content */
+    .main {
+      padding: 16px;
+      padding-bottom: 80px;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    .section-title {
-      font-size: 14px;
-      font-weight: 700;
+    /* Period Tabs */
+    .period-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .period-tab {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: white;
+      border: 2px solid #e2e8f0;
+      font-size: 13px;
+      font-weight: 600;
       color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+
+    .period-tab.active {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-color: transparent;
+      color: white;
+    }
+
+    /* Your Rank Card */
+    .your-rank {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 20px;
+      padding: 20px;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .your-rank-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
       margin-bottom: 12px;
     }
 
+    .your-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .your-info {
+      flex: 1;
+    }
+
+    .your-name {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .your-level {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .your-rank-badge {
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .your-points {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .points-icon {
+      font-size: 20px;
+    }
+
+    .points-value {
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .points-label {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    /* Progress to Next Rank */
+    .progress-section {
+      margin-top: 12px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      background: rgba(255,255,255,0.3);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: white;
+      height: 100%;
+      width: 65%;
+      border-radius: 4px;
+    }
+
+    /* Leaderboard List */
     .leaderboard-list {
       background: white;
-      border-radius: 20px;
+      border-radius: 16px;
       border: 2px solid #f1f5f9;
       overflow: hidden;
     }
@@ -199,11 +188,10 @@
     .leaderboard-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 16px;
+      gap: 12px;
+      padding: 14px 16px;
       border-bottom: 1px solid #f1f5f9;
       cursor: pointer;
-      transition: background 0.2s;
     }
 
     .leaderboard-item:last-child {
@@ -214,36 +202,51 @@
       background: #f8fafc;
     }
 
-    .leaderboard-item.you {
-      background: linear-gradient(90deg, #fef3c7 0%, #fffbeb 100%);
-      border-bottom: 2px solid #f59e0b;
+    /* Top 3 Styling */
+    .leaderboard-item.rank-1 {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
     }
 
-    .rank-pos {
-      width: 40px;
-      height: 40px;
+    .leaderboard-item.rank-2 {
+      background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+    }
+
+    .leaderboard-item.rank-3 {
+      background: linear-gradient(135deg, #fed7aa, #fdba74);
+    }
+
+    .rank-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 12px;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 800;
+      flex-shrink: 0;
     }
 
-    .rank-pos.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; }
-    .rank-pos.silver { background: linear-gradient(135deg, #e5e7eb, #9ca3af); color: white; }
-    .rank-pos.bronze { background: linear-gradient(135deg, #f97316, #ea580c); color: white; }
-    .rank-pos.normal { background: #f8fafc; color: #64748b; }
+    .rank-1 .rank-number { background: #fbbf24; color: white; font-size: 16px; }
+    .rank-2 .rank-number { background: #9ca3af; color: white; }
+    .rank-3 .rank-number { background: #fb923c; color: white; }
+    .rank-number.default { background: #f1f5f9; color: #64748b; }
 
     .student-avatar {
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 24px;
     }
 
     .student-info {
@@ -256,7 +259,7 @@
       color: #1e293b;
     }
 
-    .student-level {
+    .student-meta {
       font-size: 12px;
       color: #64748b;
       margin-top: 2px;
@@ -266,238 +269,16 @@
       text-align: right;
     }
 
-    .points-num {
+    .points-number {
       font-size: 18px;
       font-weight: 800;
-      color: #f59e0b;
+      color: #1e293b;
     }
 
-    .points-diff {
+    .points-change {
       font-size: 11px;
       color: #22c55e;
-    }
-
-    .chevron {
-      color: #94a3b8;
-      font-size: 18px;
-    }
-
-    /* Student Detail Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 200;
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .student-modal {
-      background: white;
-      width: 100%;
-      max-width: 500px;
-      max-height: 85vh;
-      border-radius: 24px 24px 0 0;
-      overflow: hidden;
-      animation: slideUp 0.3s ease-out;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-
-    .modal-header {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: white;
-      padding: 20px;
-      position: relative;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(255,255,255,0.2);
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 18px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .modal-student {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .modal-avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-    }
-
-    .modal-name {
-      font-size: 22px;
-      font-weight: 800;
-    }
-
-    .modal-rank {
-      font-size: 13px;
-      opacity: 0.9;
-    }
-
-    .modal-body {
-      padding: 20px;
-      max-height: 60vh;
-      overflow-y: auto;
-    }
-
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .stat-box {
-      background: #f8fafc;
-      border-radius: 14px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: #1e293b;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: #64748b;
-      margin-top: 4px;
-    }
-
-    /* Section */
-    .detail-section {
-      margin-bottom: 20px;
-    }
-
-    .detail-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Skills */
-    .skill-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      background: #f8fafc;
-      border-radius: 12px;
-      margin-bottom: 8px;
-    }
-
-    .skill-icon {
-      font-size: 20px;
-    }
-
-    .skill-info {
-      flex: 1;
-    }
-
-    .skill-name {
-      font-size: 13px;
       font-weight: 600;
-      color: #1e293b;
-    }
-
-    .skill-level {
-      font-size: 11px;
-      color: #64748b;
-      margin-top: 2px;
-    }
-
-    .skill-progress {
-      background: #e2e8f0;
-      height: 6px;
-      border-radius: 3px;
-      margin-top: 6px;
-      overflow: hidden;
-    }
-
-    .skill-fill {
-      height: 100%;
-      border-radius: 3px;
-    }
-
-    .skill-fill.high { background: #22c55e; }
-    .skill-fill.medium { background: #3b82f6; }
-    .skill-fill.low { background: #f59e0b; }
-
-    /* Activities Completed */
-    .activity-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      background: #f8fafc;
-      border-radius: 10px;
-      margin-bottom: 6px;
-    }
-
-    .activity-icon {
-      font-size: 18px;
-    }
-
-    .activity-name {
-      flex: 1;
-      font-size: 13px;
-      color: #1e293b;
-      font-weight: 500;
-    }
-
-    .activity-points {
-      font-size: 12px;
-      font-weight: 600;
-      color: #22c55e;
-    }
-
-    /* Badges */
-    .badges-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .badge-item {
-      padding: 8px 12px;
-      background: #fef3c7;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #92400e;
     }
 
     /* Bottom Nav */
@@ -542,279 +323,216 @@
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
-      <h1>🏆 Leaderboard</h1>
-      <button class="menu-btn" onclick="location.href='student-dashboard-full.html'">☰</button>
+      <div class="header-left">
+        <button class="back-btn" onclick="location.href='student-dashboard-full.html'">←</button>
+        <h1>🏆 Leaderboard</h1>
+      </div>
     </div>
   </header>
 
-  <!-- Your Rank Card -->
-  <div class="your-rank-card">
-    <div class="rank-header">
-      <div class="rank-badge">
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Period Tabs -->
+    <div class="period-tabs">
+      <div class="period-tab active">This Week</div>
+      <div class="period-tab">This Month</div>
+      <div class="period-tab">All Time</div>
+      <div class="period-tab">My Class</div>
+    </div>
+
+    <!-- Your Rank Card -->
+    <div class="your-rank">
+      <div class="your-rank-header">
+        <div class="your-avatar">👦</div>
+        <div class="your-info">
+          <div class="your-name">Tommy Tsang</div>
+          <div class="your-level">⭐ Level 9 • P4 - Class A</div>
+        </div>
+        <div class="your-rank-badge">#4</div>
+      </div>
+      
+      <div class="your-points">
+        <span class="points-icon">⚡</span>
         <div>
-          <div class="rank-number">#4</div>
-          <div class="rank-label">Your Rank</div>
+          <div class="points-value">2,050</div>
+          <div class="points-label">Total Points</div>
         </div>
       </div>
-      <div class="points-display">
-        <div class="points-value">2,050</div>
-        <div class="points-label">Total Points</div>
+
+      <div class="progress-section">
+        <div class="progress-header">
+          <span>180 points to beat Emily</span>
+          <span>+450 to Level 10</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
       </div>
     </div>
-    <div class="next-goal">
-      <span class="goal-icon">⭐</span>
-      <div class="goal-info">
-        <div class="goal-text">Reach Level 10!</div>
-        <div class="goal-progress">450 more points needed</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Filter Section -->
-  <div class="filter-section">
-    <div class="filter-tabs">
-      <div class="filter-tab active">This Term</div>
-      <div class="filter-tab">This Month</div>
-      <div class="filter-tab">All Time</div>
-    </div>
-  </div>
-
-  <!-- Leaderboard List -->
-  <div class="leaderboard-section">
-    <div class="section-title">Top 10 in Your Class</div>
+    <!-- Leaderboard List -->
     <div class="leaderboard-list">
-      <!-- 1st Place -->
-      <div class="leaderboard-item" onclick="openStudentDetail('emily')">
-        <div class="rank-pos gold">1</div>
-        <div class="student-avatar">👧</div>
+      <!-- Rank 1 -->
+      <div class="leaderboard-item rank-1">
+        <div class="rank-number">1</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👧</div>
+        </div>
         <div class="student-info">
           <div class="student-name">Emily Chen</div>
-          <div class="student-level">⭐ Level 12 • Primary 4</div>
+          <div class="student-meta">⭐ Level 12 • P4 - Class A</div>
         </div>
         <div class="student-points">
-          <div class="points-num">3,240</div>
-          <div class="points-diff">+120 today</div>
+          <div class="points-number">3,240</div>
+          <div class="points-change">↑ +320</div>
         </div>
-        <span class="chevron">›</span>
       </div>
 
-      <!-- 2nd Place -->
-      <div class="leaderboard-item" onclick="openStudentDetail('jayden')">
-        <div class="rank-pos silver">2</div>
-        <div class="student-avatar">👦</div>
+      <!-- Rank 2 -->
+      <div class="leaderboard-item rank-2">
+        <div class="rank-number">2</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👦</div>
+        </div>
         <div class="student-info">
-          <div class="student-name">Jayden Lee</div>
-          <div class="student-level">⭐ Level 11 • Primary 4</div>
+          <div class="student-name">Jason Wong</div>
+          <div class="student-meta">⭐ Level 11 • P5 - Class B</div>
         </div>
         <div class="student-points">
-          <div class="points-num">2,890</div>
-          <div class="points-diff">+85 today</div>
+          <div class="points-number">2,890</div>
+          <div class="points-change">↑ +180</div>
         </div>
-        <span class="chevron">›</span>
       </div>
 
-      <!-- 3rd Place -->
-      <div class="leaderboard-item" onclick="openStudentDetail('sophie')">
-        <div class="rank-pos bronze">3</div>
-        <div class="student-avatar">👧</div>
+      <!-- Rank 3 -->
+      <div class="leaderboard-item rank-3">
+        <div class="rank-number">3</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👧</div>
+        </div>
         <div class="student-info">
-          <div class="student-name">Sophie Wong</div>
-          <div class="student-level">⭐ Level 10 • Primary 4</div>
+          <div class="student-name">Sarah Lee</div>
+          <div class="student-meta">⭐ Level 10 • P4 - Class A</div>
         </div>
         <div class="student-points">
-          <div class="points-num">2,670</div>
-          <div class="points-diff">+60 today</div>
+          <div class="points-number">2,340</div>
+          <div class="points-change">↑ +210</div>
         </div>
-        <span class="chevron">›</span>
       </div>
 
-      <!-- 4th Place (You) -->
-      <div class="leaderboard-item you" onclick="openStudentDetail('tommy')">
-        <div class="rank-pos normal">4</div>
-        <div class="student-avatar">👦</div>
+      <!-- Rank 4 (YOU) -->
+      <div class="leaderboard-item" style="background: #eff6ff; border-left: 3px solid #3b82f6;">
+        <div class="rank-number default">4</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👦</div>
+        </div>
         <div class="student-info">
-          <div class="student-name">You (Tommy)</div>
-          <div class="student-level">⭐ Level 9 • Primary 4</div>
+          <div class="student-name">Tommy Tsang (You)</div>
+          <div class="student-meta">⭐ Level 9 • P4 - Class A</div>
         </div>
         <div class="student-points">
-          <div class="points-num">2,050</div>
-          <div class="points-diff">+95 today</div>
+          <div class="points-number">2,050</div>
+          <div class="points-change">↑ +150</div>
         </div>
-        <span class="chevron">›</span>
       </div>
 
-      <!-- 5th Place -->
-      <div class="leaderboard-item" onclick="openStudentDetail('ryan')">
-        <div class="rank-pos normal">5</div>
-        <div class="student-avatar">👦</div>
+      <!-- Rank 5 -->
+      <div class="leaderboard-item">
+        <div class="rank-number default">5</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👦</div>
+        </div>
         <div class="student-info">
-          <div class="student-name">Ryan Ng</div>
-          <div class="student-level">⭐ Level 8 • Primary 4</div>
+          <div class="student-name">Michael Chan</div>
+          <div class="student-meta">⭐ Level 8 • S1 - Class A</div>
         </div>
         <div class="student-points">
-          <div class="points-num">1,820</div>
-          <div class="points-diff">+40 today</div>
+          <div class="points-number">1,870</div>
+          <div class="points-change">↑ +95</div>
         </div>
-        <span class="chevron">›</span>
       </div>
 
-      <!-- 6th Place -->
-      <div class="leaderboard-item" onclick="openStudentDetail('mia')">
-        <div class="rank-pos normal">6</div>
-        <div class="student-avatar">👧</div>
+      <!-- Rank 6 -->
+      <div class="leaderboard-item">
+        <div class="rank-number default">6</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👧</div>
+        </div>
         <div class="student-info">
-          <div class="student-name">Mia Lam</div>
-          <div class="student-level">⭐ Level 8 • Primary 4</div>
+          <div class="student-name">Hannah Yip</div>
+          <div class="student-meta">⭐ Level 8 • P5 - Class A</div>
         </div>
         <div class="student-points">
-          <div class="points-num">1,680</div>
-          <div class="points-diff">+55 today</div>
+          <div class="points-number">1,720</div>
+          <div class="points-change">↑ +88</div>
         </div>
-        <span class="chevron">›</span>
       </div>
 
-      <!-- 7th Place -->
-      <div class="leaderboard-item" onclick="openStudentDetail('lucas')">
-        <div class="rank-pos normal">7</div>
-        <div class="student-avatar">👦</div>
+      <!-- Rank 7 -->
+      <div class="leaderboard-item">
+        <div class="rank-number default">7</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👦</div>
+        </div>
         <div class="student-info">
-          <div class="student-name">Lucas Ho</div>
-          <div class="student-level">⭐ Level 7 • Primary 4</div>
+          <div class="student-name">David Ng</div>
+          <div class="student-meta">⭐ Level 7 • P4 - Class B</div>
         </div>
         <div class="student-points">
-          <div class="points-num">1,540</div>
-          <div class="points-diff">+30 today</div>
-        </div>
-        <span class="chevron">›</span>
-      </div>
-
-      <!-- 8th-10th would continue... -->
-    </div>
-  </div>
-
-  <!-- Student Detail Modal -->
-  <div class="modal-overlay" id="studentModal" onclick="closeStudentDetail(event)">
-    <div class="student-modal" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <button class="modal-close" onclick="closeStudentDetail()">✕</button>
-        <div class="modal-student">
-          <div class="modal-avatar" id="modalAvatar">👧</div>
-          <div>
-            <div class="modal-name" id="modalName">Emily Chen</div>
-            <div class="modal-rank" id="modalRank">🏆 Rank #1 • 3,240 points</div>
-          </div>
+          <div class="points-number">1,580</div>
+          <div class="points-change">↑ +72</div>
         </div>
       </div>
 
-      <div class="modal-body">
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-          <div class="stat-box">
-            <div class="stat-value" id="modalLevel">12</div>
-            <div class="stat-label">Level</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-value" id="modalGrade">P4</div>
-            <div class="stat-label">Grade</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-value" id="modalActivities">24</div>
-            <div class="stat-label">Activities</div>
-          </div>
+      <!-- Rank 8 -->
+      <div class="leaderboard-item">
+        <div class="rank-number default">8</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👧</div>
         </div>
-
-        <!-- Skills Section -->
-        <div class="detail-section">
-          <div class="detail-title">🧠 Skills & Progress</div>
-          
-          <div class="skill-item">
-            <span class="skill-icon">🥽</span>
-            <div class="skill-info">
-              <div class="skill-name">AR/VR Experience</div>
-              <div class="skill-level">Advanced • 95%</div>
-              <div class="skill-progress">
-                <div class="skill-fill high" style="width: 95%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="skill-item">
-            <span class="skill-icon">🤖</span>
-            <div class="skill-info">
-              <div class="skill-name">AI & Technology</div>
-              <div class="skill-level">Expert • 92%</div>
-              <div class="skill-progress">
-                <div class="skill-fill high" style="width: 92%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="skill-item">
-            <span class="skill-icon">🎨</span>
-            <div class="skill-info">
-              <div class="skill-name">Digital Creativity</div>
-              <div class="skill-level">Intermediate • 78%</div>
-              <div class="skill-progress">
-                <div class="skill-fill medium" style="width: 78%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="skill-item">
-            <span class="skill-icon">🎲</span>
-            <div class="skill-info">
-              <div class="skill-name">3D Design</div>
-              <div class="skill-level">Beginner • 45%</div>
-              <div class="skill-progress">
-                <div class="skill-fill low" style="width: 45%"></div>
-              </div>
-            </div>
-          </div>
+        <div class="student-info">
+          <div class="student-name">Jessica Ho</div>
+          <div class="student-meta">⭐ Level 7 • P5 - Class B</div>
         </div>
-
-        <!-- Recent Activities -->
-        <div class="detail-section">
-          <div class="detail-title">📋 Completed Activities</div>
-          
-          <div class="activity-item">
-            <span class="activity-icon">🥽</span>
-            <span class="activity-name">Solar System Explorer</span>
-            <span class="activity-points">+20 pts</span>
-          </div>
-
-          <div class="activity-item">
-            <span class="activity-icon">🤖</span>
-            <span class="activity-name">AI Prompt Practice</span>
-            <span class="activity-points">+30 pts</span>
-          </div>
-
-          <div class="activity-item">
-            <span class="activity-icon">🤖</span>
-            <span class="activity-name">Train a Chatbot</span>
-            <span class="activity-points">+35 pts</span>
-          </div>
-
-          <div class="activity-item">
-            <span class="activity-icon">🎨</span>
-            <span class="activity-name">Design an Avatar</span>
-            <span class="activity-points">+15 pts</span>
-          </div>
+        <div class="student-points">
+          <div class="points-number">1,450</div>
+          <div class="points-change">↑ +65</div>
         </div>
+      </div>
 
-        <!-- Badges -->
-        <div class="detail-section">
-          <div class="detail-title">🏅 Badges Earned</div>
-          <div class="badges-grid">
-            <div class="badge-item">🏆 Top Learner</div>
-            <div class="badge-item">🤖 AI Master</div>
-            <div class="badge-item">⭐ Super Achiever</div>
-            <div class="badge-item">🎨 Creative Mind</div>
-          </div>
+      <!-- Rank 9 -->
+      <div class="leaderboard-item">
+        <div class="rank-number default">9</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👦</div>
+        </div>
+        <div class="student-info">
+          <div class="student-name">Ryan Tam</div>
+          <div class="student-meta">⭐ Level 6 • S1 - Class B</div>
+        </div>
+        <div class="student-points">
+          <div class="points-number">1,320</div>
+          <div class="points-change">↑ +58</div>
+        </div>
+      </div>
+
+      <!-- Rank 10 -->
+      <div class="leaderboard-item">
+        <div class="rank-number default">10</div>
+        <div class="student-avatar">
+          <div class="avatar-img">👧</div>
+        </div>
+        <div class="student-info">
+          <div class="student-name">Nicole Fong</div>
+          <div class="student-meta">⭐ Level 6 • P4 - Class A</div>
+        </div>
+        <div class="student-points">
+          <div class="points-number">1,280</div>
+          <div class="points-change">↑ +52</div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <!-- Bottom Navigation -->
   <nav class="bottom-nav">
@@ -832,144 +550,17 @@
         <span class="label">Ranks</span>
       </button>
       <button class="nav-item" onclick="location.href='student-dashboard-full.html'">
-        <span class="icon">☰</span>
-        <span class="label">Menu</span>
+        <span class="icon">👦</span>
+        <span class="label">Me</span>
       </button>
     </div>
   </nav>
 
   <script>
-    // Student data
-    const students = {
-      emily: {
-        name: 'Emily Chen',
-        avatar: '👧',
-        rank: 1,
-        points: 3240,
-        level: 12,
-        grade: 'P4',
-        activities: 24,
-        skills: [
-          { icon: '🥽', name: 'AR/VR Experience', level: 'Advanced', percent: 95 },
-          { icon: '🤖', name: 'AI & Technology', level: 'Expert', percent: 92 },
-          { icon: '🎨', name: 'Digital Creativity', level: 'Intermediate', percent: 78 },
-          { icon: '🎲', name: '3D Design', level: 'Beginner', percent: 45 }
-        ],
-        badges: ['🏆 Top Learner', '🤖 AI Master', '⭐ Super Achiever', '🎨 Creative Mind']
-      },
-      jayden: {
-        name: 'Jayden Lee',
-        avatar: '👦',
-        rank: 2,
-        points: 2890,
-        level: 11,
-        grade: 'P4',
-        activities: 21,
-        skills: [
-          { icon: '🥽', name: 'AR/VR Experience', level: 'Advanced', percent: 88 },
-          { icon: '🤖', name: 'AI & Technology', level: 'Advanced', percent: 85 },
-          { icon: '🎨', name: 'Digital Creativity', level: 'Intermediate', percent: 72 }
-        ],
-        badges: ['🎮 VR Enthusiast', '📖 Bookworm', '⭐ Dedicated Learner']
-      },
-      sophie: {
-        name: 'Sophie Wong',
-        avatar: '👧',
-        rank: 3,
-        points: 2670,
-        level: 10,
-        grade: 'P4',
-        activities: 19,
-        skills: [
-          { icon: '🤖', name: 'AI & Technology', level: 'Advanced', percent: 82 },
-          { icon: '🎨', name: 'Digital Creativity', level: 'Advanced', percent: 88 }
-        ],
-        badges: ['🎨 Creative Mind', '⭐ Rising Star']
-      },
-      tommy: {
-        name: 'Tommy Tsang',
-        avatar: '👦',
-        rank: 4,
-        points: 2050,
-        level: 9,
-        grade: 'P4',
-        activities: 16,
-        skills: [
-          { icon: '🥽', name: 'AR/VR Experience', level: 'Intermediate', percent: 75 },
-          { icon: '🤖', name: 'AI & Technology', level: 'Intermediate', percent: 68 },
-          { icon: '🎨', name: 'Digital Creativity', level: 'Beginner', percent: 55 }
-        ],
-        badges: ['🎮 First VR Experience', '🤖 AI Explorer', '⭐ Rising Star']
-      },
-      ryan: {
-        name: 'Ryan Ng',
-        avatar: '👦',
-        rank: 5,
-        points: 1820,
-        level: 8,
-        grade: 'P4',
-        activities: 14,
-        skills: [
-          { icon: '🥽', name: 'AR/VR Experience', level: 'Intermediate', percent: 70 }
-        ],
-        badges: ['🎮 VR Explorer']
-      },
-      mia: {
-        name: 'Mia Lam',
-        avatar: '👧',
-        rank: 6,
-        points: 1680,
-        level: 8,
-        grade: 'P4',
-        activities: 12,
-        skills: [
-          { icon: '🎨', name: 'Digital Creativity', level: 'Intermediate', percent: 82 }
-        ],
-        badges: ['🎨 Young Artist']
-      },
-      lucas: {
-        name: 'Lucas Ho',
-        avatar: '👦',
-        rank: 7,
-        points: 1540,
-        level: 7,
-        grade: 'P4',
-        activities: 11,
-        skills: [
-          { icon: '🤖', name: 'AI & Technology', level: 'Beginner', percent: 62 }
-        ],
-        badges: ['⭐ Getting Started']
-      }
-    };
-
-    function openStudentDetail(studentId) {
-      const student = students[studentId];
-      if (!student) return;
-
-      // Update modal content
-      document.getElementById('modalAvatar').textContent = student.avatar;
-      document.getElementById('modalName').textContent = student.name;
-      document.getElementById('modalRank').textContent = `🏆 Rank #${student.rank} • ${student.points.toLocaleString()} points`;
-      document.getElementById('modalLevel').textContent = student.level;
-      document.getElementById('modalGrade').textContent = student.grade;
-      document.getElementById('modalActivities').textContent = student.activities;
-
-      // Show modal
-      document.getElementById('studentModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeStudentDetail(e) {
-      if (!e || e.target === e.currentTarget) {
-        document.getElementById('studentModal').classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    }
-
-    // Filter tabs
-    document.querySelectorAll('.filter-tab').forEach(tab => {
+    // Tab switching
+    document.querySelectorAll('.period-tab').forEach(tab => {
       tab.addEventListener('click', function() {
-        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
         this.classList.add('active');
       });
     });
