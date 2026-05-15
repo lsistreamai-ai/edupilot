@@ -124,24 +124,15 @@
     var supabase;
     var currentLang = 'en';
     var selectedRole = '';
-    
-    // Production URL for email redirects
     var PRODUCTION_URL = 'https://edupilot.lsistream.ai';
 
-    // Initialize on page load
     window.onload = function() {
-      console.log('Page loaded, initializing Supabase...');
-      
       supabase = window.supabase.createClient(
         'https://zpyglubdgpecdfsrnirz.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpweWdsdWJkZ3BlY2Rmc3JuaXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NTYxNTksImV4cCI6MjA5NDMzMjE1OX0.IEBm33tSXSS7p1ivjXGNowAbyk7uYQTBCSrZJZ68maU'
       );
-      
-      console.log('Supabase initialized');
-      
       var saved = localStorage.getItem('lang');
       if (saved === 'zh') setLang('zh');
-      
       checkSession();
     };
 
@@ -153,12 +144,9 @@
         else if (i === 1 && lang === 'zh') b.classList.add('active');
         else b.classList.remove('active');
       });
-      
-      var elements = document.querySelectorAll('[data-en]');
-      elements.forEach(function(el) {
+      document.querySelectorAll('[data-en]').forEach(function(el) {
         el.textContent = el.getAttribute('data-' + lang);
       });
-      
       localStorage.setItem('lang', lang);
     }
 
@@ -187,140 +175,59 @@
       document.getElementById(role + 'Role').classList.add('selected');
     }
 
-    function showError(el, msg) {
-      document.getElementById(el).textContent = msg;
-      document.getElementById(el).style.display = 'block';
-    }
-
-    function showSuccess(el, msg) {
-      document.getElementById(el).textContent = msg;
-      document.getElementById(el).style.display = 'block';
-    }
-
-    function hideErrors() {
-      document.getElementById('loginError').style.display = 'none';
-      document.getElementById('signupError').style.display = 'none';
-      document.getElementById('loginSuccess').style.display = 'none';
-      document.getElementById('signupSuccess').style.display = 'none';
-    }
+    function showError(el, msg) { document.getElementById(el).textContent = msg; document.getElementById(el).style.display = 'block'; }
+    function showSuccess(el, msg) { document.getElementById(el).textContent = msg; document.getElementById(el).style.display = 'block'; }
+    function hideErrors() { document.getElementById('loginError').style.display = 'none'; document.getElementById('signupError').style.display = 'none'; document.getElementById('loginSuccess').style.display = 'none'; document.getElementById('signupSuccess').style.display = 'none'; }
 
     async function doLogin(e) {
       e.preventDefault();
       hideErrors();
-      
       var email = document.getElementById('loginEmail').value;
       var password = document.getElementById('loginPassword').value;
       var btn = document.getElementById('loginBtn');
-      
-      if (!email || !password) {
-        showError('loginError', currentLang === 'zh' ? '請填寫所有欄位' : 'Please fill all fields');
-        return;
-      }
-      
+      if (!email || !password) { showError('loginError', currentLang === 'zh' ? '請填寫所有欄位' : 'Please fill all fields'); return; }
       btn.disabled = true;
       btn.textContent = currentLang === 'zh' ? '登入中...' : 'Logging in...';
-      
       try {
-        console.log('Attempting login...');
         var result = await supabase.auth.signInWithPassword({ email: email, password: password });
-        
-        if (result.error) {
-          console.error('Login error:', result.error);
-          showError('loginError', result.error.message);
-          btn.disabled = false;
-          btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
-          return;
-        }
-        
-        console.log('Login successful, checking role...');
+        if (result.error) { showError('loginError', result.error.message); btn.disabled = false; btn.textContent = currentLang === 'zh' ? '登入' : 'Login'; return; }
         showSuccess('loginSuccess', currentLang === 'zh' ? '登入成功!' : 'Login successful!');
-        
         var userResult = await supabase.from('users').select('role').eq('id', result.data.user.id).single();
-        
-        console.log('User role:', userResult.data);
-        
-        if (userResult.data && userResult.data.role === 'teacher') {
-          window.location.href = 'teacher-dashboard.html';
-        } else {
-          window.location.href = 'student-dashboard-full.html';
+        if (userResult.data) {
+          var role = userResult.data.role;
+          if (role === 'admin' || role === 'teacher') {
+            window.location.href = 'teacher-dashboard.html';
+          } else {
+            window.location.href = 'student-dashboard-full.html';
+          }
         }
-        
-      } catch (err) {
-        console.error('Exception:', err);
-        showError('loginError', err.message);
-        btn.disabled = false;
-        btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
-      }
+      } catch (err) { showError('loginError', err.message); btn.disabled = false; btn.textContent = currentLang === 'zh' ? '登入' : 'Login'; }
     }
 
     async function doSignup(e) {
       e.preventDefault();
       hideErrors();
-      
       var name = document.getElementById('signupName').value;
       var email = document.getElementById('signupEmail').value;
       var password = document.getElementById('signupPassword').value;
       var btn = document.getElementById('signupBtn');
-      
-      if (!name || !email || !password) {
-        showError('signupError', currentLang === 'zh' ? '請填寫所有欄位' : 'Please fill all fields');
-        return;
-      }
-      
-      if (!selectedRole) {
-        showError('signupError', currentLang === 'zh' ? '請選擇學生或老師' : 'Please select Student or Teacher');
-        return;
-      }
-      
+      if (!name || !email || !password) { showError('signupError', currentLang === 'zh' ? '請填寫所有欄位' : 'Please fill all fields'); return; }
+      if (!selectedRole) { showError('signupError', currentLang === 'zh' ? '請選擇學生或老師' : 'Please select Student or Teacher'); return; }
       btn.disabled = true;
       btn.textContent = currentLang === 'zh' ? '建立中...' : 'Creating...';
-      
       try {
-        console.log('Attempting signup with redirect to:', PRODUCTION_URL);
         var result = await supabase.auth.signUp({
-          email: email,
-          password: password,
-          options: {
-            data: { name: name, role: selectedRole },
-            emailRedirectTo: PRODUCTION_URL
-          }
+          email: email, password: password,
+          options: { data: { name: name, role: selectedRole }, emailRedirectTo: PRODUCTION_URL }
         });
-        
-        if (result.error) {
-          console.error('Signup error:', result.error);
-          showError('signupError', result.error.message);
-          btn.disabled = false;
-          btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
-          return;
-        }
-        
-        console.log('Signup successful:', result.data);
-        
+        if (result.error) { showError('signupError', result.error.message); btn.disabled = false; btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account'; return; }
         if (result.data.user) {
-          await supabase.from('users').insert({
-            id: result.data.user.id,
-            email: email,
-            name: name,
-            role: selectedRole,
-            points: 0,
-            level: 1
-          });
+          await supabase.from('users').insert({ id: result.data.user.id, email: email, full_name: name, role: selectedRole, points: 0, level: 1 });
         }
-        
-        showSuccess('signupSuccess', currentLang === 'zh' 
-          ? '帳戶建立成功!請查收確認郵件，點擊連結後即可登入。' 
-          : 'Account created! Check your email and click the link to confirm.');
-        btn.disabled = false;
-        btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
-        
+        showSuccess('signupSuccess', currentLang === 'zh' ? '帳戶建立成功!請查收確認郵件。' : 'Account created! Check your email to confirm.');
+        btn.disabled = false; btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
         setTimeout(showLogin, 3000);
-        
-      } catch (err) {
-        console.error('Exception:', err);
-        showError('signupError', err.message);
-        btn.disabled = false;
-        btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
-      }
+      } catch (err) { showError('signupError', err.message); btn.disabled = false; btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account'; }
     }
 
     async function checkSession() {
@@ -329,12 +236,12 @@
         if (sess.data.session) {
           var userResult = await supabase.from('users').select('role').eq('id', sess.data.session.user.id).single();
           if (userResult.data) {
-            window.location.href = userResult.data.role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard-full.html';
+            var role = userResult.data.role;
+            if (role === 'admin' || role === 'teacher') window.location.href = 'teacher-dashboard.html';
+            else window.location.href = 'student-dashboard-full.html';
           }
         }
-      } catch (err) {
-        console.log('No active session');
-      }
+      } catch (err) { console.log('No session'); }
     }
   </script>
 </body>
