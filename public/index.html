@@ -127,10 +127,12 @@
     var PRODUCTION_URL = 'https://edupilot.lsistream.ai';
 
     window.onload = function() {
+      console.log('🚀 Page loaded');
       supabase = window.supabase.createClient(
         'https://zpyglubdgpecdfsrnirz.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpweWdsdWJkZ3BlY2Rmc3JuaXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NTYxNTksImV4cCI6MjA5NDMzMjE1OX0.IEBm33tSXSS7p1ivjXGNowAbyk7uYQTBCSrZJZ68maU'
       );
+      console.log('✅ Supabase ready');
       var saved = localStorage.getItem('lang');
       if (saved === 'zh') setLang('zh');
       checkSession();
@@ -185,23 +187,57 @@
       var email = document.getElementById('loginEmail').value;
       var password = document.getElementById('loginPassword').value;
       var btn = document.getElementById('loginBtn');
+      
       if (!email || !password) { showError('loginError', currentLang === 'zh' ? '請填寫所有欄位' : 'Please fill all fields'); return; }
+      
       btn.disabled = true;
       btn.textContent = currentLang === 'zh' ? '登入中...' : 'Logging in...';
+      
       try {
+        console.log('🔐 Signing in...');
         var result = await supabase.auth.signInWithPassword({ email: email, password: password });
-        if (result.error) { showError('loginError', result.error.message); btn.disabled = false; btn.textContent = currentLang === 'zh' ? '登入' : 'Login'; return; }
+        console.log('Auth result:', result);
+        
+        if (result.error) {
+          console.error('❌ Auth error:', result.error);
+          showError('loginError', result.error.message);
+          btn.disabled = false;
+          btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
+          return;
+        }
+        
+        console.log('✅ Login OK, user:', result.data.user.id);
         showSuccess('loginSuccess', currentLang === 'zh' ? '登入成功!' : 'Login successful!');
+        
+        // Get role from users table
+        console.log('🔍 Fetching user role...');
         var userResult = await supabase.from('users').select('role').eq('id', result.data.user.id).single();
-        if (userResult.data) {
-          var role = userResult.data.role;
+        console.log('User query result:', userResult);
+        
+        var role = 'student';
+        if (userResult.data && userResult.data.role) {
+          role = userResult.data.role;
+        }
+        
+        console.log('🎭 Role:', role, '→ Redirecting...');
+        
+        // Small delay so user sees the success message
+        setTimeout(function() {
           if (role === 'admin' || role === 'teacher') {
+            console.log('➡️ Going to teacher dashboard');
             window.location.href = 'teacher-dashboard.html';
           } else {
+            console.log('➡️ Going to student dashboard');
             window.location.href = 'student-dashboard-full.html';
           }
-        }
-      } catch (err) { showError('loginError', err.message); btn.disabled = false; btn.textContent = currentLang === 'zh' ? '登入' : 'Login'; }
+        }, 500);
+        
+      } catch (err) {
+        console.error('❌ Exception:', err);
+        showError('loginError', err.message);
+        btn.disabled = false;
+        btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
+      }
     }
 
     async function doSignup(e) {
