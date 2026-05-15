@@ -124,6 +124,9 @@
     var supabase;
     var currentLang = 'en';
     var selectedRole = '';
+    
+    // Production URL for email redirects
+    var PRODUCTION_URL = 'https://edupilot.lsistream.ai';
 
     // Initialize on page load
     window.onload = function() {
@@ -136,11 +139,9 @@
       
       console.log('Supabase initialized');
       
-      // Check saved language
       var saved = localStorage.getItem('lang');
       if (saved === 'zh') setLang('zh');
       
-      // Check if already logged in
       checkSession();
     };
 
@@ -234,7 +235,6 @@
         console.log('Login successful, checking role...');
         showSuccess('loginSuccess', currentLang === 'zh' ? '登入成功!' : 'Login successful!');
         
-        // Get role
         var userResult = await supabase.from('users').select('role').eq('id', result.data.user.id).single();
         
         console.log('User role:', userResult.data);
@@ -276,12 +276,13 @@
       btn.textContent = currentLang === 'zh' ? '建立中...' : 'Creating...';
       
       try {
-        console.log('Attempting signup...');
+        console.log('Attempting signup with redirect to:', PRODUCTION_URL);
         var result = await supabase.auth.signUp({
           email: email,
           password: password,
           options: {
-            data: { name: name, role: selectedRole }
+            data: { name: name, role: selectedRole },
+            emailRedirectTo: PRODUCTION_URL
           }
         });
         
@@ -293,9 +294,8 @@
           return;
         }
         
-        console.log('Signup successful, creating user record...');
+        console.log('Signup successful:', result.data);
         
-        // Create user record
         if (result.data.user) {
           await supabase.from('users').insert({
             id: result.data.user.id,
@@ -307,11 +307,13 @@
           });
         }
         
-        showSuccess('signupSuccess', currentLang === 'zh' ? '帳戶建立成功!請查收確認郵件。' : 'Account created! Check your email.');
+        showSuccess('signupSuccess', currentLang === 'zh' 
+          ? '帳戶建立成功!請查收確認郵件，點擊連結後即可登入。' 
+          : 'Account created! Check your email and click the link to confirm.');
         btn.disabled = false;
         btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
         
-        setTimeout(showLogin, 2000);
+        setTimeout(showLogin, 3000);
         
       } catch (err) {
         console.error('Exception:', err);
