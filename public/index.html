@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>EduPilot - Student & Teacher Platform</title>
+  <title>EduPilot - Learning Platform</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
@@ -55,16 +55,16 @@
     /* Logo */
     .logo {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .logo-icon {
-      font-size: 72px;
+      font-size: 64px;
       margin-bottom: 12px;
     }
 
     .logo-text {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 900;
       background: linear-gradient(135deg, #1e3a5f, #3b82f6);
       -webkit-background-clip: text;
@@ -73,69 +73,9 @@
     }
 
     .logo-tagline {
-      font-size: 14px;
+      font-size: 13px;
       color: #94a3b8;
       margin-top: 6px;
-    }
-
-    /* Platform Selection */
-    .platform-select {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .platform-card {
-      background: white;
-      border: 3px solid #e2e8f0;
-      border-radius: 20px;
-      padding: 24px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .platform-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
-    }
-
-    .platform-card.selected-student {
-      border-color: #10b981;
-      background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 100%);
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
-    }
-
-    .platform-card.selected-teacher {
-      border-color: #8b5cf6;
-      background: linear-gradient(180deg, #f5f3ff 0%, #ffffff 100%);
-      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2);
-    }
-
-    .platform-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-    }
-
-    .platform-name {
-      font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .platform-card.selected-student .platform-name {
-      color: #059669;
-    }
-
-    .platform-card.selected-teacher .platform-name {
-      color: #7c3aed;
-    }
-
-    .platform-desc {
-      font-size: 12px;
-      color: #94a3b8;
     }
 
     /* Card */
@@ -180,12 +120,12 @@
       font-size: 22px;
       font-weight: 800;
       color: #1e293b;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       text-align: center;
     }
 
     .form-group {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .form-label {
@@ -212,9 +152,52 @@
       background: white;
     }
 
+    .form-input::placeholder {
+      color: #94a3b8;
+    }
+
+    .role-select {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .role-option {
+      padding: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #f8fafc;
+    }
+
+    .role-option:hover {
+      border-color: #3b82f6;
+      background: white;
+    }
+
+    .role-option.selected {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .role-icon {
+      font-size: 32px;
+      margin-bottom: 6px;
+    }
+
+    .role-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
     .submit-btn {
       width: 100%;
       padding: 16px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
       border: none;
       border-radius: 12px;
       font-size: 16px;
@@ -224,26 +207,9 @@
       transition: all 0.2s;
     }
 
-    .submit-btn.student-btn {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: white;
-    }
-
-    .submit-btn.teacher-btn {
-      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-      color: white;
-    }
-
     .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-    }
-
-    .submit-btn:disabled {
-      background: #cbd5e1;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
     }
 
     .forgot-link {
@@ -256,46 +222,6 @@
       font-size: 13px;
       font-weight: 600;
       text-decoration: none;
-    }
-
-    .error-msg {
-      background: #fef2f2;
-      color: #dc2626;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      margin-bottom: 16px;
-      display: none;
-    }
-
-    .success-msg {
-      background: #ecfdf5;
-      color: #059669;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      margin-bottom: 16px;
-      display: none;
-    }
-
-    .info-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .info-box .icon {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .info-box .text {
-      font-size: 13px;
-      color: #1e40af;
-      font-weight: 600;
     }
   </style>
 </head>
@@ -316,31 +242,8 @@
       <div class="logo-tagline" data-en="Learn • Play • Grow" data-zh="學習 • 遊戲 • 成長">Learn • Play • Grow</div>
     </div>
 
-    <!-- Platform Selection -->
-    <div class="platform-select">
-      <div class="platform-card" onclick="selectPlatform('student')" id="student-card">
-        <div class="platform-icon">👦</div>
-        <div class="platform-name">Student Platform</div>
-        <div class="platform-desc" data-en="Learn • Play • Grow" data-zh="學習 • 遊戲 • 成長">Learn • Play • Grow</div>
-      </div>
-      <div class="platform-card" onclick="selectPlatform('teacher')" id="teacher-card">
-        <div class="platform-icon">👨‍🏫</div>
-        <div class="platform-name">Teacher Platform</div>
-        <div class="platform-desc" data-en="Manage • Teach • Inspire" data-zh="管理 • 教學 • 啟發">Manage • Teach • Inspire</div>
-      </div>
-    </div>
-
     <!-- Card -->
     <div class="card">
-      <!-- Info Box -->
-      <div class="info-box" id="platform-info" style="display: none;">
-        <div class="icon" id="info-icon">👦</div>
-        <div class="text" id="info-text"></div>
-      </div>
-
-      <div class="error-msg" id="errorMsg"></div>
-      <div class="success-msg" id="successMsg"></div>
-
       <!-- Tab Switcher -->
       <div class="tab-switcher">
         <button class="tab-btn active" id="loginTab" onclick="showLogin()" data-en="Login" data-zh="登入">Login</button>
@@ -362,7 +265,7 @@
             <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
           </div>
           
-          <button type="submit" class="submit-btn" id="loginBtn" disabled data-en="Login" data-zh="登入">Login</button>
+          <button type="submit" class="submit-btn" data-en="Login" data-zh="登入">Login</button>
         </form>
         
         <div class="forgot-link">
@@ -390,7 +293,22 @@
             <input type="password" class="form-input" id="signupPassword" placeholder="••••••••" required minlength="6">
           </div>
           
-          <button type="submit" class="submit-btn" id="signupBtn" disabled data-en="Create Account" data-zh="建立帳戶">Create Account</button>
+          <div class="form-group">
+            <label class="form-label" data-en="I am a..." data-zh="我是...">I am a...</label>
+            <div class="role-select">
+              <div class="role-option" onclick="selectRole(this, 'student')">
+                <div class="role-icon">👦</div>
+                <div class="role-label" data-en="Student" data-zh="學生">Student</div>
+              </div>
+              <div class="role-option" onclick="selectRole(this, 'teacher')">
+                <div class="role-icon">👨‍🏫</div>
+                <div class="role-label" data-en="Teacher" data-zh="老師">Teacher</div>
+              </div>
+            </div>
+            <input type="hidden" id="selectedRole" value="">
+          </div>
+          
+          <button type="submit" class="submit-btn" data-en="Create Account" data-zh="建立帳戶">Create Account</button>
         </form>
       </div>
     </div>
@@ -400,14 +318,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <script>
-    // Supabase Configuration
     const SUPABASE_URL = 'https://zpyglubdgpecdfsrnirz.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpweWdsdWJkZ3BlY2Rmc3JuaXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NTYxNTksImV4cCI6MjA5NDMzMjE1OX0.IEBm33tSXSS7p1ivjXGNowAbyk7uYQTBCSrZJZ68maU';
     
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let currentLang = 'en';
-    let selectedPlatform = null;
 
     function setLang(lang) {
       currentLang = lang;
@@ -429,45 +345,11 @@
     const savedLang = localStorage.getItem('lang');
     if (savedLang) setLang(savedLang);
 
-    function selectPlatform(platform) {
-      selectedPlatform = platform;
-      
-      // Update card styles
-      document.getElementById('student-card').classList.remove('selected-student');
-      document.getElementById('teacher-card').classList.remove('selected-teacher');
-      
-      if (platform === 'student') {
-        document.getElementById('student-card').classList.add('selected-student');
-        document.getElementById('loginBtn').classList.add('student-btn');
-        document.getElementById('loginBtn').classList.remove('teacher-btn');
-        document.getElementById('signupBtn').classList.add('student-btn');
-        document.getElementById('signupBtn').classList.remove('teacher-btn');
-        document.getElementById('info-icon').textContent = '👦';
-        document.getElementById('info-text').textContent = currentLang === 'zh' ? '學生平台已選擇' : 'Student Platform Selected';
-      } else {
-        document.getElementById('teacher-card').classList.add('selected-teacher');
-        document.getElementById('loginBtn').classList.add('teacher-btn');
-        document.getElementById('loginBtn').classList.remove('student-btn');
-        document.getElementById('signupBtn').classList.add('teacher-btn');
-        document.getElementById('signupBtn').classList.remove('student-btn');
-        document.getElementById('info-icon').textContent = '👨‍🏫';
-        document.getElementById('info-text').textContent = currentLang === 'zh' ? '老師平台已選擇' : 'Teacher Platform Selected';
-      }
-      
-      document.getElementById('platform-info').style.display = 'block';
-      document.getElementById('loginBtn').disabled = false;
-      document.getElementById('signupBtn').disabled = false;
-      
-      // Save platform preference
-      localStorage.setItem('selectedPlatform', platform);
-    }
-
     function showLogin() {
       document.getElementById('loginForm').style.display = 'block';
       document.getElementById('signupForm').style.display = 'none';
       document.getElementById('loginTab').classList.add('active');
       document.getElementById('signupTab').classList.remove('active');
-      hideMessages();
     }
 
     function showSignup() {
@@ -475,40 +357,21 @@
       document.getElementById('signupForm').style.display = 'block';
       document.getElementById('loginTab').classList.remove('active');
       document.getElementById('signupTab').classList.add('active');
-      hideMessages();
     }
 
-    function showError(msg) {
-      document.getElementById('errorMsg').textContent = msg;
-      document.getElementById('errorMsg').style.display = 'block';
-      document.getElementById('successMsg').style.display = 'none';
-    }
-
-    function showSuccess(msg) {
-      document.getElementById('successMsg').textContent = msg;
-      document.getElementById('successMsg').style.display = 'block';
-      document.getElementById('errorMsg').style.display = 'none';
-    }
-
-    function hideMessages() {
-      document.getElementById('errorMsg').style.display = 'none';
-      document.getElementById('successMsg').style.display = 'none';
+    function selectRole(el, role) {
+      document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('selectedRole').value = role;
     }
 
     async function handleLogin(e) {
       e.preventDefault();
-      hideMessages();
       
-      if (!selectedPlatform) {
-        showError(currentLang === 'zh' ? '請選擇學生或老師平台' : 'Please select Student or Teacher Platform');
-        return;
-      }
-
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPassword').value;
       
-      const btn = document.getElementById('loginBtn');
-      const originalText = btn.textContent;
+      const btn = e.target.querySelector('.submit-btn');
       btn.textContent = currentLang === 'zh' ? '登入中...' : 'Logging in...';
       btn.disabled = true;
       
@@ -518,8 +381,8 @@
       });
       
       if (error) {
-        showError(error.message);
-        btn.textContent = originalText;
+        alert(error.message);
+        btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
         btn.disabled = false;
         return;
       }
@@ -527,158 +390,79 @@
       // Get user role from database
       const { data: userData, error: userError } = await supabase
         .from('users')
-        .select('role, name')
+        .select('role')
         .eq('id', data.user.id)
         .single();
       
-      // If user doesn't exist in users table, create from metadata
-      if (userError && userError.code === 'PGRST116') {
-        const userRole = data.user.user_metadata?.role || selectedPlatform;
-        const userName = data.user.user_metadata?.name || data.user.email.split('@')[0];
-        
-        await supabase.from('users').insert({
-          id: data.user.id,
-          email: data.user.email,
-          name: userName,
-          role: userRole,
-          points: 0,
-          level: 1
-        });
-        
-        // Redirect based on role
-        if (userRole === 'student') {
-          window.location.href = 'student-dashboard-full.html';
-        } else {
-          window.location.href = 'teacher-dashboard.html';
-        }
-        return;
-      }
-      
-      if (!userData) {
-        showError(currentLang === 'zh' ? '無法獲取用戶資料' : 'Could not fetch user data');
-        btn.textContent = originalText;
-        btn.disabled = false;
-        return;
-      }
-      
-      // Check if role matches selected platform
-      if (userData.role !== selectedPlatform) {
-        await supabase.auth.signOut();
-        showError(currentLang === 'zh' 
-          ? `此帳號是${userData.role === 'student' ? '學生' : '老師'}帳號，請選擇正確的平台` 
-          : `This account is a ${userData.role}. Please select the correct platform.`);
-        btn.textContent = originalText;
-        btn.disabled = false;
-        return;
-      }
-      
-      // Redirect based on role
-      if (userData.role === 'student') {
-        window.location.href = 'student-dashboard-full.html';
-      } else {
+      if (userData && userData.role === 'teacher') {
         window.location.href = 'teacher-dashboard.html';
+      } else {
+        window.location.href = 'student-dashboard-full.html';
       }
     }
 
     async function handleSignup(e) {
       e.preventDefault();
-      hideMessages();
       
-      if (!selectedPlatform) {
-        showError(currentLang === 'zh' ? '請選擇學生或老師平台' : 'Please select Student or Teacher Platform');
-        return;
-      }
-
       const name = document.getElementById('signupName').value;
       const email = document.getElementById('signupEmail').value;
       const password = document.getElementById('signupPassword').value;
+      const role = document.getElementById('selectedRole').value;
       
-      const btn = document.getElementById('signupBtn');
-      const originalText = btn.textContent;
-      btn.textContent = currentLang === 'zh' ? '建立帳戶中...' : 'Creating account...';
+      if (!role) {
+        alert(currentLang === 'zh' ? '請選擇學生或老師' : 'Please select Student or Teacher');
+        return;
+      }
+      
+      const btn = e.target.querySelector('.submit-btn');
+      btn.textContent = currentLang === 'zh' ? '建立帳戶中...' : 'Creating...';
       btn.disabled = true;
       
-      // Sign up with Supabase Auth - role stored in metadata
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             name: name,
-            role: selectedPlatform // Store role in auth metadata
-          },
-          emailRedirectTo: window.location.origin + '/index.html'
+            role: role
+          }
         }
       });
       
       if (error) {
-        showError(error.message);
-        btn.textContent = originalText;
+        alert(error.message);
+        btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
         btn.disabled = false;
         return;
       }
       
-      // Create user record in users table with role
       if (data.user) {
-        const { error: insertError } = await supabase.from('users').insert({
+        await supabase.from('users').insert({
           id: data.user.id,
           email: email,
           name: name,
-          role: selectedPlatform, // Store role in database
+          role: role,
           points: 0,
-          level: 1,
-          school_id: null,
-          created_at: new Date().toISOString()
+          level: 1
         });
-        
-        if (insertError) {
-          console.error('Error creating user record:', insertError);
-          // Continue anyway - might be RLS issue
-        }
       }
       
-      // Show success message
-      const msg = currentLang === 'zh' 
-        ? `✅ ${selectedPlatform === 'student' ? '學生' : '老師'}帳戶建立成功！請查收確認郵件。` 
-        : `✅ ${selectedPlatform.charAt(0).toUpperCase() + selectedPlatform.slice(1)} account created! Please check your email to confirm.`;
-      
-      showSuccess(msg);
-      
-      setTimeout(() => {
-        showLogin();
-        btn.textContent = originalText;
-        btn.disabled = false;
-      }, 2000);
+      alert(currentLang === 'zh' ? '帳戶建立成功!請查收確認郵件。' : 'Account created! Please check your email.');
+      showLogin();
+      btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
+      btn.disabled = false;
     }
 
-    // Check if already logged in on page load
-    (async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession();
-      
+    // Check if already logged in
+    supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
-        // Get user role
-        const { data: userData } = await supabase
-          .from('users')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
-        
-        if (userData) {
-          // Redirect to correct dashboard
-          if (userData.role === 'student') {
-            window.location.href = 'student-dashboard-full.html';
-          } else {
-            window.location.href = 'teacher-dashboard.html';
+        supabase.from('users').select('role').eq('id', session.user.id).single().then(({ data }) => {
+          if (data) {
+            window.location.href = data.role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard-full.html';
           }
-        }
+        });
       }
-    })();
-
-    // Restore platform selection from localStorage
-    const savedPlatform = localStorage.getItem('selectedPlatform');
-    if (savedPlatform) {
-      selectPlatform(savedPlatform);
-    }
+    });
   </script>
 </body>
 </html>
