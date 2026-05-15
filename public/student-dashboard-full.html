@@ -6,86 +6,45 @@
   <title>Student Dashboard - EduPilot</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
-      background: #f0f9ff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+      background: linear-gradient(180deg, #eff6ff 0%, #f0f9ff 100%);
       min-height: 100vh;
     }
-
-    /* Header */
     .header {
       position: sticky;
       top: 0;
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
       z-index: 100;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       padding: 14px 16px;
-    }
-
-    .header-title {
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    /* Language Toggle */
-    .lang-toggle {
       display: flex;
-      background: rgba(255,255,255,0.2);
-      border-radius: 12px;
-      overflow: hidden;
+      justify-content: space-between;
+      align-items: center;
     }
-
-    .lang-btn {
-      padding: 8px 12px;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.7);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .lang-btn.active {
-      background: rgba(255,255,255,0.3);
-      color: white;
-    }
-
-    /* Main Content */
-    .main {
-      padding: 20px 16px;
-      padding-bottom: 100px;
-    }
-
-    /* Welcome Card */
-    .welcome-card {
+    .logo { font-size: 20px; font-weight: 800; }
+    .logout-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 16px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+    .main { padding: 20px 16px; padding-bottom: 100px; max-width: 600px; margin: 0 auto; }
+    
+    .profile-card {
       background: white;
       border-radius: 24px;
       padding: 32px 24px;
+      text-align: center;
       margin-bottom: 20px;
       box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
-      text-align: center;
     }
-
-    .welcome-title {
-      font-size: 28px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 8px;
-    }
-
-    .welcome-sub {
-      font-size: 16px;
-      color: #64748b;
-    }
-
-    /* Setup Card */
+    .avatar { font-size: 64px; margin-bottom: 16px; }
+    .name { font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+    .class-info { font-size: 16px; color: #64748b; margin-bottom: 20px; }
+    
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .stat-box { background: #f8fafc; border-radius: 16px; padding: 16px; text-align: center; }
+    .stat-value { font-size: 24px; font-weight: 800; color: #3b82f6; }
+    .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+    
+    .section-title { font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 16px; }
+    
     .setup-card {
       background: white;
       border-radius: 20px;
@@ -93,221 +52,182 @@
       margin-bottom: 16px;
       border: 3px solid #f1f5f9;
     }
-
-    .setup-card:hover {
-      border-color: #3b82f6;
-    }
-
-    .setup-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .setup-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-    }
-
-    .setup-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: #1e293b;
-    }
-
-    .setup-desc {
-      font-size: 14px;
-      color: #64748b;
-      line-height: 1.5;
-    }
-
+    .setup-card:hover { border-color: #3b82f6; }
+    .setup-title { font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+    .setup-desc { font-size: 14px; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
     .setup-btn {
-      display: block;
       width: 100%;
-      padding: 16px;
-      margin-top: 16px;
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: white;
       border: none;
-      border-radius: 14px;
+      padding: 14px;
+      border-radius: 12px;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      text-align: center;
     }
-
-    /* Empty State */
-    .empty-state {
+    
+    .subject-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .subject-card {
       background: white;
-      border-radius: 20px;
-      padding: 32px 24px;
-      margin-bottom: 16px;
-      border: 3px dashed #e2e8f0;
+      border-radius: 16px;
+      padding: 20px;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-
-    .empty-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-    }
-
-    .empty-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 6px;
-    }
-
-    .empty-desc {
-      font-size: 14px;
-      color: #64748b;
-    }
-
-    /* Bottom Navigation */
+    .subject-icon { font-size: 36px; margin-bottom: 8px; }
+    .subject-name { font-size: 14px; font-weight: 700; color: #1e293b; }
+    
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       background: white;
-      border-top: 2px solid #e2e8f0;
-      z-index: 50;
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-
-    .nav-content {
+      padding: 12px 20px;
       display: flex;
       justify-content: space-around;
-      padding: 8px 0 12px;
+      box-shadow: 0 -2px 20px rgba(0,0,0,0.08);
     }
-
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 8px 16px;
-      background: none;
-      border: none;
-      color: #94a3b8;
-      cursor: pointer;
-    }
-
+    .nav-item { text-align: center; color: #94a3b8; font-size: 12px; }
     .nav-item.active { color: #3b82f6; }
-    .nav-item .icon { font-size: 28px; }
-    .nav-item .label { font-size: 12px; font-weight: 700; }
+    .nav-icon { font-size: 24px; margin-bottom: 4px; }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="header">
-    <div class="header-content">
-      <span class="header-title" data-en="EduPilot" data-zh="EduPilot">EduPilot</span>
-      <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" onclick="setLang('zh')">中文</button>
-      </div>
-    </div>
+    <div class="logo">🎓 EduPilot</div>
+    <button class="logout-btn" onclick="logout()">Log Out</button>
   </header>
 
-  <!-- Main Content -->
-  <main class="main">
-    <!-- Welcome -->
-    <div class="welcome-card">
-      <div class="welcome-title" data-en="Welcome! 👋" data-zh="歡迎! 👋">Welcome! 👋</div>
-      <div class="welcome-sub" data-en="Let's get you started" data-zh="讓我們開始吧">Let's get you started</div>
-    </div>
-
-    <!-- Step 1: Edit Profile -->
-    <div class="setup-card">
-      <div class="setup-header">
-        <div class="setup-icon">👤</div>
-        <div>
-          <div class="setup-title" data-en="Step 1: Your Profile" data-zh="步驟 1: 你的資料">Step 1: Your Profile</div>
+  <main class="main" id="mainContent">
+    <!-- Profile -->
+    <div class="profile-card">
+      <div class="avatar">👦</div>
+      <div class="name" id="userName">Student</div>
+      <div class="class-info" id="classInfo">Ready to learn!</div>
+      
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-value" id="points">0</div>
+          <div class="stat-label">Points</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="level">1</div>
+          <div class="stat-label">Level</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="streak">🔥</div>
+          <div class="stat-label">Streak</div>
         </div>
       </div>
-      <div class="setup-desc" data-en="Set your name and choose your avatar. Your teacher and classmates will see this." data-zh="設定你的名稱並選擇頭像。老師和同學會看到這個。">Set your name and choose your avatar. Your teacher and classmates will see this.</div>
-      <button class="setup-btn" data-en="Edit Profile" data-zh="編輯資料" onclick="location.href='edit-profile.html'">Edit Profile</button>
     </div>
 
-    <!-- Step 2: Join Class -->
+    <!-- Join Class -->
+    <div class="section-title">📚 My Classes</div>
     <div class="setup-card">
-      <div class="setup-header">
-        <div class="setup-icon">🎒</div>
-        <div>
-          <div class="setup-title" data-en="Step 2: Join a Class" data-zh="步驟 2: 加入班級">Step 2: Join a Class</div>
-        </div>
+      <div class="setup-title">Join a Class</div>
+      <div class="setup-desc">Enter your class code from your teacher to join your class and see your subjects.</div>
+      <button class="setup-btn" onclick="showJoinModal()">Join Class</button>
+    </div>
+
+    <!-- Subjects -->
+    <div class="section-title" style="margin-top: 24px;">📖 Subjects</div>
+    <div class="subject-grid" id="subjectsGrid">
+      <div class="subject-card">
+        <div class="subject-icon">🇨🇳</div>
+        <div class="subject-name">Chinese</div>
       </div>
-      <div class="setup-desc" data-en="Enter your class code from your teacher to join your class and see your subjects." data-zh="輸入老師提供的班級代碼，加入班級並查看你的科目。">Enter your class code from your teacher to join your class and see your subjects.</div>
-      <button class="setup-btn" data-en="Join Class" data-zh="加入班級" onclick="location.href='join-class.html'">Join Class</button>
-    </div>
-
-    <!-- Empty States -->
-    <div class="empty-state">
-      <div class="empty-icon">📚</div>
-      <div class="empty-title" data-en="No Subjects Yet" data-zh="還沒有科目">No Subjects Yet</div>
-      <div class="empty-desc" data-en="Join a class to see your subjects" data-zh="加入班級後可查看科目">Join a class to see your subjects</div>
-    </div>
-
-    <div class="empty-state">
-      <div class="empty-icon">🏆</div>
-      <div class="empty-title" data-en="No Points Yet" data-zh="還沒有積分">No Points Yet</div>
-      <div class="empty-desc" data-en="Complete activities to earn points" data-zh="完成活動可賺取積分">Complete activities to earn points</div>
+      <div class="subject-card">
+        <div class="subject-icon">🇬🇧</div>
+        <div class="subject-name">English</div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-icon">🔢</div>
+        <div class="subject-name">Math</div>
+      </div>
+      <div class="subject-card">
+        <div class="subject-icon">🔬</div>
+        <div class="subject-name">Science</div>
+      </div>
     </div>
   </main>
 
-  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
-    <div class="nav-content">
-      <button class="nav-item active">
-        <span class="icon">🏠</span>
-        <span class="label" data-en="Home" data-zh="主頁">Home</span>
-      </button>
-      <button class="nav-item">
-        <span class="icon">📚</span>
-        <span class="label" data-en="Learn" data-zh="學習">Learn</span>
-      </button>
-      <button class="nav-item">
-        <span class="icon">🏆</span>
-        <span class="label" data-en="Ranks" data-zh="排名">Ranks</span>
-      </button>
-      <button class="nav-item" onclick="location.href='settings.html'">
-        <span class="icon" style="font-size: 24px;">👦</span>
-        <span class="label" data-en="Me" data-zh="我">Me</span>
-      </button>
+    <div class="nav-item active">
+      <div class="nav-icon">🏠</div>
+      Home
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">📚</div>
+      Learn
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">🏆</div>
+      Rewards
+    </div>
+    <div class="nav-item">
+      <div class="nav-icon">👤</div>
+      Profile
     </div>
   </nav>
 
-  <script>
-    // Language
-    let currentLang = 'en';
+  <!-- Join Class Modal -->
+  <div id="joinModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:white; border-radius:24px; padding:24px; max-width:400px; width:100%;">
+      <h2 style="font-size:24px; font-weight:800; margin-bottom:16px;">Join Class</h2>
+      <input type="text" id="classCode" placeholder="Enter class code (e.g., P4CS21)" style="width:100%; padding:14px; border:2px solid #e2e8f0; border-radius:12px; font-size:16px; margin-bottom:16px;">
+      <button onclick="joinClass()" style="width:100%; background:linear-gradient(135deg, #3b82f6, #1d4ed8); color:white; border:none; padding:14px; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer;">Join</button>
+      <button onclick="closeJoinModal()" style="width:100%; background:none; border:none; color:#64748b; padding:14px; font-size:16px; cursor:pointer;">Cancel</button>
+    </div>
+  </div>
 
-    function setLang(lang) {
-      currentLang = lang;
-      
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-      if (lang === 'en') {
-        document.querySelector('.lang-btn:first-child').classList.add('active');
-      } else {
-        document.querySelector('.lang-btn:last-child').classList.add('active');
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    var supabase = window.supabase.createClient(
+      'https://zpyglubdgpecdfsrnirz.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpweWdsdWJkZ3BlY2Rmc3JuaXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NTYxNTksImV4cCI6MjA5NDMzMjE1OX0.IEBm33tSXSS7p1ivjXGNowAbyk7uYQTBCSrZJZ68maU'
+    );
+
+    window.onload = async function() {
+      var sess = await supabase.auth.getSession();
+      if (!sess.data.session) {
+        window.location.href = 'index.html';
+        return;
       }
       
-      document.querySelectorAll('[data-en]').forEach(el => {
-        el.textContent = el.getAttribute(`data-${lang}`);
-      });
+      var user = sess.data.session.user;
+      var userResult = await supabase.from('users').select('*').eq('id', user.id).single();
       
-      localStorage.setItem('lang', lang);
+      if (userResult.data) {
+        document.getElementById('userName').textContent = userResult.data.full_name || 'Student';
+        document.getElementById('points').textContent = userResult.data.points || 0;
+        document.getElementById('level').textContent = userResult.data.level || 1;
+      }
+    };
+
+    function showJoinModal() {
+      document.getElementById('joinModal').style.display = 'flex';
     }
 
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang) setLang(savedLang);
+    function closeJoinModal() {
+      document.getElementById('joinModal').style.display = 'none';
+    }
+
+    async function joinClass() {
+      var code = document.getElementById('classCode').value.toUpperCase();
+      if (!code) {
+        alert('Please enter a class code');
+        return;
+      }
+      alert('Joined class: ' + code);
+      closeJoinModal();
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = 'index.html';
+    }
   </script>
 </body>
 </html>
