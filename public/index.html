@@ -268,6 +268,16 @@
       display: none;
     }
 
+    .success-msg {
+      background: #ecfdf5;
+      color: #059669;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
     .info-box {
       background: #eff6ff;
       border: 1px solid #bfdbfe;
@@ -329,6 +339,7 @@
       </div>
 
       <div class="error-msg" id="errorMsg"></div>
+      <div class="success-msg" id="successMsg"></div>
 
       <!-- Tab Switcher -->
       <div class="tab-switcher">
@@ -446,6 +457,9 @@
       document.getElementById('platform-info').style.display = 'block';
       document.getElementById('loginBtn').disabled = false;
       document.getElementById('signupBtn').disabled = false;
+      
+      // Save platform preference
+      localStorage.setItem('selectedPlatform', platform);
     }
 
     function showLogin() {
@@ -453,6 +467,7 @@
       document.getElementById('signupForm').style.display = 'none';
       document.getElementById('loginTab').classList.add('active');
       document.getElementById('signupTab').classList.remove('active');
+      hideMessages();
     }
 
     function showSignup() {
@@ -460,21 +475,29 @@
       document.getElementById('signupForm').style.display = 'block';
       document.getElementById('loginTab').classList.remove('active');
       document.getElementById('signupTab').classList.add('active');
+      hideMessages();
     }
 
     function showError(msg) {
-      const errorEl = document.getElementById('errorMsg');
-      errorEl.textContent = msg;
-      errorEl.style.display = 'block';
+      document.getElementById('errorMsg').textContent = msg;
+      document.getElementById('errorMsg').style.display = 'block';
+      document.getElementById('successMsg').style.display = 'none';
     }
 
-    function hideError() {
+    function showSuccess(msg) {
+      document.getElementById('successMsg').textContent = msg;
+      document.getElementById('successMsg').style.display = 'block';
       document.getElementById('errorMsg').style.display = 'none';
+    }
+
+    function hideMessages() {
+      document.getElementById('errorMsg').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'none';
     }
 
     async function handleLogin(e) {
       e.preventDefault();
-      hideError();
+      hideMessages();
       
       if (!selectedPlatform) {
         showError(currentLang === 'zh' ? '請選擇學生或老師平台' : 'Please select Student or Teacher Platform');
@@ -485,6 +508,7 @@
       const password = document.getElementById('loginPassword').value;
       
       const btn = document.getElementById('loginBtn');
+      const originalText = btn.textContent;
       btn.textContent = currentLang === 'zh' ? '登入中...' : 'Logging in...';
       btn.disabled = true;
       
@@ -495,30 +519,61 @@
       
       if (error) {
         showError(error.message);
-        btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
+        btn.textContent = originalText;
         btn.disabled = false;
         return;
       }
       
-      // Check user role
-      const { data: userData } = await supabase
+      // Get user role from database
+      const { data: userData, error: userError } = await supabase
         .from('users')
-        .select('role')
+        .select('role, name')
         .eq('id', data.user.id)
         .single();
       
-      if (userData && userData.role !== selectedPlatform) {
-        showError(currentLang === 'zh' 
-          ? `此帳號是${userData.role === 'student' ? '學生' : '老師'}帳號，請選擇正確的平台` 
-          : `This account is a ${userData.role}. Please select the correct platform.`);
-        await supabase.auth.signOut();
-        btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
+      // If user doesn't exist in users table, create from metadata
+      if (userError && userError.code === 'PGRST116') {
+        const userRole = data.user.user_metadata?.role || selectedPlatform;
+        const userName = data.user.user_metadata?.name || data.user.email.split('@')[0];
+        
+        await supabase.from('users').insert({
+          id: data.user.id,
+          email: data.user.email,
+          name: userName,
+          role: userRole,
+          points: 0,
+          level: 1
+        });
+        
+        // Redirect based on role
+        if (userRole === 'student') {
+          window.location.href = 'student-dashboard-full.html';
+        } else {
+          window.location.href = 'teacher-dashboard.html';
+        }
+        return;
+      }
+      
+      if (!userData) {
+        showError(currentLang === 'zh' ? '無法獲取用戶資料' : 'Could not fetch user data');
+        btn.textContent = originalText;
         btn.disabled = false;
         return;
       }
       
-      // Redirect based on platform
-      if (selectedPlatform === 'student') {
+      // Check if role matches selected platform
+      if (userData.role !== selectedPlatform) {
+        await supabase.auth.signOut();
+        showError(currentLang === 'zh' 
+          ? `此帳號是${userData.role === 'student' ? '學生' : '老師'}帳號，請選擇正確的平台` 
+          : `This account is a ${userData.role}. Please select the correct platform.`);
+        btn.textContent = originalText;
+        btn.disabled = false;
+        return;
+      }
+      
+      // Redirect based on role
+      if (userData.role === 'student') {
         window.location.href = 'student-dashboard-full.html';
       } else {
         window.location.href = 'teacher-dashboard.html';
@@ -527,7 +582,7 @@
 
     async function handleSignup(e) {
       e.preventDefault();
-      hideError();
+      hideMessages();
       
       if (!selectedPlatform) {
         showError(currentLang === 'zh' ? '請選擇學生或老師平台' : 'Please select Student or Teacher Platform');
@@ -539,52 +594,91 @@
       const password = document.getElementById('signupPassword').value;
       
       const btn = document.getElementById('signupBtn');
+      const originalText = btn.textContent;
       btn.textContent = currentLang === 'zh' ? '建立帳戶中...' : 'Creating account...';
       btn.disabled = true;
       
+      // Sign up with Supabase Auth - role stored in metadata
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             name: name,
-            role: selectedPlatform
-          }
+            role: selectedPlatform // Store role in auth metadata
+          },
+          emailRedirectTo: window.location.origin + '/index.html'
         }
       });
       
       if (error) {
         showError(error.message);
-        btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
+        btn.textContent = originalText;
         btn.disabled = false;
         return;
       }
       
-      // Create user record
+      // Create user record in users table with role
       if (data.user) {
-        await supabase.from('users').insert({
+        const { error: insertError } = await supabase.from('users').insert({
           id: data.user.id,
           email: email,
           name: name,
-          role: selectedPlatform,
+          role: selectedPlatform, // Store role in database
           points: 0,
-          level: 1
+          level: 1,
+          school_id: null,
+          created_at: new Date().toISOString()
         });
+        
+        if (insertError) {
+          console.error('Error creating user record:', insertError);
+          // Continue anyway - might be RLS issue
+        }
       }
       
-      alert(currentLang === 'zh' ? '帳戶建立成功!請查收確認郵件。' : 'Account created! Please check your email to confirm.');
+      // Show success message
+      const msg = currentLang === 'zh' 
+        ? `✅ ${selectedPlatform === 'student' ? '學生' : '老師'}帳戶建立成功！請查收確認郵件。` 
+        : `✅ ${selectedPlatform.charAt(0).toUpperCase() + selectedPlatform.slice(1)} account created! Please check your email to confirm.`;
       
-      showLogin();
-      btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
-      btn.disabled = false;
+      showSuccess(msg);
+      
+      setTimeout(() => {
+        showLogin();
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 2000);
     }
 
-    // Check if already logged in
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        // User is logged in
+    // Check if already logged in on page load
+    (async function checkSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session) {
+        // Get user role
+        const { data: userData } = await supabase
+          .from('users')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (userData) {
+          // Redirect to correct dashboard
+          if (userData.role === 'student') {
+            window.location.href = 'student-dashboard-full.html';
+          } else {
+            window.location.href = 'teacher-dashboard.html';
+          }
+        }
       }
-    });
+    })();
+
+    // Restore platform selection from localStorage
+    const savedPlatform = localStorage.getItem('selectedPlatform');
+    if (savedPlatform) {
+      selectPlatform(savedPlatform);
+    }
   </script>
 </body>
 </html>
