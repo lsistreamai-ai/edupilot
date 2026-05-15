@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EduPilot - Learning Platform</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
       min-height: 100vh;
       display: flex;
@@ -16,505 +15,325 @@
       justify-content: center;
       padding: 20px;
     }
-
-    .container {
-      width: 100%;
-      max-width: 420px;
-    }
-
-    .header {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 20px;
-    }
-
-    .lang-toggle {
-      display: flex;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .lang-btn {
-      padding: 6px 14px;
-      background: none;
-      border: none;
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .lang-btn.active {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
-    }
-
-    .logo {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-
-    .logo-icon {
-      font-size: 64px;
-      margin-bottom: 12px;
-    }
-
-    .logo-text {
-      font-size: 28px;
-      font-weight: 900;
-      background: linear-gradient(135deg, #1e3a5f, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .logo-tagline {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-top: 6px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 28px 24px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    }
-
-    .tab-switcher {
-      display: flex;
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 4px;
-      margin-bottom: 24px;
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      background: none;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #64748b;
-      cursor: pointer;
-    }
-
-    .tab-btn.active {
-      background: white;
-      color: #3b82f6;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      font-weight: 700;
-    }
-
-    .form-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: #475569;
-      margin-bottom: 8px;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 15px;
-      background: #f8fafc;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: #3b82f6;
-      background: white;
-    }
-
-    .role-select {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .role-option {
-      padding: 16px;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      text-align: center;
-      cursor: pointer;
-      background: #f8fafc;
-    }
-
-    .role-option.selected {
-      border-color: #3b82f6;
-      background: #eff6ff;
-    }
-
-    .role-icon {
-      font-size: 32px;
-      margin-bottom: 6px;
-    }
-
-    .role-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1e293b;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-    }
-
-    .forgot-link {
-      text-align: center;
-      margin-top: 18px;
-    }
-
-    .forgot-link a {
-      color: #3b82f6;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-    }
+    .container { width: 100%; max-width: 420px; }
+    .header { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+    .lang-toggle { display: flex; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .lang-btn { padding: 6px 14px; background: none; border: none; color: #64748b; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .lang-btn.active { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+    .logo { text-align: center; margin-bottom: 28px; }
+    .logo-icon { font-size: 64px; margin-bottom: 12px; }
+    .logo-text { font-size: 28px; font-weight: 900; background: linear-gradient(135deg, #1e3a5f, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo-tagline { font-size: 13px; color: #94a3b8; margin-top: 6px; }
+    .card { background: white; border-radius: 20px; padding: 28px 24px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .tab-switcher { display: flex; background: #f8fafc; border-radius: 12px; padding: 4px; margin-bottom: 24px; }
+    .tab-btn { flex: 1; padding: 12px; border: none; background: none; border-radius: 10px; font-size: 14px; font-weight: 600; color: #64748b; cursor: pointer; }
+    .tab-btn.active { background: white; color: #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-weight: 700; }
+    .form-title { font-size: 22px; font-weight: 800; color: #1e293b; margin-bottom: 24px; text-align: center; }
+    .form-group { margin-bottom: 18px; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 8px; }
+    .form-input { width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; background: #f8fafc; }
+    .form-input:focus { outline: none; border-color: #3b82f6; background: white; }
+    .role-select { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .role-option { padding: 16px; border: 2px solid #e2e8f0; border-radius: 12px; text-align: center; cursor: pointer; background: #f8fafc; }
+    .role-option.selected { border-color: #3b82f6; background: #eff6ff; }
+    .role-icon { font-size: 32px; margin-bottom: 6px; }
+    .role-label { font-size: 14px; font-weight: 600; color: #1e293b; }
+    .submit-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); }
+    .forgot-link { text-align: center; margin-top: 18px; }
+    .forgot-link a { color: #3b82f6; font-size: 13px; font-weight: 600; text-decoration: none; }
+    .error { background: #fee2e2; color: #dc2626; padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; display: none; }
+    .success { background: #dcfce7; color: #16a34a; padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; display: none; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
       <div class="lang-toggle">
-        <button class="lang-btn active" id="langEn">EN</button>
-        <button class="lang-btn" id="langZh">中文</button>
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('zh')">中文</button>
       </div>
     </div>
 
     <div class="logo">
       <div class="logo-icon">🎓</div>
       <div class="logo-text">EduPilot</div>
-      <div class="logo-tagline" id="tagline">Learn • Play • Grow</div>
+      <div class="logo-tagline" data-en="Learn • Play • Grow" data-zh="學習 • 遊戲 • 成長">Learn • Play • Grow</div>
     </div>
 
     <div class="card">
       <div class="tab-switcher">
-        <button class="tab-btn active" id="loginTabBtn">Login</button>
-        <button class="tab-btn" id="signupTabBtn">Sign Up</button>
+        <button class="tab-btn active" onclick="showLogin()">Login</button>
+        <button class="tab-btn" onclick="showSignup()">Sign Up</button>
       </div>
 
-      <!-- Login Form -->
       <div id="loginForm">
-        <div class="form-title" id="loginTitle">Welcome Back!</div>
-        <form id="loginFormElement">
-          <div class="form-group">
-            <label class="form-label" id="emailLabel">Email</label>
-            <input type="email" class="form-input" id="loginEmail" placeholder="your@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" id="passwordLabel">Password</label>
-            <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
-          </div>
-          <button type="submit" class="submit-btn" id="loginBtn">Login</button>
-        </form>
+        <div class="form-title" data-en="Welcome Back!" data-zh="歡迎回來!">Welcome Back!</div>
+        <div class="error" id="loginError"></div>
+        <div class="success" id="loginSuccess"></div>
+        <div class="form-group">
+          <label class="form-label" data-en="Email" data-zh="電郵">Email</label>
+          <input type="email" class="form-input" id="loginEmail" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
+          <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <button class="submit-btn" onclick="doLogin(event)" id="loginBtn" data-en="Login" data-zh="登入">Login</button>
         <div class="forgot-link">
-          <a href="#" id="forgotLink">Forgot password?</a>
+          <a href="#" data-en="Forgot password?" data-zh="忘記密碼?">Forgot password?</a>
         </div>
       </div>
 
-      <!-- Signup Form -->
       <div id="signupForm" style="display: none;">
-        <div class="form-title" id="signupTitle">Create Account</div>
-        <form id="signupFormElement">
-          <div class="form-group">
-            <label class="form-label" id="nameLabel">Full Name</label>
-            <input type="text" class="form-input" id="signupName" placeholder="Tommy Tsang" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-input" id="signupEmail" placeholder="your@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Password</label>
-            <input type="password" class="form-input" id="signupPassword" placeholder="••••••••" required minlength="6">
-          </div>
-          <div class="form-group">
-            <label class="form-label" id="roleLabel">I am a...</label>
-            <div class="role-select">
-              <div class="role-option" id="studentRole">
-                <div class="role-icon">👦</div>
-                <div class="role-label" id="studentLabel">Student</div>
-              </div>
-              <div class="role-option" id="teacherRole">
-                <div class="role-icon">👨‍🏫</div>
-                <div class="role-label" id="teacherLabel">Teacher</div>
-              </div>
+        <div class="form-title" data-en="Create Account" data-zh="建立帳戶">Create Account</div>
+        <div class="error" id="signupError"></div>
+        <div class="success" id="signupSuccess"></div>
+        <div class="form-group">
+          <label class="form-label" data-en="Full Name" data-zh="姓名">Full Name</label>
+          <input type="text" class="form-input" id="signupName" placeholder="Tommy Tsang" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-en="Email" data-zh="電郵">Email</label>
+          <input type="email" class="form-input" id="signupEmail" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-en="Password" data-zh="密碼">Password</label>
+          <input type="password" class="form-input" id="signupPassword" placeholder="••••••••" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-en="I am a..." data-zh="我是...">I am a...</label>
+          <div class="role-select">
+            <div class="role-option" id="studentRole" onclick="selectRole('student')">
+              <div class="role-icon">👦</div>
+              <div class="role-label" data-en="Student" data-zh="學生">Student</div>
             </div>
-            <input type="hidden" id="selectedRole" value="">
+            <div class="role-option" id="teacherRole" onclick="selectRole('teacher')">
+              <div class="role-icon">👨‍🏫</div>
+              <div class="role-label" data-en="Teacher" data-zh="老師">Teacher</div>
+            </div>
           </div>
-          <button type="submit" class="submit-btn" id="signupBtn">Create Account</button>
-        </form>
+        </div>
+        <button class="submit-btn" onclick="doSignup(event)" id="signupBtn" data-en="Create Account" data-zh="建立帳戶">Create Account</button>
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Initialize Supabase
-    const supabaseUrl = 'https://zpyglubdgpecdfsrnirz.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpweWdsdWJkZ3BlY2Rmc3JuaXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NTYxNTksImV4cCI6MjA5NDMzMjE1OX0.IEBm33tSXSS7p1ivjXGNowAbyk7uYQTBCSrZJZ68maU';
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    var supabase;
+    var currentLang = 'en';
+    var selectedRole = '';
 
-    let currentLang = 'en';
-    let selectedRole = '';
-
-    // Language toggle
-    document.getElementById('langEn').addEventListener('click', function() {
-      currentLang = 'en';
-      document.getElementById('langEn').classList.add('active');
-      document.getElementById('langZh').classList.remove('active');
-      updateLanguage();
-      localStorage.setItem('lang', 'en');
-    });
-
-    document.getElementById('langZh').addEventListener('click', function() {
-      currentLang = 'zh';
-      document.getElementById('langZh').classList.add('active');
-      document.getElementById('langEn').classList.remove('active');
-      updateLanguage();
-      localStorage.setItem('lang', 'zh');
-    });
-
-    function updateLanguage() {
-      const texts = {
-        en: {
-          tagline: 'Learn • Play • Grow',
-          loginTab: 'Login',
-          signupTab: 'Sign Up',
-          loginTitle: 'Welcome Back!',
-          emailLabel: 'Email',
-          passwordLabel: 'Password',
-          loginBtn: 'Login',
-          forgotLink: 'Forgot password?',
-          signupTitle: 'Create Account',
-          nameLabel: 'Full Name',
-          roleLabel: 'I am a...',
-          studentLabel: 'Student',
-          teacherLabel: 'Teacher',
-          signupBtn: 'Create Account'
-        },
-        zh: {
-          tagline: '學習 • 遊戲 • 成長',
-          loginTab: '登入',
-          signupTab: '註冊',
-          loginTitle: '歡迎回來!',
-          emailLabel: '電郵',
-          passwordLabel: '密碼',
-          loginBtn: '登入',
-          forgotLink: '忘記密碼?',
-          signupTitle: '建立帳戶',
-          nameLabel: '姓名',
-          roleLabel: '我是...',
-          studentLabel: '學生',
-          teacherLabel: '老師',
-          signupBtn: '建立帳戶'
-        }
-      };
+    // Initialize on page load
+    window.onload = function() {
+      console.log('Page loaded, initializing Supabase...');
       
-      const t = texts[currentLang];
-      document.getElementById('tagline').textContent = t.tagline;
-      document.getElementById('loginTabBtn').textContent = t.loginTab;
-      document.getElementById('signupTabBtn').textContent = t.signupTab;
-      document.getElementById('loginTitle').textContent = t.loginTitle;
-      document.getElementById('emailLabel').textContent = t.emailLabel;
-      document.getElementById('passwordLabel').textContent = t.passwordLabel;
-      document.getElementById('loginBtn').textContent = t.loginBtn;
-      document.getElementById('forgotLink').textContent = t.forgotLink;
-      document.getElementById('signupTitle').textContent = t.signupTitle;
-      document.getElementById('nameLabel').textContent = t.nameLabel;
-      document.getElementById('roleLabel').textContent = t.roleLabel;
-      document.getElementById('studentLabel').textContent = t.studentLabel;
-      document.getElementById('teacherLabel').textContent = t.teacherLabel;
-      document.getElementById('signupBtn').textContent = t.signupBtn;
+      supabase = window.supabase.createClient(
+        'https://zpyglubdgpecdfsrnirz.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpweWdsdWJkZ3BlY2Rmc3JuaXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NTYxNTksImV4cCI6MjA5NDMzMjE1OX0.IEBm33tSXSS7p1ivjXGNowAbyk7uYQTBCSrZJZ68maU'
+      );
+      
+      console.log('Supabase initialized');
+      
+      // Check saved language
+      var saved = localStorage.getItem('lang');
+      if (saved === 'zh') setLang('zh');
+      
+      // Check if already logged in
+      checkSession();
+    };
+
+    function setLang(lang) {
+      currentLang = lang;
+      var btns = document.querySelectorAll('.lang-btn');
+      btns.forEach(function(b, i) {
+        if (i === 0 && lang === 'en') b.classList.add('active');
+        else if (i === 1 && lang === 'zh') b.classList.add('active');
+        else b.classList.remove('active');
+      });
+      
+      var elements = document.querySelectorAll('[data-en]');
+      elements.forEach(function(el) {
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+      
+      localStorage.setItem('lang', lang);
     }
 
-    // Load saved language
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang === 'zh') {
-      document.getElementById('langZh').click();
-    }
-
-    // Tab switching
-    document.getElementById('loginTabBtn').addEventListener('click', function() {
+    function showLogin() {
       document.getElementById('loginForm').style.display = 'block';
       document.getElementById('signupForm').style.display = 'none';
-      document.getElementById('loginTabBtn').classList.add('active');
-      document.getElementById('signupTabBtn').classList.remove('active');
-    });
+      var btns = document.querySelectorAll('.tab-btn');
+      btns[0].classList.add('active');
+      btns[1].classList.remove('active');
+      hideErrors();
+    }
 
-    document.getElementById('signupTabBtn').addEventListener('click', function() {
+    function showSignup() {
       document.getElementById('loginForm').style.display = 'none';
       document.getElementById('signupForm').style.display = 'block';
-      document.getElementById('signupTabBtn').classList.add('active');
-      document.getElementById('loginTabBtn').classList.remove('active');
-    });
+      var btns = document.querySelectorAll('.tab-btn');
+      btns[0].classList.remove('active');
+      btns[1].classList.add('active');
+      hideErrors();
+    }
 
-    // Role selection
-    document.getElementById('studentRole').addEventListener('click', function() {
-      selectedRole = 'student';
-      document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
-      this.classList.add('selected');
-      document.getElementById('selectedRole').value = 'student';
-    });
+    function selectRole(role) {
+      selectedRole = role;
+      document.getElementById('studentRole').classList.remove('selected');
+      document.getElementById('teacherRole').classList.remove('selected');
+      document.getElementById(role + 'Role').classList.add('selected');
+    }
 
-    document.getElementById('teacherRole').addEventListener('click', function() {
-      selectedRole = 'teacher';
-      document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
-      this.classList.add('selected');
-      document.getElementById('selectedRole').value = 'teacher';
-    });
+    function showError(el, msg) {
+      document.getElementById(el).textContent = msg;
+      document.getElementById(el).style.display = 'block';
+    }
 
-    // Login
-    document.getElementById('loginFormElement').addEventListener('submit', async function(e) {
+    function showSuccess(el, msg) {
+      document.getElementById(el).textContent = msg;
+      document.getElementById(el).style.display = 'block';
+    }
+
+    function hideErrors() {
+      document.getElementById('loginError').style.display = 'none';
+      document.getElementById('signupError').style.display = 'none';
+      document.getElementById('loginSuccess').style.display = 'none';
+      document.getElementById('signupSuccess').style.display = 'none';
+    }
+
+    async function doLogin(e) {
       e.preventDefault();
+      hideErrors();
       
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      const btn = document.getElementById('loginBtn');
+      var email = document.getElementById('loginEmail').value;
+      var password = document.getElementById('loginPassword').value;
+      var btn = document.getElementById('loginBtn');
       
-      btn.textContent = currentLang === 'zh' ? '登入中...' : 'Logging in...';
+      if (!email || !password) {
+        showError('loginError', currentLang === 'zh' ? '請填寫所有欄位' : 'Please fill all fields');
+        return;
+      }
+      
       btn.disabled = true;
+      btn.textContent = currentLang === 'zh' ? '登入中...' : 'Logging in...';
       
       try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
+        console.log('Attempting login...');
+        var result = await supabase.auth.signInWithPassword({ email: email, password: password });
         
-        if (error) {
-          alert(error.message);
-          btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
+        if (result.error) {
+          console.error('Login error:', result.error);
+          showError('loginError', result.error.message);
           btn.disabled = false;
+          btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
           return;
         }
         
-        // Get user role
-        const { data: userData } = await supabase
-          .from('users')
-          .select('role')
-          .eq('id', data.user.id)
-          .single();
+        console.log('Login successful, checking role...');
+        showSuccess('loginSuccess', currentLang === 'zh' ? '登入成功!' : 'Login successful!');
         
-        if (userData && userData.role === 'teacher') {
+        // Get role
+        var userResult = await supabase.from('users').select('role').eq('id', result.data.user.id).single();
+        
+        console.log('User role:', userResult.data);
+        
+        if (userResult.data && userResult.data.role === 'teacher') {
           window.location.href = 'teacher-dashboard.html';
         } else {
           window.location.href = 'student-dashboard-full.html';
         }
+        
       } catch (err) {
-        alert(err.message);
-        btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
+        console.error('Exception:', err);
+        showError('loginError', err.message);
         btn.disabled = false;
+        btn.textContent = currentLang === 'zh' ? '登入' : 'Login';
       }
-    });
+    }
 
-    // Signup
-    document.getElementById('signupFormElement').addEventListener('submit', async function(e) {
+    async function doSignup(e) {
       e.preventDefault();
+      hideErrors();
       
-      const name = document.getElementById('signupName').value;
-      const email = document.getElementById('signupEmail').value;
-      const password = document.getElementById('signupPassword').value;
-      const role = document.getElementById('selectedRole').value;
+      var name = document.getElementById('signupName').value;
+      var email = document.getElementById('signupEmail').value;
+      var password = document.getElementById('signupPassword').value;
+      var btn = document.getElementById('signupBtn');
       
-      if (!role) {
-        alert(currentLang === 'zh' ? '請選擇學生或老師' : 'Please select Student or Teacher');
+      if (!name || !email || !password) {
+        showError('signupError', currentLang === 'zh' ? '請填寫所有欄位' : 'Please fill all fields');
         return;
       }
       
-      const btn = document.getElementById('signupBtn');
-      btn.textContent = currentLang === 'zh' ? '建立中...' : 'Creating...';
+      if (!selectedRole) {
+        showError('signupError', currentLang === 'zh' ? '請選擇學生或老師' : 'Please select Student or Teacher');
+        return;
+      }
+      
       btn.disabled = true;
+      btn.textContent = currentLang === 'zh' ? '建立中...' : 'Creating...';
       
       try {
-        const { data, error } = await supabase.auth.signUp({
+        console.log('Attempting signup...');
+        var result = await supabase.auth.signUp({
           email: email,
           password: password,
           options: {
-            data: {
-              name: name,
-              role: role
-            }
+            data: { name: name, role: selectedRole }
           }
         });
         
-        if (error) {
-          alert(error.message);
-          btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
+        if (result.error) {
+          console.error('Signup error:', result.error);
+          showError('signupError', result.error.message);
           btn.disabled = false;
+          btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
           return;
         }
         
-        if (data.user) {
+        console.log('Signup successful, creating user record...');
+        
+        // Create user record
+        if (result.data.user) {
           await supabase.from('users').insert({
-            id: data.user.id,
+            id: result.data.user.id,
             email: email,
             name: name,
-            role: role,
+            role: selectedRole,
             points: 0,
             level: 1
           });
         }
         
-        alert(currentLang === 'zh' ? '帳戶建立成功!請查收確認郵件。' : 'Account created! Please check your email.');
-        document.getElementById('loginTabBtn').click();
-        btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
+        showSuccess('signupSuccess', currentLang === 'zh' ? '帳戶建立成功!請查收確認郵件。' : 'Account created! Check your email.');
         btn.disabled = false;
-      } catch (err) {
-        alert(err.message);
         btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
-        btn.disabled = false;
-      }
-    });
-
-    // Check if already logged in
-    (async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const { data: userData } = await supabase
-          .from('users')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
         
-        if (userData) {
-          window.location.href = userData.role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard-full.html';
-        }
+        setTimeout(showLogin, 2000);
+        
+      } catch (err) {
+        console.error('Exception:', err);
+        showError('signupError', err.message);
+        btn.disabled = false;
+        btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
       }
-    })();
+    }
+
+    async function checkSession() {
+      try {
+        var sess = await supabase.auth.getSession();
+        if (sess.data.session) {
+          var userResult = await supabase.from('users').select('role').eq('id', sess.data.session.user.id).single();
+          if (userResult.data) {
+            window.location.href = userResult.data.role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard-full.html';
+          }
+        }
+      } catch (err) {
+        console.log('No active session');
+      }
+    }
   </script>
 </body>
 </html>
