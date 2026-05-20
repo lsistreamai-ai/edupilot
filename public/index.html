@@ -270,7 +270,7 @@
       try {
         var sess = await supabase.auth.getSession();
         if (sess.data.session) {
-          var userResult = await supabase.from('users').select('role').eq('id', sess.data.session.user.id).single();
+          var userResult = await supabase.from('users').select('role').eq('auth_id', sess.data.session.user.id).single();
           if (userResult.data) {
             var role = userResult.data.role;
             if (role === 'admin' || role === 'teacher') window.location.href = 'teacher-dashboard.html';
