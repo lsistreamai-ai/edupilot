@@ -197,7 +197,7 @@
       }
       
       var user = sess.data.session.user;
-      var userResult = await supabase.from('users').select('*').eq('id', user.id).single();
+      var userResult = await supabase.from('users').select('*').eq('auth_id', user.id).single();
       
       if (userResult.data) {
         document.getElementById('userName').textContent = userResult.data.full_name || 'Student';
