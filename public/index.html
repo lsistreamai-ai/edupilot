@@ -211,7 +211,7 @@
         
         // Get role from users table
         console.log('🔍 Fetching user role...');
-        var userResult = await supabase.from('users').select('role').eq('id', result.data.user.id).single();
+        var userResult = await supabase.from('users').select('role').eq('auth_id', result.data.user.id).single();
         console.log('User query result:', userResult);
         
         var role = 'student';
@@ -258,7 +258,7 @@
         });
         if (result.error) { showError('signupError', result.error.message); btn.disabled = false; btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account'; return; }
         if (result.data.user) {
-          await supabase.from('users').insert({ id: result.data.user.id, email: email, full_name: name, role: selectedRole, points: 0, level: 1 });
+          await supabase.from('users').insert({ auth_id: result.data.user.id, email: email, full_name: name, role: selectedRole, points: 0, level: 1 });
         }
         showSuccess('signupSuccess', currentLang === 'zh' ? '帳戶建立成功!請查收確認郵件。' : 'Account created! Check your email to confirm.');
         btn.disabled = false; btn.textContent = currentLang === 'zh' ? '建立帳戶' : 'Create Account';
