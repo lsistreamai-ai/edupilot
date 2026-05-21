@@ -33,7 +33,7 @@ export default function WikiCard({ page }: Props) {
         <span>{page.view_count} views</span>
         {page.tags?.length > 0 && (
           <span className="flex gap-1.5">
-            {page.tags.slice(0, 3).map((t) => (
+            {page.tags.slice(0, 3).map((t: string) => (
               <span key={t} className="px-1.5 py-0.5 rounded bg-slate-700/30 text-slate-500">
                 {t}
               </span>

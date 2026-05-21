@@ -54,7 +54,7 @@ export default async function WikiViewPage({ params }: Props) {
           <span>{page.view_count} views</span>
           {page.tags?.length > 0 && (
             <div className="flex gap-1.5">
-              {page.tags.map((t) => (
+              {page.tags.map((t: string) => (
                 <span key={t} className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-500">
                   {t}
                 </span>

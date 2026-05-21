@@ -48,7 +48,7 @@ export default function WikiSidebar({ categories, activeCategory }: Props) {
               ) : results.length === 0 ? (
                 <p className="text-xs text-slate-500 px-1">No results</p>
               ) : (
-                results.map((r) => (
+                results.map((r: SearchResult) => (
                   <Link
                     key={r.id}
                     href={`/wiki/${r.slug}`}
@@ -78,7 +78,7 @@ export default function WikiSidebar({ categories, activeCategory }: Props) {
             >
               All Pages
             </Link>
-            {categories.map((cat) => (
+            {categories.map((cat: WikiCategory) => (
               <Link
                 key={cat.id}
                 href={`/wiki?category=${cat.slug}`}

@@ -76,7 +76,7 @@ export default function NewWikiPage() {
             className="bg-slate-800/50 border border-slate-700/30 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-indigo-500/30"
           >
             <option value="">No category</option>
-            {categories.map((c) => (
+            {categories.map((c: WikiCategory) => (
               <option key={c.id} value={c.id}>
                 {c.icon} {c.name}
               </option>
