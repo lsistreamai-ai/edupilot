@@ -188,7 +188,7 @@ export default function GlobeBackground() {
     const orbitGroup = new THREE.Group()
     scene.add(orbitGroup)
 
-    const orbitParticles: THREE.Mesh[] = []
+    const orbitParticles: any[] = []
     for (let i = 0; i < 12; i++) {
       const particle = new THREE.Mesh(
         new THREE.SphereGeometry(0.03, 8, 8),
