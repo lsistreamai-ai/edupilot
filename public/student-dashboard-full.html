@@ -3,231 +3,1237 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Student Dashboard - EduPilot</title>
+  <title>Student Dashboard - LSI Learning</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
-      background: linear-gradient(180deg, #eff6ff 0%, #f0f9ff 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', Roboto, sans-serif;
+      background: #f0f9ff;
       min-height: 100vh;
+      padding-bottom: 90px;
     }
-    .header {
-      position: sticky;
+
+    /* Top Header */
+    .top-header {
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      padding: 18px 20px;
       color: white;
       z-index: 100;
-      padding: 14px 16px;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      max-width: 600px;
+      margin: 0 auto;
     }
-    .logo { font-size: 20px; font-weight: 800; }
-    .logout-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 16px; border-radius: 12px; font-weight: 600; cursor: pointer; }
-    .main { padding: 20px 16px; padding-bottom: 100px; max-width: 600px; margin: 0 auto; }
-    
-    .profile-card {
-      background: white;
-      border-radius: 24px;
-      padding: 32px 24px;
-      text-align: center;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
-    .avatar { font-size: 64px; margin-bottom: 16px; }
-    .name { font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
-    .class-info { font-size: 16px; color: #64748b; margin-bottom: 20px; }
-    
-    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
-    .stat-box { background: #f8fafc; border-radius: 16px; padding: 16px; text-align: center; }
-    .stat-value { font-size: 24px; font-weight: 800; color: #3b82f6; }
-    .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
-    
-    .section-title { font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 16px; }
-    
-    .setup-card {
+
+    .student-avatar {
+      width: 52px;
+      height: 52px;
       background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .student-details h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.25);
+      padding: 6px 14px;
       border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 16px;
-      border: 3px solid #f1f5f9;
-    }
-    .setup-card:hover { border-color: #3b82f6; }
-    .setup-title { font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
-    .setup-desc { font-size: 14px; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
-    .setup-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .help-btn {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      font-size: 26px;
       cursor: pointer;
     }
-    
-    .subject-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .subject-card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+    .badges-btn {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      font-size: 26px;
+      cursor: pointer;
+      position: relative;
     }
-    .subject-icon { font-size: 36px; margin-bottom: 8px; }
-    .subject-name { font-size: 14px; font-weight: 700; color: #1e293b; }
-    
+
+    /* Bottom Navigation */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       background: white;
-      padding: 12px 20px;
+      border-top: 2px solid #e2e8f0;
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    }
+
+    .nav-content {
       display: flex;
       justify-content: space-around;
-      box-shadow: 0 -2px 20px rgba(0,0,0,0.08);
+      padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+      max-width: 600px;
+      margin: 0 auto;
     }
-    .nav-item { text-align: center; color: #94a3b8; font-size: 12px; }
-    .nav-item.active { color: #3b82f6; }
-    .nav-icon { font-size: 24px; margin-bottom: 4px; }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+      min-width: 60px;
+    }
+
+    .nav-item.active {
+      color: #3b82f6;
+    }
+
+    .nav-item .icon {
+      font-size: 28px;
+    }
+
+    .nav-item .label {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .nav-item.active .label {
+      color: #3b82f6;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 100px 20px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* How to Start Card */
+    .how-to-start {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 2px solid #f59e0b;
+    }
+
+    .how-to-start h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #92400e;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: white;
+      padding: 16px;
+      border-radius: 16px;
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+      background: #f59e0b;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #451a03;
+    }
+
+    .step-icon {
+      font-size: 28px;
+      margin-left: auto;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Today's Learning */
+    .today-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border: 2px solid #e2e8f0;
+    }
+
+    .today-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .today-badge {
+      background: #fef3c7;
+      color: #b45309;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .countdown {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #dc2626;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .lesson-card {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-radius: 20px;
+      padding: 20px;
+      border: 2px solid #3b82f6;
+    }
+
+    .lesson-icon {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .lesson-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .lesson-subtitle {
+      font-size: 16px;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .start-lesson-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 20px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    /* Subject Tiles */
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .subject-tile {
+      background: white;
+      border-radius: 20px;
+      padding: 20px 12px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .subject-tile:hover {
+      border-color: #3b82f6;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+    }
+
+    .subject-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 12px;
+    }
+
+    .subject-icon.english { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .subject-icon.math { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .subject-icon.science { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+    .subject-icon.art { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .subject-icon.coding { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+    .subject-icon.music { background: linear-gradient(135deg, #fae8ff, #e9d5ff); }
+
+    .subject-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    /* Practice Space */
+    .practice-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border: 2px solid #8b5cf6;
+    }
+
+    .practice-header {
+      margin-bottom: 20px;
+    }
+
+    .skill-select {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .skill-option {
+      padding: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .skill-option:hover {
+      border-color: #8b5cf6;
+      background: #faf5ff;
+    }
+
+    .skill-option.selected {
+      border-color: #8b5cf6;
+      background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+    }
+
+    .skill-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .skill-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .start-practice-btn {
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      border: none;
+      border-radius: 18px;
+      font-size: 20px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    /* Leaderboard */
+    .leaderboard-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border: 2px solid #f59e0b;
+    }
+
+    .your-rank {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border: 3px solid #3b82f6;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .rank-label {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .rank-number {
+      font-size: 48px;
+      font-weight: 900;
+      color: #3b82f6;
+    }
+
+    .leaderboard-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .leader-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      background: #f8fafc;
+      border-radius: 16px;
+    }
+
+    .leader-item.gold { background: linear-gradient(135deg, #fffbeb, #fef3c7); }
+    .leader-item.silver { background: linear-gradient(135deg, #f8fafc, #f1f5f9); }
+    .leader-item.bronze { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+    .leader-item.you { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #3b82f6; }
+
+    .leader-rank {
+      width: 36px;
+      font-size: 22px;
+      text-align: center;
+    }
+
+    .leader-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c4b5fd, #f0abfc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .leader-name {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .leader-points {
+      font-size: 18px;
+      font-weight: 800;
+      color: #f59e0b;
+    }
+
+    /* My Progress */
+    .progress-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border: 2px solid #22c55e;
+    }
+
+    .progress-item {
+      margin-bottom: 20px;
+    }
+
+    .progress-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .progress-subject {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-percent {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .progress-bar {
+      height: 16px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 8px;
+      transition: width 0.5s;
+    }
+
+    /* Checklist */
+    .checklist {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 2px solid #f1f5f9;
+    }
+
+    .checklist-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 16px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 14px;
+      margin-bottom: 10px;
+    }
+
+    .checklist-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .checklist-icon.not-started { background: #fee2e2; }
+    .checklist-icon.in-progress { background: #fef3c7; }
+    .checklist-icon.completed { background: #dcfce7; }
+
+    .checklist-text {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .checklist-status {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 10px;
+    }
+
+    .checklist-status.not-started { background: #fee2e2; color: #dc2626; }
+    .checklist-status.in-progress { background: #fef3c7; color: #b45309; }
+    .checklist-status.completed { background: #dcfce7; color: #16a34a; }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="logo">🎓 EduPilot</div>
-    <button class="logout-btn" onclick="logout()">Log Out</button>
+  <!-- Top Header -->
+  <header class="top-header">
+    <div class="header-content">
+      <div class="student-info">
+        <div class="student-avatar">👦</div>
+        <div class="student-details">
+          <h2>Tommy! 👋</h2>
+          <div class="level-badge">
+            <span>⭐</span>
+            <span>Level 9</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="badges-btn">🏅</button>
+        <button class="help-btn">❓</button>
+      </div>
+    </div>
   </header>
 
-  <main class="main" id="mainContent">
-    <!-- Profile -->
-    <div class="profile-card">
-      <div class="avatar">👦</div>
-      <div class="name" id="userName">Student</div>
-      <div class="class-info" id="classInfo">Ready to learn!</div>
-      
-      <div class="stats-row">
-        <div class="stat-box">
-          <div class="stat-value" id="points">0</div>
-          <div class="stat-label">Points</div>
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- How to Start -->
+    <div class="how-to-start">
+      <h3>🚀 How to Start Learning</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-text">Pick a Subject</div>
+          <div class="step-icon">👆</div>
         </div>
-        <div class="stat-box">
-          <div class="stat-value" id="level">1</div>
-          <div class="stat-label">Level</div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-text">Start Practice</div>
+          <div class="step-icon">✏️</div>
         </div>
-        <div class="stat-box">
-          <div class="stat-value" id="streak">🔥</div>
-          <div class="stat-label">Streak</div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-text">Submit or Finish</div>
+          <div class="step-icon">✅</div>
         </div>
       </div>
     </div>
 
-    <!-- Join Class -->
-    <div class="section-title">📚 My Classes</div>
-    <div class="setup-card">
-      <div class="setup-title">Join a Class</div>
-      <div class="setup-desc">Enter your class code from your teacher to join your class and see your subjects.</div>
-      <button class="setup-btn" onclick="showJoinModal()">Join Class</button>
-    </div>
+    <!-- Today's Learning -->
+    <section>
+      <h2 class="section-title">📚 Today's Learning</h2>
+      <div class="today-card">
+        <div class="today-header">
+          <span class="today-badge">⭐ Today's Lesson</span>
+          <div class="countdown">
+            <span>⏰</span>
+            <span>Due in 2 hours</span>
+          </div>
+        </div>
+        <div class="lesson-card">
+          <div class="lesson-icon">📐</div>
+          <div class="lesson-title">Fractions Made Easy</div>
+          <div class="lesson-subtitle">Learn about halves, quarters, and thirds!</div>
+          <button class="start-lesson-btn">
+            <span>▶️</span>
+            <span>Start Learning</span>
+          </button>
+        </div>
+      </div>
+    </section>
 
     <!-- Subjects -->
-    <div class="section-title" style="margin-top: 24px;">📖 Subjects</div>
-    <div class="subject-grid" id="subjectsGrid">
-      <div class="subject-card">
-        <div class="subject-icon">🇨🇳</div>
-        <div class="subject-name">Chinese</div>
+    <section>
+      <h2 class="section-title">📖 My Subjects</h2>
+      <div class="subjects-grid">
+        <div class="subject-tile">
+          <div class="subject-icon english">📖</div>
+          <div class="subject-name">English</div>
+        </div>
+        <div class="subject-tile">
+          <div class="subject-icon math">📐</div>
+          <div class="subject-name">Math</div>
+        </div>
+        <div class="subject-tile">
+          <div class="subject-icon science">🔬</div>
+          <div class="subject-name">Science</div>
+        </div>
+        <div class="subject-tile">
+          <div class="subject-icon art">🎨</div>
+          <div class="subject-name">Art</div>
+        </div>
+        <div class="subject-tile">
+          <div class="subject-icon coding">💻</div>
+          <div class="subject-name">Coding</div>
+        </div>
+        <div class="subject-tile">
+          <div class="subject-icon music">🎵</div>
+          <div class="subject-name">Music</div>
+        </div>
       </div>
-      <div class="subject-card">
-        <div class="subject-icon">🇬🇧</div>
-        <div class="subject-name">English</div>
+    </section>
+
+    <!-- Practice Space -->
+    <section>
+      <h2 class="section-title">✏️ Practice Space</h2>
+      <div class="practice-card">
+        <div class="practice-header">
+          <p style="font-size: 16px; color: #64748b;">Choose a skill to practice:</p>
+        </div>
+        <div class="skill-select">
+          <div class="skill-option selected">
+            <div class="skill-icon">➕</div>
+            <div class="skill-name">Addition</div>
+          </div>
+          <div class="skill-option">
+            <div class="skill-icon">➖</div>
+            <div class="skill-name">Subtraction</div>
+          </div>
+          <div class="skill-option">
+            <div class="skill-icon">✖️</div>
+            <div class="skill-name">Multiply</div>
+          </div>
+          <div class="skill-option">
+            <div class="skill-icon">➗</div>
+            <div class="skill-name">Division</div>
+          </div>
+        </div>
+        <button class="start-practice-btn">
+          <span>🎯</span>
+          <span>Start Practice</span>
+        </button>
       </div>
-      <div class="subject-card">
-        <div class="subject-icon">🔢</div>
-        <div class="subject-name">Math</div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section>
+      <h2 class="section-title">🏆 Leaderboard</h2>
+      <div class="leaderboard-card">
+        <div class="your-rank">
+          <div class="rank-label">Your Rank</div>
+          <div class="rank-number">#4</div>
+        </div>
+        <div class="leaderboard-list">
+          <div class="leader-item gold">
+            <div class="leader-rank">🥇</div>
+            <div class="leader-avatar">👧</div>
+            <div class="leader-name">Emily Wong</div>
+            <div class="leader-points">2,450 ⭐</div>
+          </div>
+          <div class="leader-item silver">
+            <div class="leader-rank">🥈</div>
+            <div class="leader-avatar">👦</div>
+            <div class="leader-name">Jason Lee</div>
+            <div class="leader-points">2,320 ⭐</div>
+          </div>
+          <div class="leader-item bronze">
+            <div class="leader-rank">🥉</div>
+            <div class="leader-avatar">👧</div>
+            <div class="leader-name">Sophie Chan</div>
+            <div class="leader-points">2,180 ⭐</div>
+          </div>
+          <div class="leader-item you">
+            <div class="leader-rank">4</div>
+            <div class="leader-avatar">👦</div>
+            <div class="leader-name">Tommy (You)</div>
+            <div class="leader-points">2,050 ⭐</div>
+          </div>
+        </div>
       </div>
-      <div class="subject-card">
-        <div class="subject-icon">🔬</div>
-        <div class="subject-name">Science</div>
+    </section>
+
+    <!-- My Progress -->
+    <section>
+      <h2 class="section-title">📊 My Progress</h2>
+      <div class="progress-card">
+        <div class="progress-item">
+          <div class="progress-header">
+            <div class="progress-subject">
+              <span>📐</span>
+              <span>Math</span>
+            </div>
+            <div class="progress-percent" style="color: #3b82f6;">80%</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-header">
+            <div class="progress-subject">
+              <span>📖</span>
+              <span>English</span>
+            </div>
+            <div class="progress-percent" style="color: #8b5cf6;">60%</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 60%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-header">
+            <div class="progress-subject">
+              <span>🔬</span>
+              <span>Science</span>
+            </div>
+            <div class="progress-percent" style="color: #22c55e;">70%</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 70%; background: linear-gradient(90deg, #22c55e, #4ade80);"></div>
+          </div>
+        </div>
+
+        <!-- Checklist -->
+        <div class="checklist">
+          <div class="checklist-title">✅ My Checklist</div>
+          <div class="checklist-item">
+            <div class="checklist-icon completed">✅</div>
+            <div class="checklist-text">Morning Quiz</div>
+            <span class="checklist-status completed">Done! 🎉</span>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon in-progress">🔄</div>
+            <div class="checklist-text">Fractions Lesson</div>
+            <span class="checklist-status in-progress">In Progress</span>
+          </div>
+          <div class="checklist-item">
+            <div class="checklist-icon not-started">⭕</div>
+            <div class="checklist-text">Art Project</div>
+            <span class="checklist-status not-started">Not Started</span>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 
+  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
-    <div class="nav-item active">
-      <div class="nav-icon">🏠</div>
-      Home
-    </div>
-    <div class="nav-item">
-      <div class="nav-icon">📚</div>
-      Learn
-    </div>
-    <div class="nav-item">
-      <div class="nav-icon">🏆</div>
-      Rewards
-    </div>
-    <div class="nav-item">
-      <div class="nav-icon">👤</div>
-      Profile
+    <div class="nav-content">
+      <button class="nav-item active">
+        <span class="icon">🏠</span>
+        <span class="label">Home</span>
+      </button>
+      <button class="nav-item">
+        <span class="icon">📚</span>
+        <span class="label">Learn</span>
+      </button>
+      <button class="nav-item">
+        <span class="icon">✏️</span>
+        <span class="label">Practice</span>
+      </button>
+      <button class="nav-item">
+        <span class="icon">🏆</span>
+        <span class="label">Leaders</span>
+      </button>
+      <button class="nav-item">
+        <span class="icon">📊</span>
+        <span class="label">Progress</span>
+      </button>
     </div>
   </nav>
 
-  <!-- Join Class Modal -->
-  <div id="joinModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center; padding:20px;">
-    <div style="background:white; border-radius:24px; padding:24px; max-width:400px; width:100%;">
-      <h2 style="font-size:24px; font-weight:800; margin-bottom:16px;">Join Class</h2>
-      <input type="text" id="classCode" placeholder="Enter class code (e.g., P4CS21)" style="width:100%; padding:14px; border:2px solid #e2e8f0; border-radius:12px; font-size:16px; margin-bottom:16px;">
-      <button onclick="joinClass()" style="width:100%; background:linear-gradient(135deg, #3b82f6, #1d4ed8); color:white; border:none; padding:14px; border-radius:12px; font-size:16px; font-weight:700; cursor:pointer;">Join</button>
-      <button onclick="closeJoinModal()" style="width:100%; background:none; border:none; color:#64748b; padding:14px; font-size:16px; cursor:pointer;">Cancel</button>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    var supabase = window.supabase.createClient(
-      'https://zpyglubdgpecdfsrnirz.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpweWdsdWJkZ3BlY2Rmc3JuaXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NTYxNTksImV4cCI6MjA5NDMzMjE1OX0.IEBm33tSXSS7p1ivjXGNowAbyk7uYQTBCSrZJZ68maU'
-    );
+    // ===== MOCK DATA (Replace with Supabase later) =====
+    const SUBJECTS = [
+      { id: 'english', name: 'English', icon: '📖', color: '#3b82f6', progress: 60,
+        lessons: [
+          { id: 1, title: 'Reading Comprehension', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Grammar Basics', type: 'lesson', status: 'in-progress' },
+          { id: 3, title: 'Vocabulary Quiz', type: 'quiz', status: 'not-started' }
+        ]
+      },
+      { id: 'math', name: 'Math', icon: '📐', color: '#f59e0b', progress: 80,
+        lessons: [
+          { id: 1, title: 'Addition & Subtraction', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Fractions Made Easy', type: 'lesson', status: 'in-progress' },
+          { id: 3, title: 'Multiplication Tables', type: 'quiz', status: 'not-started' }
+        ]
+      },
+      { id: 'science', name: 'Science', icon: '🔬', color: '#22c55e', progress: 70,
+        lessons: [
+          { id: 1, title: 'Plants & Animals', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Water Cycle', type: 'lesson', status: 'completed' },
+          { id: 3, title: 'Simple Machines', type: 'lesson', status: 'not-started' }
+        ]
+      },
+      { id: 'art', name: 'Art', icon: '🎨', color: '#ec4899', progress: 40,
+        lessons: [
+          { id: 1, title: 'Color Theory', type: 'lesson', status: 'in-progress' },
+          { id: 2, title: 'Drawing Basics', type: 'lesson', status: 'not-started' }
+        ]
+      },
+      { id: 'coding', name: 'Coding', icon: '💻', color: '#6366f1', progress: 50,
+        lessons: [
+          { id: 1, title: 'Intro to Scratch', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Making Animations', type: 'lesson', status: 'in-progress' }
+        ]
+      },
+      { id: 'music', name: 'Music', icon: '🎵', color: '#8b5cf6', progress: 30,
+        lessons: [
+          { id: 1, title: 'Musical Notes', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Rhythm & Beat', type: 'lesson', status: 'not-started' }
+        ]
+      }
+    ];
 
-    window.onload = async function() {
-      var sess = await supabase.auth.getSession();
-      if (!sess.data.session) {
-        window.location.href = 'index.html';
-        return;
-      }
-      
-      var user = sess.data.session.user;
-      var userResult = await supabase.from('users').select('*').eq('auth_id', user.id).single();
-      
-      if (userResult.data) {
-        document.getElementById('userName').textContent = userResult.data.full_name || 'Student';
-        document.getElementById('points').textContent = userResult.data.points || 0;
-        document.getElementById('level').textContent = userResult.data.level || 1;
-      }
+    const PRACTICE_QUESTIONS = {
+      addition: [
+        { q: '5 + 3 = ?', options: ['6', '7', '8', '9'], answer: 2 },
+        { q: '12 + 8 = ?', options: ['18', '19', '20', '21'], answer: 2 },
+        { q: '7 + 6 = ?', options: ['11', '12', '13', '14'], answer: 2 }
+      ],
+      subtraction: [
+        { q: '10 - 4 = ?', options: ['5', '6', '7', '8'], answer: 1 },
+        { q: '15 - 7 = ?', options: ['6', '7', '8', '9'], answer: 2 }
+      ],
+      multiply: [
+        { q: '3 × 4 = ?', options: ['10', '11', '12', '13'], answer: 2 },
+        { q: '6 × 5 = ?', options: ['25', '30', '35', '40'], answer: 1 }
+      ],
+      division: [
+        { q: '20 ÷ 4 = ?', options: ['3', '4', '5', '6'], answer: 2 },
+        { q: '18 ÷ 3 = ?', options: ['5', '6', '7', '8'], answer: 1 }
+      ]
     };
 
-    function showJoinModal() {
-      document.getElementById('joinModal').style.display = 'flex';
+    // ===== STATE =====
+    let currentView = 'home';
+    let currentSubject = null;
+    let currentSkill = 'addition';
+    let practiceIndex = 0;
+    let practiceScore = 0;
+    let studentPoints = 2050;
+    let studentLevel = 9;
+
+    // ===== MODAL OVERLAY =====
+    function showModal(content) {
+      let modal = document.getElementById('dynamic-modal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'dynamic-modal';
+        modal.style.cssText = `
+          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.7); z-index: 1000;
+          display: flex; align-items: center; justify-content: center;
+          padding: 20px;
+        `;
+        document.body.appendChild(modal);
+      }
+      modal.innerHTML = `<div style="background: white; border-radius: 24px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; position: relative;">${content}</div>`;
+      modal.style.display = 'flex';
+      modal.onclick = (e) => { if (e.target === modal) closeModal(); };
     }
 
-    function closeJoinModal() {
-      document.getElementById('joinModal').style.display = 'none';
+    function closeModal() {
+      const modal = document.getElementById('dynamic-modal');
+      if (modal) modal.style.display = 'none';
     }
 
-    async function joinClass() {
-      var code = document.getElementById('classCode').value.toUpperCase();
-      if (!code) {
-        alert('Please enter a class code');
+    // ===== SUBJECT DETAIL VIEW =====
+    function openSubject(subjectId) {
+      const subject = SUBJECTS.find(s => s.id === subjectId);
+      if (!subject) return;
+
+      const lessonsHtml = subject.lessons.map(l => `
+        <div class="lesson-item" style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f8fafc; border-radius: 12px; margin-bottom: 12px; cursor: pointer;" onclick="startLesson('${subject.id}', ${l.id})">
+          <div style="width: 50px; height: 50px; border-radius: 12px; background: ${l.status === 'completed' ? '#dcfce7' : l.status === 'in-progress' ? '#fef3c7' : '#f1f5f9'}; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+            ${l.status === 'completed' ? '✅' : l.status === 'in-progress' ? '🔄' : '📚'}
+          </div>
+          <div style="flex: 1;">
+            <div style="font-weight: 700; font-size: 16px; color: #1e293b;">${l.title}</div>
+            <div style="font-size: 13px; color: #64748b;">${l.type === 'quiz' ? '🎯 Quiz' : '📖 Lesson'}</div>
+          </div>
+          <div style="font-size: 20px;">▶️</div>
+        </div>
+      `).join('');
+
+      showModal(`
+        <div style="padding: 24px;">
+          <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+            <div style="width: 64px; height: 64px; background: ${subject.color}; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 36px;">${subject.icon}</div>
+            <div>
+              <h2 style="font-size: 24px; font-weight: 800; color: #1e293b;">${subject.name}</h2>
+              <div style="color: #64748b;">${subject.progress}% Complete</div>
+            </div>
+          </div>
+          <div style="background: #f1f5f9; border-radius: 8px; height: 12px; margin-bottom: 24px;">
+            <div style="background: ${subject.color}; height: 100%; border-radius: 8px; width: ${subject.progress}%;"></div>
+          </div>
+          <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">📚 Lessons</h3>
+          ${lessonsHtml}
+        </div>
+      `);
+    }
+
+    function startLesson(subjectId, lessonId) {
+      const subject = SUBJECTS.find(s => s.id === subjectId);
+      const lesson = subject?.lessons.find(l => l.id === lessonId);
+      if (!lesson) return;
+
+      showModal(`
+        <div style="padding: 24px; text-align: center;">
+          <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+          <div style="font-size: 64px; margin-bottom: 20px;">${subject.icon}</div>
+          <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 12px;">${lesson.title}</h2>
+          <p style="color: #64748b; margin-bottom: 24px;">${lesson.type === 'quiz' ? '🎯 Quiz - Test your knowledge!' : '📖 Lesson content would load here'}</p>
+          <button onclick="completeLesson('${subjectId}', ${lessonId})" style="width: 100%; padding: 18px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer;">
+            ${lesson.status === 'completed' ? '✅ Done! Do Again?' : '▶️ Start Learning'}
+          </button>
+        </div>
+      `);
+    }
+
+    function completeLesson(subjectId, lessonId) {
+      const subject = SUBJECTS.find(s => s.id === subjectId);
+      const lesson = subject?.lessons.find(l => l.id === lessonId);
+      if (lesson && lesson.status !== 'completed') {
+        lesson.status = 'completed';
+        studentPoints += 50;
+        updatePointsDisplay();
+      }
+      showModal(`
+        <div style="padding: 32px; text-align: center;">
+          <div style="font-size: 80px; margin-bottom: 20px;">🎉</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 12px;">Great Job!</h2>
+          <p style="color: #64748b; margin-bottom: 24px;">You earned 50 points! ⭐</p>
+          <button onclick="closeModal()" style="width: 100%; padding: 18px; background: #22c55e; color: white; border: none; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer;">Continue</button>
+        </div>
+      `);
+    }
+
+    function updatePointsDisplay() {
+      const pointsEl = document.querySelector('.leader-item.you .leader-points');
+      if (pointsEl) pointsEl.textContent = `${studentPoints} ⭐`;
+    }
+
+    // ===== PRACTICE MODE =====
+    function startPractice() {
+      practiceIndex = 0;
+      practiceScore = 0;
+      showPracticeQuestion();
+    }
+
+    function showPracticeQuestion() {
+      const questions = PRACTICE_QUESTIONS[currentSkill];
+      if (practiceIndex >= questions.length) {
+        showPracticeResult();
         return;
       }
-      alert('Joined class: ' + code);
-      closeJoinModal();
+
+      const q = questions[practiceIndex];
+      const optionsHtml = q.options.map((opt, i) => `
+        <button onclick="answerQuestion(${i})" style="width: 100%; padding: 18px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; margin-bottom: 12px; text-align: left;">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </button>
+      `).join('');
+
+      showModal(`
+        <div style="padding: 24px;">
+          <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <span style="font-weight: 700; color: #64748b;">Question ${practiceIndex + 1}/${questions.length}</span>
+            <span style="font-weight: 700; color: #3b82f6;">Score: ${practiceScore}</span>
+          </div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 24px;">${q.q}</h2>
+          ${optionsHtml}
+        </div>
+      `);
     }
 
-    async function logout() {
-      await supabase.auth.signOut();
-      window.location.href = 'index.html';
+    function answerQuestion(selected) {
+      const questions = PRACTICE_QUESTIONS[currentSkill];
+      const q = questions[practiceIndex];
+      const correct = selected === q.answer;
+
+      if (correct) {
+        practiceScore += 10;
+        studentPoints += 10;
+        updatePointsDisplay();
+      }
+
+      // Show feedback
+      const feedbackHtml = `
+        <div style="padding: 24px; text-align: center;">
+          <div style="font-size: 80px; margin-bottom: 20px;">${correct ? '✅' : '❌'}</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: ${correct ? '#16a34a' : '#dc2626'}; margin-bottom: 12px;">${correct ? 'Correct!' : 'Not quite!'}</h2>
+          <p style="color: #64748b; margin-bottom: 24px;">${correct ? '+10 points! ⭐' : `The answer was ${q.options[q.answer]}`}</p>
+          <button onclick="nextQuestion()" style="width: 100%; padding: 18px; background: ${correct ? '#22c55e' : '#3b82f6'}; color: white; border: none; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer;">Next Question →</button>
+        </div>
+      `;
+      showModal(feedbackHtml);
     }
+
+    function nextQuestion() {
+      practiceIndex++;
+      showPracticeQuestion();
+    }
+
+    function showPracticeResult() {
+      const total = PRACTICE_QUESTIONS[currentSkill].length * 10;
+      const percentage = Math.round((practiceScore / total) * 100);
+
+      showModal(`
+        <div style="padding: 32px; text-align: center;">
+          <div style="font-size: 80px; margin-bottom: 20px;">🏆</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 12px;">Practice Complete!</h2>
+          <div style="font-size: 48px; font-weight: 900; color: #3b82f6; margin-bottom: 12px;">${practiceScore}/${total} points</div>
+          <p style="color: #64748b; margin-bottom: 24px;">${percentage >= 80 ? '🌟 Amazing work!' : percentage >= 50 ? '👍 Good effort!' : '💪 Keep practicing!'}</p>
+          <button onclick="closeModal()" style="width: 100%; padding: 18px; background: #22c55e; color: white; border: none; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer;">Done</button>
+        </div>
+      `);
+    }
+
+    // ===== NAVIGATION =====
+    const views = {
+      home: document.querySelector('.main-content'),
+      learn: null,
+      practice: null,
+      leaders: null,
+      progress: null
+    };
+
+    function switchView(viewName) {
+      currentView = viewName;
+
+      // Update nav buttons
+      document.querySelectorAll('.nav-item').forEach((item, i) => {
+        const labels = ['home', 'learn', 'practice', 'leaders', 'progress'];
+        item.classList.toggle('active', labels[i] === viewName);
+      });
+
+      // Show different content based on view
+      const main = document.querySelector('.main-content');
+
+      if (viewName === 'home') {
+        location.reload(); // Reload to show default
+      } else if (viewName === 'learn') {
+        showModal(`
+          <div style="padding: 24px;">
+            <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+            <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 20px;">📚 My Learning</h2>
+            <p style="color: #64748b; margin-bottom: 20px;">Pick a subject to start learning:</p>
+            ${SUBJECTS.map(s => `
+              <div onclick="closeModal(); openSubject('${s.id}')" style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f8fafc; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: ${s.color}; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px;">${s.icon}</div>
+                <div style="flex: 1;">
+                  <div style="font-weight: 700; color: #1e293b;">${s.name}</div>
+                  <div style="font-size: 13px; color: #64748b;">${s.progress}% complete</div>
+                </div>
+                <div style="color: #3b82f6;">▶️</div>
+              </div>
+            `).join('')}
+          </div>
+        `);
+      } else if (viewName === 'practice') {
+        startPractice();
+      } else if (viewName === 'leaders') {
+        showModal(`
+          <div style="padding: 24px;">
+            <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+            <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 20px;">🏆 Leaderboard</h2>
+            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: 16px; margin-bottom: 20px;">
+              <div style="color: #64748b; font-size: 14px;">Your Points</div>
+              <div style="font-size: 36px; font-weight: 900; color: #3b82f6;">${studentPoints} ⭐</div>
+              <div style="color: #64748b; font-size: 14px;">Rank #4</div>
+            </div>
+            <p style="text-align: center; color: #64748b;">Keep learning to climb the ranks!</p>
+          </div>
+        `);
+      } else if (viewName === 'progress') {
+        showModal(`
+          <div style="padding: 24px;">
+            <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+            <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 20px;">📊 My Progress</h2>
+            ${SUBJECTS.map(s => `
+              <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span style="font-weight: 600;">${s.icon} ${s.name}</span>
+                  <span style="font-weight: 700; color: ${s.color};">${s.progress}%</span>
+                </div>
+                <div style="background: #f1f5f9; border-radius: 8px; height: 12px;">
+                  <div style="background: ${s.color}; height: 100%; border-radius: 8px; width: ${s.progress}%;"></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `);
+      }
+    }
+
+    // ===== EVENT LISTENERS =====
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navigation
+      document.querySelectorAll('.nav-item').forEach((item, i) => {
+        const labels = ['home', 'learn', 'practice', 'leaders', 'progress'];
+        item.addEventListener('click', () => switchView(labels[i]));
+      });
+
+      // Skill selection
+      document.querySelectorAll('.skill-option').forEach((option, i) => {
+        const skills = ['addition', 'subtraction', 'multiply', 'division'];
+        option.addEventListener('click', function() {
+          document.querySelectorAll('.skill-option').forEach(o => o.classList.remove('selected'));
+          this.classList.add('selected');
+          currentSkill = skills[i];
+        });
+      });
+
+      // Subject tiles
+      document.querySelectorAll('.subject-tile').forEach((tile, i) => {
+        const subjectIds = ['english', 'math', 'science', 'art', 'coding', 'music'];
+        tile.addEventListener('click', () => openSubject(subjectIds[i]));
+      });
+
+      // Start lesson button
+      document.querySelector('.start-lesson-btn')?.addEventListener('click', () => {
+        openSubject('math');
+      });
+
+      // Start practice button
+      document.querySelector('.start-practice-btn')?.addEventListener('click', startPractice);
+    });
   </script>
 </body>
 </html>
