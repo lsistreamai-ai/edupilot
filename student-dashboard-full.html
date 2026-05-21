@@ -874,30 +874,365 @@
   </nav>
 
   <script>
-    // Navigation
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
+    // ===== MOCK DATA (Replace with Supabase later) =====
+    const SUBJECTS = [
+      { id: 'english', name: 'English', icon: '📖', color: '#3b82f6', progress: 60,
+        lessons: [
+          { id: 1, title: 'Reading Comprehension', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Grammar Basics', type: 'lesson', status: 'in-progress' },
+          { id: 3, title: 'Vocabulary Quiz', type: 'quiz', status: 'not-started' }
+        ]
+      },
+      { id: 'math', name: 'Math', icon: '📐', color: '#f59e0b', progress: 80,
+        lessons: [
+          { id: 1, title: 'Addition & Subtraction', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Fractions Made Easy', type: 'lesson', status: 'in-progress' },
+          { id: 3, title: 'Multiplication Tables', type: 'quiz', status: 'not-started' }
+        ]
+      },
+      { id: 'science', name: 'Science', icon: '🔬', color: '#22c55e', progress: 70,
+        lessons: [
+          { id: 1, title: 'Plants & Animals', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Water Cycle', type: 'lesson', status: 'completed' },
+          { id: 3, title: 'Simple Machines', type: 'lesson', status: 'not-started' }
+        ]
+      },
+      { id: 'art', name: 'Art', icon: '🎨', color: '#ec4899', progress: 40,
+        lessons: [
+          { id: 1, title: 'Color Theory', type: 'lesson', status: 'in-progress' },
+          { id: 2, title: 'Drawing Basics', type: 'lesson', status: 'not-started' }
+        ]
+      },
+      { id: 'coding', name: 'Coding', icon: '💻', color: '#6366f1', progress: 50,
+        lessons: [
+          { id: 1, title: 'Intro to Scratch', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Making Animations', type: 'lesson', status: 'in-progress' }
+        ]
+      },
+      { id: 'music', name: 'Music', icon: '🎵', color: '#8b5cf6', progress: 30,
+        lessons: [
+          { id: 1, title: 'Musical Notes', type: 'lesson', status: 'completed' },
+          { id: 2, title: 'Rhythm & Beat', type: 'lesson', status: 'not-started' }
+        ]
+      }
+    ];
 
-    // Skill selection
-    document.querySelectorAll('.skill-option').forEach(option => {
-      option.addEventListener('click', function() {
-        document.querySelectorAll('.skill-option').forEach(o => o.classList.remove('selected'));
-        this.classList.add('selected');
-      });
-    });
+    const PRACTICE_QUESTIONS = {
+      addition: [
+        { q: '5 + 3 = ?', options: ['6', '7', '8', '9'], answer: 2 },
+        { q: '12 + 8 = ?', options: ['18', '19', '20', '21'], answer: 2 },
+        { q: '7 + 6 = ?', options: ['11', '12', '13', '14'], answer: 2 }
+      ],
+      subtraction: [
+        { q: '10 - 4 = ?', options: ['5', '6', '7', '8'], answer: 1 },
+        { q: '15 - 7 = ?', options: ['6', '7', '8', '9'], answer: 2 }
+      ],
+      multiply: [
+        { q: '3 × 4 = ?', options: ['10', '11', '12', '13'], answer: 2 },
+        { q: '6 × 5 = ?', options: ['25', '30', '35', '40'], answer: 1 }
+      ],
+      division: [
+        { q: '20 ÷ 4 = ?', options: ['3', '4', '5', '6'], answer: 2 },
+        { q: '18 ÷ 3 = ?', options: ['5', '6', '7', '8'], answer: 1 }
+      ]
+    };
 
-    // Subject tiles
-    document.querySelectorAll('.subject-tile').forEach(tile => {
-      tile.addEventListener('click', function() {
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          this.style.transform = '';
-        }, 150);
+    // ===== STATE =====
+    let currentView = 'home';
+    let currentSubject = null;
+    let currentSkill = 'addition';
+    let practiceIndex = 0;
+    let practiceScore = 0;
+    let studentPoints = 2050;
+    let studentLevel = 9;
+
+    // ===== MODAL OVERLAY =====
+    function showModal(content) {
+      let modal = document.getElementById('dynamic-modal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'dynamic-modal';
+        modal.style.cssText = `
+          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.7); z-index: 1000;
+          display: flex; align-items: center; justify-content: center;
+          padding: 20px;
+        `;
+        document.body.appendChild(modal);
+      }
+      modal.innerHTML = `<div style="background: white; border-radius: 24px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; position: relative;">${content}</div>`;
+      modal.style.display = 'flex';
+      modal.onclick = (e) => { if (e.target === modal) closeModal(); };
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('dynamic-modal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    // ===== SUBJECT DETAIL VIEW =====
+    function openSubject(subjectId) {
+      const subject = SUBJECTS.find(s => s.id === subjectId);
+      if (!subject) return;
+
+      const lessonsHtml = subject.lessons.map(l => `
+        <div class="lesson-item" style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f8fafc; border-radius: 12px; margin-bottom: 12px; cursor: pointer;" onclick="startLesson('${subject.id}', ${l.id})">
+          <div style="width: 50px; height: 50px; border-radius: 12px; background: ${l.status === 'completed' ? '#dcfce7' : l.status === 'in-progress' ? '#fef3c7' : '#f1f5f9'}; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+            ${l.status === 'completed' ? '✅' : l.status === 'in-progress' ? '🔄' : '📚'}
+          </div>
+          <div style="flex: 1;">
+            <div style="font-weight: 700; font-size: 16px; color: #1e293b;">${l.title}</div>
+            <div style="font-size: 13px; color: #64748b;">${l.type === 'quiz' ? '🎯 Quiz' : '📖 Lesson'}</div>
+          </div>
+          <div style="font-size: 20px;">▶️</div>
+        </div>
+      `).join('');
+
+      showModal(`
+        <div style="padding: 24px;">
+          <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+            <div style="width: 64px; height: 64px; background: ${subject.color}; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 36px;">${subject.icon}</div>
+            <div>
+              <h2 style="font-size: 24px; font-weight: 800; color: #1e293b;">${subject.name}</h2>
+              <div style="color: #64748b;">${subject.progress}% Complete</div>
+            </div>
+          </div>
+          <div style="background: #f1f5f9; border-radius: 8px; height: 12px; margin-bottom: 24px;">
+            <div style="background: ${subject.color}; height: 100%; border-radius: 8px; width: ${subject.progress}%;"></div>
+          </div>
+          <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">📚 Lessons</h3>
+          ${lessonsHtml}
+        </div>
+      `);
+    }
+
+    function startLesson(subjectId, lessonId) {
+      const subject = SUBJECTS.find(s => s.id === subjectId);
+      const lesson = subject?.lessons.find(l => l.id === lessonId);
+      if (!lesson) return;
+
+      showModal(`
+        <div style="padding: 24px; text-align: center;">
+          <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+          <div style="font-size: 64px; margin-bottom: 20px;">${subject.icon}</div>
+          <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 12px;">${lesson.title}</h2>
+          <p style="color: #64748b; margin-bottom: 24px;">${lesson.type === 'quiz' ? '🎯 Quiz - Test your knowledge!' : '📖 Lesson content would load here'}</p>
+          <button onclick="completeLesson('${subjectId}', ${lessonId})" style="width: 100%; padding: 18px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer;">
+            ${lesson.status === 'completed' ? '✅ Done! Do Again?' : '▶️ Start Learning'}
+          </button>
+        </div>
+      `);
+    }
+
+    function completeLesson(subjectId, lessonId) {
+      const subject = SUBJECTS.find(s => s.id === subjectId);
+      const lesson = subject?.lessons.find(l => l.id === lessonId);
+      if (lesson && lesson.status !== 'completed') {
+        lesson.status = 'completed';
+        studentPoints += 50;
+        updatePointsDisplay();
+      }
+      showModal(`
+        <div style="padding: 32px; text-align: center;">
+          <div style="font-size: 80px; margin-bottom: 20px;">🎉</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 12px;">Great Job!</h2>
+          <p style="color: #64748b; margin-bottom: 24px;">You earned 50 points! ⭐</p>
+          <button onclick="closeModal()" style="width: 100%; padding: 18px; background: #22c55e; color: white; border: none; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer;">Continue</button>
+        </div>
+      `);
+    }
+
+    function updatePointsDisplay() {
+      const pointsEl = document.querySelector('.leader-item.you .leader-points');
+      if (pointsEl) pointsEl.textContent = `${studentPoints} ⭐`;
+    }
+
+    // ===== PRACTICE MODE =====
+    function startPractice() {
+      practiceIndex = 0;
+      practiceScore = 0;
+      showPracticeQuestion();
+    }
+
+    function showPracticeQuestion() {
+      const questions = PRACTICE_QUESTIONS[currentSkill];
+      if (practiceIndex >= questions.length) {
+        showPracticeResult();
+        return;
+      }
+
+      const q = questions[practiceIndex];
+      const optionsHtml = q.options.map((opt, i) => `
+        <button onclick="answerQuestion(${i})" style="width: 100%; padding: 18px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; margin-bottom: 12px; text-align: left;">
+          ${String.fromCharCode(65 + i)}. ${opt}
+        </button>
+      `).join('');
+
+      showModal(`
+        <div style="padding: 24px;">
+          <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <span style="font-weight: 700; color: #64748b;">Question ${practiceIndex + 1}/${questions.length}</span>
+            <span style="font-weight: 700; color: #3b82f6;">Score: ${practiceScore}</span>
+          </div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 24px;">${q.q}</h2>
+          ${optionsHtml}
+        </div>
+      `);
+    }
+
+    function answerQuestion(selected) {
+      const questions = PRACTICE_QUESTIONS[currentSkill];
+      const q = questions[practiceIndex];
+      const correct = selected === q.answer;
+
+      if (correct) {
+        practiceScore += 10;
+        studentPoints += 10;
+        updatePointsDisplay();
+      }
+
+      // Show feedback
+      const feedbackHtml = `
+        <div style="padding: 24px; text-align: center;">
+          <div style="font-size: 80px; margin-bottom: 20px;">${correct ? '✅' : '❌'}</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: ${correct ? '#16a34a' : '#dc2626'}; margin-bottom: 12px;">${correct ? 'Correct!' : 'Not quite!'}</h2>
+          <p style="color: #64748b; margin-bottom: 24px;">${correct ? '+10 points! ⭐' : `The answer was ${q.options[q.answer]}`}</p>
+          <button onclick="nextQuestion()" style="width: 100%; padding: 18px; background: ${correct ? '#22c55e' : '#3b82f6'}; color: white; border: none; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer;">Next Question →</button>
+        </div>
+      `;
+      showModal(feedbackHtml);
+    }
+
+    function nextQuestion() {
+      practiceIndex++;
+      showPracticeQuestion();
+    }
+
+    function showPracticeResult() {
+      const total = PRACTICE_QUESTIONS[currentSkill].length * 10;
+      const percentage = Math.round((practiceScore / total) * 100);
+
+      showModal(`
+        <div style="padding: 32px; text-align: center;">
+          <div style="font-size: 80px; margin-bottom: 20px;">🏆</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #1e293b; margin-bottom: 12px;">Practice Complete!</h2>
+          <div style="font-size: 48px; font-weight: 900; color: #3b82f6; margin-bottom: 12px;">${practiceScore}/${total} points</div>
+          <p style="color: #64748b; margin-bottom: 24px;">${percentage >= 80 ? '🌟 Amazing work!' : percentage >= 50 ? '👍 Good effort!' : '💪 Keep practicing!'}</p>
+          <button onclick="closeModal()" style="width: 100%; padding: 18px; background: #22c55e; color: white; border: none; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer;">Done</button>
+        </div>
+      `);
+    }
+
+    // ===== NAVIGATION =====
+    const views = {
+      home: document.querySelector('.main-content'),
+      learn: null,
+      practice: null,
+      leaders: null,
+      progress: null
+    };
+
+    function switchView(viewName) {
+      currentView = viewName;
+
+      // Update nav buttons
+      document.querySelectorAll('.nav-item').forEach((item, i) => {
+        const labels = ['home', 'learn', 'practice', 'leaders', 'progress'];
+        item.classList.toggle('active', labels[i] === viewName);
       });
+
+      // Show different content based on view
+      const main = document.querySelector('.main-content');
+
+      if (viewName === 'home') {
+        location.reload(); // Reload to show default
+      } else if (viewName === 'learn') {
+        showModal(`
+          <div style="padding: 24px;">
+            <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+            <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 20px;">📚 My Learning</h2>
+            <p style="color: #64748b; margin-bottom: 20px;">Pick a subject to start learning:</p>
+            ${SUBJECTS.map(s => `
+              <div onclick="closeModal(); openSubject('${s.id}')" style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f8fafc; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                <div style="width: 50px; height: 50px; background: ${s.color}; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px;">${s.icon}</div>
+                <div style="flex: 1;">
+                  <div style="font-weight: 700; color: #1e293b;">${s.name}</div>
+                  <div style="font-size: 13px; color: #64748b;">${s.progress}% complete</div>
+                </div>
+                <div style="color: #3b82f6;">▶️</div>
+              </div>
+            `).join('')}
+          </div>
+        `);
+      } else if (viewName === 'practice') {
+        startPractice();
+      } else if (viewName === 'leaders') {
+        showModal(`
+          <div style="padding: 24px;">
+            <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+            <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 20px;">🏆 Leaderboard</h2>
+            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: 16px; margin-bottom: 20px;">
+              <div style="color: #64748b; font-size: 14px;">Your Points</div>
+              <div style="font-size: 36px; font-weight: 900; color: #3b82f6;">${studentPoints} ⭐</div>
+              <div style="color: #64748b; font-size: 14px;">Rank #4</div>
+            </div>
+            <p style="text-align: center; color: #64748b;">Keep learning to climb the ranks!</p>
+          </div>
+        `);
+      } else if (viewName === 'progress') {
+        showModal(`
+          <div style="padding: 24px;">
+            <button onclick="closeModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer;">✕</button>
+            <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 20px;">📊 My Progress</h2>
+            ${SUBJECTS.map(s => `
+              <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span style="font-weight: 600;">${s.icon} ${s.name}</span>
+                  <span style="font-weight: 700; color: ${s.color};">${s.progress}%</span>
+                </div>
+                <div style="background: #f1f5f9; border-radius: 8px; height: 12px;">
+                  <div style="background: ${s.color}; height: 100%; border-radius: 8px; width: ${s.progress}%;"></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `);
+      }
+    }
+
+    // ===== EVENT LISTENERS =====
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navigation
+      document.querySelectorAll('.nav-item').forEach((item, i) => {
+        const labels = ['home', 'learn', 'practice', 'leaders', 'progress'];
+        item.addEventListener('click', () => switchView(labels[i]));
+      });
+
+      // Skill selection
+      document.querySelectorAll('.skill-option').forEach((option, i) => {
+        const skills = ['addition', 'subtraction', 'multiply', 'division'];
+        option.addEventListener('click', function() {
+          document.querySelectorAll('.skill-option').forEach(o => o.classList.remove('selected'));
+          this.classList.add('selected');
+          currentSkill = skills[i];
+        });
+      });
+
+      // Subject tiles
+      document.querySelectorAll('.subject-tile').forEach((tile, i) => {
+        const subjectIds = ['english', 'math', 'science', 'art', 'coding', 'music'];
+        tile.addEventListener('click', () => openSubject(subjectIds[i]));
+      });
+
+      // Start lesson button
+      document.querySelector('.start-lesson-btn')?.addEventListener('click', () => {
+        openSubject('math');
+      });
+
+      // Start practice button
+      document.querySelector('.start-practice-btn')?.addEventListener('click', startPractice);
     });
   </script>
 </body>
