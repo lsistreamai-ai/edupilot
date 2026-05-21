@@ -1,11 +1,10 @@
 'use client'
 
 // components/WikiCard.tsx
-// Matches automation-demos.vercel.app card structure exactly:
-// title + category badge → workflow pill row → "View" button
+// Mobile-friendly card with expanded context: longer excerpt, up to 5 tag pills
 
 import Link from 'next/link'
-import { Eye, Clock, ChevronRight } from 'lucide-react'
+import { Eye, Clock, Tag, ArrowUpRight } from 'lucide-react'
 import { WikiPage } from '@/lib/wiki'
 
 interface Props {
@@ -13,99 +12,79 @@ interface Props {
   catColor?: string
 }
 
-// Icon map for common tags
-const TAG_ICONS: Record<string, string> = {
-  'exam': '📝', 'test': '📋', 'practice': '✏️', 'math': '🔢',
-  'english': '📖', 'chinese': '🈯', 'science': '🔬', 'history': '📜',
-  'geography': '🌍', 'physics': '⚡', 'chemistry': '🧪', 'biology': '🧬',
-  'reading': '👁️', 'writing': '✍️', 'listening': '👂', 'speaking': '🗣️',
-  'grammar': '📐', 'vocabulary': '📚', 'comprehension': '💡',
-}
+const TAG_COLORS = [
+  'bg-teal-500/20 border-teal-500/50 text-teal-300',
+  'bg-blue-500/20 border-blue-500/50 text-blue-300',
+  'bg-pink-500/20 border-pink-500/50 text-pink-300',
+  'bg-emerald-500/20 border-emerald-500/50 text-emerald-300',
+  'bg-amber-500/20 border-amber-500/50 text-amber-300',
+]
 
 export default function WikiCard({ page, catColor }: Props) {
   const excerpt = page.content
-    ?.replace(/[#*`>\[\]()!\-_~|=]/g, '')
+    ?.replace(/[#*>`\[\]()!\-_~|=]/g, '')
     .replace(/\n+/g, ' ')
     .trim()
-    .slice(0, 120) || ''
+    .slice(0, 200) || ''
 
   const timeAgo = getTimeAgo(page.updated_at)
+  const displayTags = (page.tags || []).slice(0, 5)
 
   return (
-    <div
-      className="h-full bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-4 sm:p-6 hover:border-teal-500/30 transition-all"
-      style={{ opacity: 0, transform: 'translateY(20px)' }}
-    >
+    <div className="h-full bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-4 sm:p-5 hover:border-teal-500/30 transition-all group flex flex-col">
       {/* ── Top: title + category badge ── */}
-      <div className="flex items-start justify-between gap-2 mb-4">
-        <div className="min-w-0">
-          <h3 className="text-base sm:text-lg font-semibold text-white truncate">
-            {page.title}
-          </h3>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1 line-clamp-2">
-            {excerpt || 'No description yet'}
-          </p>
-        </div>
+      <div className="flex items-start justify-between gap-2 mb-3">
+        <h3 className="text-sm sm:text-base font-semibold text-white leading-snug line-clamp-2 min-w-0">
+          {page.title}
+        </h3>
         {page.category && (
-          <span className={`px-2 py-1 text-xs rounded-full capitalize flex-shrink-0 border ${
-            catColor || 'bg-slate-700/50 text-slate-400 border-slate-600/30'
-          }`}>
+          <span className={`px-2 py-0.5 text-[11px] rounded-full flex-shrink-0 border leading-tight ${catColor || 'bg-slate-700/50 text-slate-400 border-slate-600/30'}`}>
             {page.category.name}
           </span>
         )}
       </div>
 
-      {/* ── Middle: workflow pill row ── */}
-      <div className="relative py-4 sm:py-6 -mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto scrollbar-hide">
-        <div className="flex items-center justify-start sm:justify-center gap-1 sm:gap-2 min-w-max">
-          {page.tags && page.tags.length > 0 ? (
-            page.tags.slice(0, 3).map((tag: string, i: number) => (
-              <div key={tag} className="flex items-center">
-                <div className={`relative flex flex-col items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg border ${
-                  i === 0
-                    ? 'bg-teal-500/20 border-teal-500/50'
-                    : 'bg-slate-800/50 border-slate-700/50'
-                }`}>
-                  <span className="text-[10px] sm:text-xs text-slate-300 whitespace-nowrap">
-                    {TAG_ICONS[tag.toLowerCase()] || '📌'} {tag}
-                  </span>
-                </div>
-                {i < Math.min(page.tags.length, 3) - 1 && (
-                  <div className="w-4 sm:w-8 h-px bg-gradient-to-r from-slate-600 to-slate-500 mx-0.5 sm:mx-1" />
-                )}
-              </div>
-            ))
-          ) : (
+      {/* ── Excerpt — expanded for more context ── */}
+      {excerpt && (
+        <p className="text-xs sm:text-sm text-slate-400 mb-3 leading-relaxed line-clamp-3">
+          {excerpt}
+        </p>
+      )}
+
+      {/* ── Tags — show up to 5, more context ── */}
+      {displayTags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-4 mt-auto">
+          {displayTags.map((tag: string, i: number) => (
+            <span
+              key={tag}
+              className={`inline-flex items-center gap-1 px-2 py-0.5 text-[10px] sm:text-[11px] rounded-md border leading-tight ${TAG_COLORS[i % TAG_COLORS.length]}`}
+            >
+              <Tag className="w-2.5 h-2.5 opacity-60" />
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* ── Bottom: view button + meta ── */}
+      <div className="flex items-center justify-between gap-2 pt-3 border-t border-slate-800">
+        <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-600">
+          <Clock className="w-3 h-3" />
+          <span>{timeAgo}</span>
+          {page.view_count > 0 && (
             <>
-              <div className="flex items-center">
-                <div className="relative flex flex-col items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg border bg-teal-500/20 border-teal-500/50">
-                  <span className="text-[10px] sm:text-xs text-slate-300 whitespace-nowrap">
-                    {page.category?.icon || '📄'} {page.category?.name || 'Resource'}
-                  </span>
-                </div>
-              </div>
+              <span className="text-slate-700">·</span>
+              <span>{page.view_count} views</span>
             </>
           )}
         </div>
-      </div>
-
-      {/* ── Bottom: "View" button ── */}
-      <Link
-        href={`/wiki/${page.slug}`}
-        className="w-full py-2 sm:py-2.5 rounded-lg font-medium text-sm sm:text-base flex items-center justify-center gap-2 transition-all bg-teal-500/20 text-teal-400 hover:bg-teal-500/30"
-      >
-        <Eye className="w-4 h-4" />
-        View Resource
-        <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-      </Link>
-
-      {/* ── Meta line ── */}
-      <div className="flex items-center justify-between mt-3 text-xs text-slate-600">
-        <div className="flex items-center gap-1.5">
-          <Clock className="w-3 h-3" />
-          <span>{timeAgo}</span>
-        </div>
-        <span>{page.view_count} views</span>
+        <Link
+          href={`/wiki/${page.slug}`}
+          className="inline-flex items-center gap-1 text-xs font-medium text-teal-400 hover:text-teal-300 transition-colors"
+        >
+          View
+          <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </Link>
       </div>
     </div>
   )
@@ -117,10 +96,11 @@ function getTimeAgo(dateStr: string): string {
   const diff = now - then
   const mins = Math.floor(diff / 60000)
   if (mins < 1) return 'just now'
-  if (mins < 60) return `${mins}m`
+  if (mins < 60) return `${mins}m ago`
   const hours = Math.floor(mins / 60)
-  if (hours < 24) return `${hours}h`
+  if (hours < 24) return `${hours}h ago`
   const days = Math.floor(hours / 24)
-  if (days < 7) return `${days}d`
+  if (days < 7) return `${days}d ago`
+  if (days < 30) return `${Math.floor(days / 7)}w ago`
   return new Date(dateStr).toLocaleDateString('en-HK', { month: 'short', day: 'numeric' })
 }
