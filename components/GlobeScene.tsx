@@ -173,39 +173,42 @@ export default function GlobeScene() {
       ctx.fillStyle = sphereGrad
       ctx.fillRect(0, 0, w, h)
 
-      // Grid lines
+      // Grid lines — all visible hemisphere (clip handles back side)
       for (const line of gridLines) {
         const p1 = toCartesian(line.lat1, line.lng1, R)
         const p2 = toCartesian(line.lat2, line.lng2, R)
         const r1 = rotateY(p1.x, p1.y, p1.z, rotation)
         const r2 = rotateY(p2.x, p2.y, p2.z, rotation)
 
-        if (r1.z > 0 && r2.z > 0) {
-          const s1 = project(r1.x, r1.y, r1.z)
-          const s2 = project(r2.x, r2.y, r2.z)
-          const alpha = Math.max(0.03, 0.06 * (1 - Math.abs(s1.z / R)))
-          ctx.strokeStyle = `rgba(20, 184, 166, ${alpha})`
-          ctx.lineWidth = 0.3
-          ctx.beginPath()
-          ctx.moveTo(s1.px, s1.py)
-          ctx.lineTo(s2.px, s2.py)
-          ctx.stroke()
-        }
+        // Fade to 0 at silhouette (z=0), fully visible when facing forward (z=R)
+        const zAvg = (r1.z + r2.z) / 2
+        const alpha = Math.max(0, zAvg / R) * 0.08
+        if (alpha < 0.005) continue
+
+        const s1 = project(r1.x, r1.y, r1.z)
+        const s2 = project(r2.x, r2.y, r2.z)
+        ctx.strokeStyle = `rgba(20, 184, 166, ${alpha})`
+        ctx.lineWidth = 0.3
+        ctx.beginPath()
+        ctx.moveTo(s1.px, s1.py)
+        ctx.lineTo(s2.px, s2.py)
+        ctx.stroke()
       }
 
-      // Continent dots
+      // Continent dots — fade with depth
       for (const dot of dots) {
         const p = toCartesian(dot.lat, dot.lng, R)
         const r = rotateY(p.x, p.y, p.z, rotation)
-        if (r.z > 0) {
-          const s = project(r.x, r.y, r.z)
-          visibleDots.push(s)
-          const alpha = 0.5 + 0.5 * (1 - Math.abs(s.z / R))
-          ctx.fillStyle = `rgba(20, 184, 166, ${alpha * 0.7})`
-          ctx.beginPath()
-          ctx.arc(s.px, s.py, 1.2, 0, Math.PI * 2)
-          ctx.fill()
-        }
+        const s = project(r.x, r.y, r.z)
+        visibleDots.push(s)
+        // Full brightness when facing camera (z=R), dim at silhouette (z=0), hidden behind (z<0)
+        const zFactor = Math.max(0, r.z / R)
+        if (zFactor < 0.02) continue
+        const alpha = 0.35 + 0.35 * zFactor
+        ctx.fillStyle = `rgba(20, 184, 166, ${alpha})`
+        ctx.beginPath()
+        ctx.arc(s.px, s.py, 1.2, 0, Math.PI * 2)
+        ctx.fill()
       }
 
       ctx.restore()
@@ -223,22 +226,22 @@ export default function GlobeScene() {
       ctx.lineWidth = 1
       ctx.stroke()
 
-      // City dots
+      // City dots — fade with depth
       for (const city of cities) {
         const p = toCartesian(city.lat, city.lng, R + 2)
         const r = rotateY(p.x, p.y, p.z, rotation)
-        if (r.z > 0) {
-          const s = project(r.x, r.y, r.z)
-          const pulse = 0.5 + 0.5 * Math.sin(Date.now() * 0.002 + city.lng)
-          ctx.fillStyle = `rgba(45, 212, 191, ${0.5 + pulse * 0.4})`
-          ctx.beginPath()
-          ctx.arc(s.px, s.py, 3, 0, Math.PI * 2)
-          ctx.fill()
-          // City label
-          ctx.fillStyle = `rgba(204, 251, 241, 0.7)`
-          ctx.font = '8px Inter, sans-serif'
-          ctx.fillText(city.name, s.px + 6, s.py + 3)
-        }
+        const zFactor = Math.max(0, r.z / R)
+        if (zFactor < 0.05) continue
+        const s = project(r.x, r.y, r.z)
+        const pulse = 0.5 + 0.5 * Math.sin(Date.now() * 0.002 + city.lng)
+        ctx.fillStyle = `rgba(45, 212, 191, ${(0.5 + pulse * 0.4) * zFactor})`
+        ctx.beginPath()
+        ctx.arc(s.px, s.py, 3, 0, Math.PI * 2)
+        ctx.fill()
+        // City label
+        ctx.fillStyle = `rgba(204, 251, 241, ${0.7 * zFactor})`
+        ctx.font = '8px Inter, sans-serif'
+        ctx.fillText(city.name, s.px + 6, s.py + 3)
       }
 
       rotation += (targetRotation - rotation) * 0.1
