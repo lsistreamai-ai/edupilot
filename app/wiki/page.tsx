@@ -1,12 +1,11 @@
-// app/wiki/page.tsx — Wiki Brain Homepage
-// Design: matches automation-demos.vercel.app
-// Inter font, Lucide icons, connected pill cards, entrance animations
+// app/wiki/page.tsx — Wiki Brain
+// HTML5 Canvas 3D globe as hero element — not hidden, front and center
 
 import { getCategories, getWikiPages } from '@/lib/wiki'
-import { Layers, Search, Plus, BookOpen, Sparkles } from 'lucide-react'
+import { Layers, Search, Plus, MapPin, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import WikiCard from '@/components/WikiCard'
-import { HeroParticles } from '@/components/HeroParticles'
+import GlobeScene from '@/components/GlobeScene'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,10 +24,7 @@ interface Props {
 export default async function WikiPage({ searchParams }: Props) {
   const params = await searchParams
   const categories = await getCategories()
-  const { pages } = await getWikiPages({
-    category: params.category,
-    search: params.search,
-  })
+  const { pages } = await getWikiPages({ category: params.category, search: params.search })
 
   const activeCategoryName = params.category
     ? categories.find((c) => c.slug === params.category)?.name
@@ -36,59 +32,50 @@ export default async function WikiPage({ searchParams }: Props) {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* ═══════════ Hero ═══════════ */}
+      {/* ═══════════ Hero with Globe ═══════════ */}
       {!params.category && (
-        <section className="min-h-[50vh] sm:min-h-[60vh] flex items-center justify-center text-center px-4 py-12 sm:py-0 relative overflow-hidden">
-          <HeroParticles />
-
-          <div className="max-w-3xl relative z-10">
-            {/* Badge */}
-            <div style={{ opacity: 0, transform: 'translateY(20px)' }}>
+        <section className="min-h-[60vh] sm:min-h-[70vh] flex items-center px-4 py-12 sm:py-0">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
+            {/* Left: Text + CTAs */}
+            <div className="text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 mb-4 sm:mb-6">
                 <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-teal-400" />
                 <span className="text-xs sm:text-sm text-teal-300">Knowledge Base</span>
               </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6 leading-tight tracking-tight">
+                Your School&apos;s{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
+                  Second Brain
+                </span>
+              </h1>
+
+              <p className="text-base sm:text-lg text-slate-400 mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">
+                A living library of exam papers, curriculum guides, worksheets and study notes
+                — mapped to skills, searchable in seconds, built by your teachers.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+                <Link
+                  href="/wiki/new"
+                  className="px-6 py-3 bg-teal-500 text-slate-900 font-semibold rounded-xl hover:bg-teal-400 transition-all hover:shadow-lg hover:shadow-teal-500/20 text-sm sm:text-base inline-flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  Add a Resource
+                </Link>
+                <Link
+                  href="/wiki/skills"
+                  className="px-6 py-3 bg-slate-800/80 text-white font-semibold rounded-xl border border-slate-700 hover:border-slate-600 hover:bg-slate-800 transition-all text-sm sm:text-base inline-flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Explore Skills
+                </Link>
+              </div>
             </div>
 
-            {/* Headline */}
-            <h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight"
-              style={{ opacity: 0, transform: 'translateY(20px)' }}
-            >
-              Resources That Teach{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">
-                While You Sleep
-              </span>
-            </h1>
-
-            {/* Subtitle */}
-            <p
-              className="text-base sm:text-lg md:text-xl text-slate-400 mb-6 sm:mb-8 px-2"
-              style={{ opacity: 0, transform: 'translateY(20px)' }}
-            >
-              A searchable library of exam papers, curriculum guides, worksheets and study notes
-              — organised by subject and mapped to skills.
-            </p>
-
-            {/* CTAs */}
-            <div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center"
-              style={{ opacity: 0, transform: 'translateY(20px)' }}
-            >
-              <Link
-                href="/wiki/new"
-                className="px-5 sm:px-6 py-2.5 sm:py-3 bg-teal-500 text-slate-900 font-medium rounded-lg hover:bg-teal-400 transition-colors text-sm sm:text-base inline-flex items-center justify-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                Add a Resource
-              </Link>
-              <Link
-                href="/wiki/skills"
-                className="px-5 sm:px-6 py-2.5 sm:py-3 bg-slate-800 text-white font-medium rounded-lg border border-slate-700 hover:border-slate-600 transition-colors text-sm sm:text-base inline-flex items-center justify-center gap-2"
-              >
-                <BookOpen className="w-4 h-4" />
-                Skills Map
-              </Link>
+            {/* Right: 3D Globe */}
+            <div className="h-[350px] sm:h-[450px] lg:h-[500px] relative flex items-center justify-center">
+              <GlobeScene />
             </div>
           </div>
         </section>
@@ -101,15 +88,12 @@ export default async function WikiPage({ searchParams }: Props) {
             ← Wiki Brain
           </Link>
           <h1 className="text-2xl sm:text-3xl font-bold text-white">{activeCategoryName}</h1>
-          <p className="text-sm text-slate-500 mt-1">
-            {categories.find((c) => c.name === activeCategoryName)?.description}
-          </p>
         </div>
       )}
 
       {/* ═══════════ Category pills ═══════════ */}
       {categories.length > 0 && (
-        <div className="flex flex-wrap gap-2 justify-center mb-6 sm:mb-8 px-2">
+        <div className="flex flex-wrap gap-2 justify-center mb-6 sm:mb-8">
           <Link
             href="/wiki"
             className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
@@ -148,14 +132,14 @@ export default async function WikiPage({ searchParams }: Props) {
       {/* ═══════════ Search ═══════════ */}
       <form className="mb-8 sm:mb-10 max-w-xl mx-auto" action="/wiki" method="get">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600 pointer-events-none" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
           <input
             type="text"
             name="search"
-            placeholder="Search by title, subject, or keyword…"
+            placeholder="Search exams, worksheets, study guides…"
             defaultValue={params.search || ''}
-            className="w-full bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-lg pl-11 pr-4 py-3 text-sm sm:text-base text-slate-200
-                     placeholder:text-slate-600 focus:outline-none focus:border-teal-500/30 focus:bg-slate-800/60
+            className="w-full bg-slate-800/60 border border-slate-700/40 rounded-xl pl-11 pr-4 py-3 text-sm sm:text-base text-slate-200
+                     placeholder:text-slate-600 focus:outline-none focus:border-teal-500/40 focus:bg-slate-800/80
                      transition-all duration-200"
           />
         </div>
@@ -163,43 +147,47 @@ export default async function WikiPage({ searchParams }: Props) {
       </form>
 
       {/* ═══════════ Results header ═══════════ */}
-      <div className="flex items-center justify-between mb-6 px-2">
-        <h2 className="text-2xl sm:text-3xl font-bold text-white">
-          {params.search ? `Results for "${params.search}"` : 'Resources'}
+      {params.search && (
+        <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-6 sm:mb-8">
+          Results for &ldquo;{params.search}&rdquo;
         </h2>
-      </div>
+      )}
 
       {/* ═══════════ Empty state ═══════════ */}
       {pages.length === 0 ? (
-        <div className="text-center py-12 sm:py-20">
-          <p className="text-slate-400 text-center mb-6 sm:mb-8 text-sm sm:text-base px-2">
-            {params.search
-              ? `Nothing matched "${params.search}". Try a different keyword.`
-              : 'Click "Add a Resource" to start building your school\'s knowledge library.'}
-          </p>
-          {!params.search && (
-            <Link
-              href="/wiki/new"
-              className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-teal-500 text-slate-900 font-medium rounded-lg hover:bg-teal-400 transition-colors text-sm sm:text-base"
-            >
-              <Plus className="w-4 h-4" />
-              Add Your First Resource
-            </Link>
-          )}
-          {params.search && (
-            <Link href="/wiki" className="text-sm text-teal-400 hover:text-teal-300 transition-colors">
-              ← Back to all resources
-            </Link>
+        <div className="text-center py-16 sm:py-24">
+          <div className="w-16 h-16 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mx-auto mb-6">
+            <MapPin className="w-7 h-7 text-teal-400" />
+          </div>
+          {params.search ? (
+            <>
+              <p className="text-slate-400 text-sm sm:text-base mb-6">Nothing found. Try a different search term.</p>
+              <Link href="/wiki" className="text-teal-400 hover:text-teal-300 transition-colors text-sm font-medium">
+                ← Clear search
+              </Link>
+            </>
+          ) : (
+            <>
+              <h3 className="text-xl font-semibold text-white mb-3">No resources yet</h3>
+              <p className="text-slate-400 text-sm sm:text-base max-w-md mx-auto mb-8 leading-relaxed">
+                Start building your school&apos;s knowledge library. Add exam papers, worksheets, study notes — anything your teachers need.
+              </p>
+              <Link
+                href="/wiki/new"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-teal-500 text-slate-900 font-semibold rounded-xl hover:bg-teal-400 transition-all hover:shadow-lg hover:shadow-teal-500/20 text-sm sm:text-base"
+              >
+                <Plus className="w-4 h-4" />
+                Add Your First Resource
+              </Link>
+            </>
           )}
         </div>
       ) : (
         /* ═══════════ Results Grid ═══════════ */
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {pages.map((page) => {
             const catColor = CATEGORY_COLORS[page.category?.slug || ''] || undefined
-            return (
-              <WikiCard key={page.id} page={page} catColor={catColor} />
-            )
+            return <WikiCard key={page.id} page={page} catColor={catColor} />
           })}
         </div>
       )}
