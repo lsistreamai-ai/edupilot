@@ -57,6 +57,12 @@ export default async function WikiPage({ searchParams }: Props) {
                 + Add Knowledge
               </a>
               <a
+                href="/wiki/skills"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700/30 text-slate-300 text-sm font-medium hover:bg-slate-800 hover:border-slate-600/30 transition-colors"
+              >
+                🎯 Skills Map
+              </a>
+              <a
                 href="?category=exam-papers"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700/30 text-slate-300 text-sm font-medium hover:bg-slate-800 hover:border-slate-600/30 transition-colors"
               >
@@ -121,6 +127,12 @@ export default async function WikiPage({ searchParams }: Props) {
             {cat.icon} {cat.name}
           </a>
         ))}
+        <a
+          href="/wiki/skills"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 hover:bg-indigo-500/20 transition-colors"
+        >
+          🎯 Skills
+        </a>
         <a
           href="/wiki/new"
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 hover:bg-indigo-500/20 transition-colors"
