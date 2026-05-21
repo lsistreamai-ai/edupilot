@@ -20,6 +20,12 @@ export default function GlobeScene() {
 
     let animId: number
     let rotation = 0
+    // Mouse/touch interaction
+    let isDragging = false
+    let lastX = 0
+    let targetRotation = 0
+    let autoRotate = true
+    let autoSpeed = 0.008
 
     const resize = () => {
       const parent = canvas.parentElement!
@@ -36,6 +42,38 @@ export default function GlobeScene() {
 
     let { w, h } = resize()
     window.addEventListener('resize', () => { const s = resize(); w = s.w; h = s.h })
+
+    // Mouse handlers
+    const onDown = (e: MouseEvent | Touch) => {
+      isDragging = true
+      autoRotate = false
+      lastX = e.clientX
+      targetRotation = rotation
+    }
+    const onMove = (e: MouseEvent | Touch) => {
+      if (!isDragging) return
+      const dx = e.clientX - lastX
+      targetRotation += dx * 0.005
+      lastX = e.clientX
+    }
+    const onUp = () => {
+      isDragging = false
+      // Resume auto-rotation after 2s idle
+      setTimeout(() => { if (!isDragging) autoRotate = true }, 2000)
+    }
+
+    const handleMouseDown = (e: MouseEvent) => onDown(e)
+    const handleMouseMove = (e: MouseEvent) => onMove(e)
+    const handleTouchStart = (e: TouchEvent) => { e.preventDefault(); onDown(e.touches[0]) }
+    const handleTouchMove = (e: TouchEvent) => { e.preventDefault(); onMove(e.touches[0]) }
+
+    canvas.addEventListener('mousedown', handleMouseDown)
+    canvas.addEventListener('mousemove', handleMouseMove)
+    canvas.addEventListener('mouseup', onUp)
+    canvas.addEventListener('mouseleave', onUp)
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: false })
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: false })
+    canvas.addEventListener('touchend', onUp)
 
     // Continent dots
     const dots: Dot[] = []
@@ -203,7 +241,10 @@ export default function GlobeScene() {
         }
       }
 
-      rotation += 0.002
+      rotation += (targetRotation - rotation) * 0.1
+      if (autoRotate) {
+        targetRotation += autoSpeed
+      }
       animId = requestAnimationFrame(draw)
     }
 
@@ -212,6 +253,13 @@ export default function GlobeScene() {
     return () => {
       cancelAnimationFrame(animId)
       window.removeEventListener('resize', resize)
+      canvas.removeEventListener('mousedown', handleMouseDown)
+      canvas.removeEventListener('mousemove', handleMouseMove)
+      canvas.removeEventListener('mouseup', onUp)
+      canvas.removeEventListener('mouseleave', onUp)
+      canvas.removeEventListener('touchstart', handleTouchStart)
+      canvas.removeEventListener('touchmove', handleTouchMove)
+      canvas.removeEventListener('touchend', onUp)
     }
   }, [])
 
