@@ -1,11 +1,10 @@
 // app/wiki/page.tsx — Wiki Brain Homepage
-// Design direction: warm editorial library.
-// Golden/amber tones, intentional whitespace, typography-first.
-// Knowledge repositories should feel calm, not busy.
+// app/wiki/page.tsx — Wiki Brain Homepage
+// Design system: automation-demos.vercel.app
+// Teal accent, border-driven depth, generous spacing, clean hierarchy
 
 import { getCategories, getWikiPages } from '@/lib/wiki'
 import WikiCard from '@/components/WikiCard'
-import GlobeBackground from '@/components/GlobeBackground'
 
 export const dynamic = 'force-dynamic'
 

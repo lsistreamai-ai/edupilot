@@ -18,38 +18,36 @@ export default function WikiCard({ page }: Props) {
   return (
     <Link
       href={`/wiki/${page.slug}`}
-      className="group flex flex-col p-5 bg-stone-800/20 border border-stone-700/20 rounded-2xl
-               hover:border-amber-500/10 hover:bg-stone-800/30 hover:shadow-md
+      className="group flex flex-col p-5 bg-slate-800/30 border border-slate-800/50 rounded-xl
+               hover:border-teal-500/20 hover:bg-slate-800/50
                active:scale-[0.98] transition-all duration-200 cursor-pointer"
     >
-      {/* Top: Icon + Title */}
+      {/* Icon + Title */}
       <div className="flex items-start gap-3 mb-3">
-        <span className="text-xl shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200">
+        <span className="text-lg shrink-0 mt-0.5">
           {page.category?.icon || '📄'}
         </span>
-        <div className="min-w-0">
-          <h3 className="text-[14px] font-semibold text-stone-200 group-hover:text-white leading-snug transition-colors line-clamp-2">
-            {page.title}
-          </h3>
-        </div>
+        <h3 className="text-sm font-medium text-slate-200 group-hover:text-white leading-snug transition-colors line-clamp-2">
+          {page.title}
+        </h3>
       </div>
 
       {/* Excerpt */}
       {excerpt && (
-        <p className="text-xs text-stone-500 leading-relaxed line-clamp-2 mb-auto">
+        <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 mb-auto">
           {excerpt}
         </p>
       )}
 
       {/* Bottom meta */}
-      <div className="flex items-center justify-between mt-4 pt-3 border-t border-stone-800/50">
+      <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-800/50">
         <div className="flex items-center gap-2.5">
-          <span className="flex items-center gap-1 text-[11px] text-stone-600">
-            <span className="inline-block w-1 h-1 rounded-full bg-stone-600" />
+          <span className="flex items-center gap-1 text-[11px] text-slate-600">
+            <span className="inline-block w-1 h-1 rounded-full bg-slate-600" />
             {timeAgo}
           </span>
-          <span className="text-[11px] text-stone-700">·</span>
-          <span className="text-[11px] text-stone-600">{page.view_count} views</span>
+          <span className="text-[11px] text-slate-700">·</span>
+          <span className="text-[11px] text-slate-600">{page.view_count} views</span>
         </div>
 
         {page.tags && page.tags.length > 0 && (
@@ -57,14 +55,14 @@ export default function WikiCard({ page }: Props) {
             {page.tags.slice(0, 2).map((t: string) => (
               <span
                 key={t}
-                className="px-2 py-0.5 rounded-md bg-stone-700/30 text-[10px] text-stone-500
-                         group-hover:bg-stone-700/50 group-hover:text-stone-400 transition-colors"
+                className="px-2 py-0.5 rounded-md bg-slate-700/30 text-[10px] text-slate-500
+                         group-hover:bg-slate-700/50 group-hover:text-slate-400 transition-colors"
               >
                 {t}
               </span>
             ))}
             {page.tags.length > 2 && (
-              <span className="px-2 py-0.5 rounded-md bg-stone-700/20 text-[10px] text-stone-600">
+              <span className="px-2 py-0.5 rounded-md bg-slate-800 text-[10px] text-slate-600">
                 +{page.tags.length - 2}
               </span>
             )}
