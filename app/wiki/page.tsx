@@ -1,4 +1,8 @@
 // app/wiki/page.tsx — Wiki Brain Homepage
+// Design direction: warm editorial library.
+// Golden/amber tones, intentional whitespace, typography-first.
+// Knowledge repositories should feel calm, not busy.
+
 import { getCategories, getWikiPages } from '@/lib/wiki'
 import WikiCard from '@/components/WikiCard'
 import GlobeBackground from '@/components/GlobeBackground'
@@ -23,127 +27,73 @@ export default async function WikiPage({ searchParams }: Props) {
 
   return (
     <div>
-      {/* ── Hero Section ── */}
+      {/* ── Hero — editorial, restrained ── */}
       {!params.category && (
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950/50 via-slate-900 to-slate-950 mb-10 border border-indigo-500/10">
-          {/* Globe */}
-          <div className="absolute right-0 top-0 w-[520px] h-[420px] opacity-70">
+        <section className="relative mb-16 pb-0">
+          {/* Subtle globe — background texture, not the main event */}
+          <div className="absolute -top-16 -right-12 w-[460px] h-[460px] opacity-[0.12] pointer-events-none overflow-hidden">
             <GlobeBackground />
           </div>
 
-          {/* Gradient fade for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent rounded-2xl pointer-events-none" />
-
-          <div className="relative z-10 px-8 py-14 sm:px-10 sm:py-16 max-w-xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium mb-5 tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-              KNOWLEDGE HUB
-            </div>
-
-            {/* Title */}
-            <div className="flex items-baseline gap-3 mb-4">
-              <span className="text-4xl">🧠</span>
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-                Wiki Brain
-              </h1>
-            </div>
-
-            {/* Subtitle */}
-            <p className="text-base text-slate-300 leading-relaxed mb-2 max-w-md">
-              Your school&apos;s collective intelligence — a searchable, AI-powered knowledge library
-              built for teachers, by teachers.
-            </p>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-md">
-              Store exam papers, curriculum guides, worksheets, and study notes in one place.
-              Every upload makes the brain smarter. Find anything in seconds with AI-powered search.
+          <div className="relative max-w-2xl pt-8">
+            {/* Eyebrow — warm amber, not sci-fi indigo */}
+            <p className="text-xs tracking-[0.2em] uppercase text-amber-500/70 font-medium mb-6">
+              Knowledge Base
             </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-3 mt-7">
+            {/* Title — typography as the hero. No emoji, no badge. */}
+            <h1 className="text-4xl sm:text-5xl font-serif font-bold text-white tracking-[-0.02em] leading-[1.05] mb-5">
+              The school&apos;s<br />
+              <span className="text-amber-400">collective intelligence.</span>
+            </h1>
+
+            {/* One clear sentence. No paragraph of selling points. */}
+            <p className="text-base text-stone-400 leading-relaxed max-w-lg">
+              A searchable library of exam papers, curriculum guides, worksheets and study notes
+              — organised by subject, mapped to skills, and built by your teachers.
+            </p>
+
+            {/* Primary action only. Secondary actions moved below. */}
+            <div className="mt-8">
               <a
                 href="/wiki/new"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-indigo-500 text-white text-sm font-semibold
-                         hover:bg-indigo-400 active:scale-[0.97] transition-all duration-150
-                         shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/35"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-500 text-amber-950 text-sm font-semibold
+                         hover:bg-amber-400 active:scale-[0.97] transition-all duration-150
+                         shadow-sm"
               >
-                + New Resource
+                Add your first resource
+                <span className="text-amber-700">→</span>
               </a>
-              <a
-                href="/wiki/skills"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-slate-200 text-sm font-medium
-                         hover:bg-white/10 hover:border-white/15 active:scale-[0.97] transition-all duration-150"
-              >
-                🎯 Skills Map
-              </a>
-              <a
-                href="?category=exam-papers"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-slate-300 text-sm font-medium
-                         hover:bg-white/10 hover:border-white/15 active:scale-[0.97] transition-all duration-150"
-              >
-                📝 Exam Papers
-              </a>
-            </div>
-
-            {/* Quick stats */}
-            <div className="flex gap-8 mt-10 pt-8 border-t border-slate-800/50">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 text-sm">
-                  📄
-                </div>
-                <div>
-                  <div className="text-lg font-bold text-white">{pages.length}</div>
-                  <div className="text-[11px] text-slate-500">Resources</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 text-sm">
-                  📂
-                </div>
-                <div>
-                  <div className="text-lg font-bold text-white">{categories.length}</div>
-                  <div className="text-[11px] text-slate-500">Categories</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-sm">
-                  🔍
-                </div>
-                <div>
-                  <div className="text-lg font-bold text-emerald-400">AI</div>
-                  <div className="text-[11px] text-slate-500">Smart Search</div>
-                </div>
-              </div>
             </div>
           </div>
-        </div>
+        </section>
       )}
 
       {/* ── Category Filter Header ── */}
       {activeCategoryName && (
-        <div className="mb-8">
-          <a href="/wiki" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-300 transition-colors mb-2">
+        <div className="mb-10">
+          <a href="/wiki" className="inline-flex items-center gap-1 text-sm text-stone-500 hover:text-stone-300 transition-colors mb-3">
             ← Wiki Brain
           </a>
-          <h1 className="text-2xl font-bold text-white">{activeCategoryName}</h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <h1 className="text-2xl font-semibold text-white">{activeCategoryName}</h1>
+          <p className="text-sm text-stone-500 mt-1">
             {categories.find((c) => c.name === activeCategoryName)?.description}
           </p>
         </div>
       )}
 
-      {/* ── Category Pills ── */}
-      <div className="flex flex-wrap items-center gap-2 mb-8">
+      {/* ── Navigation — category pills + secondary actions ── */}
+      <div className="flex flex-wrap items-center gap-2 mb-10">
         {/* All */}
         <a
           href="/wiki"
           className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[13px] font-medium transition-all duration-150 ${
             !params.category
-              ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/25'
-              : 'bg-slate-800/60 text-slate-400 border border-slate-700/40 hover:text-slate-200 hover:border-slate-600/50'
+              ? 'bg-amber-500 text-amber-950'
+              : 'bg-stone-800/40 text-stone-400 border border-stone-700/30 hover:text-stone-200 hover:border-stone-600/40'
           }`}
         >
-          📚 All Pages
+          All
         </a>
 
         {/* Category pills */}
@@ -153,8 +103,8 @@ export default async function WikiPage({ searchParams }: Props) {
             href={`/wiki?category=${cat.slug}`}
             className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[13px] font-medium transition-all duration-150 ${
               params.category === cat.slug
-                ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/25'
-                : 'bg-slate-800/60 text-slate-400 border border-slate-700/40 hover:text-slate-200 hover:border-slate-600/50'
+                ? 'bg-amber-500 text-amber-950'
+                : 'bg-stone-800/40 text-stone-400 border border-stone-700/30 hover:text-stone-200 hover:border-stone-600/40'
             }`}
           >
             {cat.icon} {cat.name}
@@ -162,101 +112,126 @@ export default async function WikiPage({ searchParams }: Props) {
         ))}
 
         {/* Separator */}
-        <div className="w-px h-5 bg-slate-700/50 mx-1" />
+        <span className="w-px h-5 bg-stone-700/40 mx-1.5" aria-hidden="true" />
 
-        {/* Action pills (different style) */}
+        {/* Skills link */}
         <a
           href="/wiki/skills"
           className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[13px] font-medium
-                   bg-purple-500/10 text-purple-400 border border-purple-500/20
-                   hover:bg-purple-500/20 hover:border-purple-500/30 transition-all duration-150"
+                   text-stone-400 border border-stone-700/30 hover:text-stone-200 hover:border-stone-600/40
+                   transition-all duration-150"
         >
-          🎯 Skills
-        </a>
-        <a
-          href="/wiki/new"
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[13px] font-semibold
-                   bg-indigo-500/15 text-indigo-400 border border-indigo-500/25
-                   hover:bg-indigo-500/25 hover:text-indigo-300 transition-all duration-150"
-        >
-          + New
+          Skills map
         </a>
       </div>
 
-      {/* ── Search Bar ── */}
-      <form className="relative mb-8" action="/wiki" method="get">
-        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">🔍</span>
-        <input
-          type="text"
-          name="search"
-          placeholder="Search the Wiki Brain by title or content…"
-          defaultValue={params.search || ''}
-          className="w-full bg-slate-800/40 border border-slate-700/40 rounded-xl pl-10 pr-4 py-3.5 text-sm text-slate-200
-                   placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/40 focus:bg-slate-800/60
-                   transition-all duration-200"
-        />
+      {/* ── Search — calm, inviting ── */}
+      <form className="mb-10" action="/wiki" method="get">
+        <div className="relative">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search by title, subject, or keyword…"
+            defaultValue={params.search || ''}
+            className="w-full bg-stone-800/30 border border-stone-700/30 rounded-xl px-4 py-3.5 text-sm text-stone-200
+                     placeholder:text-stone-600 focus:outline-none focus:border-amber-500/30 focus:bg-stone-800/40
+                     transition-all duration-200"
+          />
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-600 text-xs pointer-events-none">
+            Press enter
+          </span>
+        </div>
         {params.category && <input type="hidden" name="category" value={params.category} />}
       </form>
 
-      {/* ── Results Header ── */}
-      <div className="flex items-center justify-between mb-5">
-        <span className="text-sm text-slate-500 font-medium">
+      {/* ── Results header — restrained, no filler stats ── */}
+      <div className="flex items-center justify-between mb-6">
+        <span className="text-sm text-stone-500">
           {params.search
-            ? `Search results for "${params.search}"`
-            : `${pages.length} resource${pages.length !== 1 ? 's' : ''}`}
+            ? `Results for &ldquo;${params.search}&rdquo;`
+            : pages.length > 0
+              ? `${pages.length} resource${pages.length !== 1 ? 's' : ''}`
+              : 'No resources yet'}
         </span>
         {!params.search && pages.length > 0 && (
-          <span className="text-[11px] text-slate-600">Most recent first</span>
+          <span className="text-xs text-stone-700">Most recent</span>
         )}
       </div>
 
-      {/* ── Page Grid ── */}
+      {/* ── Empty state — editorial, warm ── */}
       {pages.length === 0 ? (
-        <div className="text-center py-24">
-          <div className="text-6xl mb-5 opacity-30">🧠</div>
-          <h3 className="text-lg text-slate-400 font-semibold mb-2">
-            {params.search ? 'No results found' : 'The Brain is empty'}
-          </h3>
-          <p className="text-sm text-slate-600 mb-8 max-w-sm mx-auto leading-relaxed">
-            {params.search
-              ? `Nothing matched "${params.search}". Try different keywords or browse by category.`
-              : 'Start building your school&apos;s knowledge library. Add exam papers, worksheets, or study notes — the Brain gets smarter with every contribution.'}
-          </p>
+        <div className="text-center py-20">
           {!params.search && (
-            <a
-              href="/wiki/new"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-500 text-white text-sm font-semibold
-                       hover:bg-indigo-400 active:scale-[0.97] transition-all duration-150
-                       shadow-lg shadow-indigo-500/25"
-            >
-              + Add Your First Resource
-            </a>
+            <>
+              <p className="text-sm text-stone-500 leading-relaxed max-w-md mx-auto">
+                This is where your school&apos;s knowledge lives. Start by adding an exam paper,
+                a worksheet, or a curriculum guide — anything your teachers want to find again.
+              </p>
+
+              {/* Category shortcuts — the real entry points */}
+              <div className="mt-10 pt-8 border-t border-stone-800/30">
+                <p className="text-xs text-stone-600 mb-5 uppercase tracking-widest font-medium">Browse by subject</p>
+                <div className="flex flex-wrap justify-center gap-2.5">
+                  {categories.map((cat) => (
+                    <a
+                      key={cat.id}
+                      href={`/wiki?category=${cat.slug}`}
+                      className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-stone-800/20 border border-stone-800/40 text-stone-400 text-sm
+                               hover:text-stone-200 hover:border-stone-700/40 hover:bg-stone-800/30
+                               transition-all duration-200"
+                    >
+                      <span className="text-base">{cat.icon}</span>
+                      <span>{cat.name}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick links row */}
+              <div className="mt-10 flex items-center justify-center gap-6 text-xs text-stone-600">
+                <a href="/wiki/skills" className="hover:text-stone-400 transition-colors">
+                  Skills map →
+                </a>
+                <span className="text-stone-800">·</span>
+                <a href="/wiki/new" className="hover:text-stone-400 transition-colors">
+                  Add resource →
+                </a>
+              </div>
+            </>
           )}
 
-          {/* Quick access: show category links as fallback when empty */}
-          {!params.search && (
-            <div className="mt-10 pt-8 border-t border-slate-800/50">
-              <p className="text-xs text-slate-600 mb-4 uppercase tracking-wide font-semibold">Browse by Category</p>
-              <div className="flex flex-wrap justify-center gap-2">
-                {categories.map((cat) => (
-                  <a
-                    key={cat.id}
-                    href={`/wiki?category=${cat.slug}`}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm bg-slate-800/40 border border-slate-700/40 text-slate-400
-                             hover:text-slate-200 hover:border-slate-600/50 transition-all duration-150"
-                  >
-                    {cat.icon} {cat.name}
-                  </a>
-                ))}
+          {/* Search-specific empty state */}
+          {params.search && (
+            <>
+              <p className="text-stone-500 text-sm max-w-md mx-auto leading-relaxed">
+                Nothing matched &ldquo;{params.search}&rdquo;. Try a different keyword or browse by category.
+              </p>
+              <div className="mt-6">
+                <a href="/wiki" className="text-sm text-amber-500 hover:text-amber-400 transition-colors">
+                  ← Back to all resources
+                </a>
               </div>
-            </div>
+            </>
           )}
         </div>
       ) : (
+        /* ── Results grid ── */
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {pages.map((page) => (
             <WikiCard key={page.id} page={page} />
           ))}
+        </div>
+      )}
+
+      {/* ── Footer — quiet, secondary actions ── */}
+      {!params.category && !params.search && (
+        <div className="mt-20 pt-10 border-t border-stone-800/20 flex items-center gap-8 text-sm text-stone-600">
+          <a href="/wiki/skills" className="hover:text-stone-400 transition-colors">
+            🎯 Skills map
+          </a>
+          <a href="/wiki/new" className="hover:text-stone-400 transition-colors">
+            + New resource
+          </a>
         </div>
       )}
     </div>
